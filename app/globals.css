@@ -466,6 +466,74 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
   html { scroll-behavior:auto; }
   *,*::before,*::after { animation-duration:.01ms !important; animation-iteration-count:1 !important; scroll-behavior:auto !important; transition-duration:.01ms !important; }
 }
+@media (max-width:480px) {
+  body { overflow-x:hidden; }
+  .site-header { gap:.5rem; padding:.8rem .75rem; }
+  .site-header .travel-logo { min-width:0; }
+  .site-header .brand-logo-copy { display:none; }
+  .site-header .brand-logo-mark { width:2.35rem; height:2.35rem; }
+  .site-header-actions { gap:.3rem; }
+  .site-header-actions .language-switcher { display:none; }
+  .site-header .theme-toggle,.site-header .mobile-menu { width:2.15rem; height:2.15rem; }
+  .travel-hero { min-height:520px; margin-inline:0; border-radius:0 0 20px 20px; background-position:64% center; }
+  .hero-copy { max-width:265px; padding:4.2rem 1rem 2.5rem; }
+  .hero-copy h1 { font-size:2.8rem; line-height:.92; }
+  .hero-copy p { max-width:235px; font-size:.68rem; line-height:1.65; }
+  .hero-ctas { gap:.55rem; }
+  .primary-cta,.video-cta { padding:.62rem .78rem; font-size:.65rem; }
+  .travel-search { grid-template-columns:1fr 1fr; width:calc(100% - 1rem); margin-top:-3.5rem; padding:.45rem; }
+  .travel-search .search-item { min-width:0; min-height:3.15rem; }
+  .search-item > svg { width:17px; height:17px; }
+  .search-item small { font-size:.53rem; }
+  .search-item input,.date-picker-trigger,.traveler-trigger { max-width:100%; overflow:hidden; font-size:.63rem; text-overflow:ellipsis; white-space:nowrap; }
+  .date-range-picker { grid-column:span 2; min-width:0; }
+  .date-range-inputs { display:grid; grid-template-columns:1fr 1px 1fr; min-width:0; }
+  .range-input { min-width:0; padding-inline:.45rem; }
+  .range-input + .range-connector { background:rgba(131,157,168,.15); }
+  .range-input button { max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .range-calendar-popover { left:50%; width:calc(100vw - 1.5rem); max-height:75vh; overflow:auto; }
+  .range-calendar-columns { grid-template-columns:1fr; }
+  .travel-section { padding-inline:.8rem; }
+  .section-heading { gap:.7rem; }
+  .section-heading h2 { font-size:1.35rem; }
+  .carousel-actions { gap:.25rem; }
+  .carousel-actions > button { width:1.8rem; height:1.8rem; }
+  .destination-slide { grid-template-columns:1fr 1fr; gap:.4rem; }
+  .destination-card { min-height:136px; border-radius:13px; }
+  .destination-card > div { padding:.7rem; }
+  .destination-card strong { font-size:.62rem; }
+  .destination-card small { font-size:.53rem; }
+  .destination-card button { right:.55rem; bottom:.55rem; width:1.55rem; height:1.55rem; }
+  .experience-types { grid-template-columns:1fr 1fr; }
+  .deals-section { margin-inline:.5rem; }
+  .deal-form { display:flex; width:100%; }
+  .deal-form input { min-width:0; width:100%; }
+  .benefits-strip { gap:.65rem; padding-inline:.65rem; }
+  .benefit { gap:.45rem; }
+  .benefit strong { font-size:.62rem; }
+  .benefit small { font-size:.48rem; }
+  .professional-auth-card { padding:1.1rem; }
+  .professional-auth-card h1 { font-size:2.4rem; }
+  .auth-divider { flex-wrap:wrap; text-align:center; }
+  .search-hero,.inner-hero { min-height:250px; margin-inline:.65rem; padding:2rem 1.15rem; border-radius:20px; }
+  .search-hero h1,.inner-hero h1,.contact-layout h1,.faq-layout h1 { font-size:2.3rem; }
+  .search-layout { padding-inline:.65rem; }
+  .results-toolbar { align-items:flex-start; gap:.8rem; }
+  .results-toolbar h2 { font-size:1.25rem; }
+  .results-toolbar select { max-width:120px; min-width:0; }
+  .results-grid { grid-template-columns:1fr; gap:.75rem; }
+  .result-image { height:185px; }
+  .filter-sidebar { width:100%; border-radius:0; }
+  .contact-layout,.faq-layout { min-height:0; padding:2.5rem .9rem; }
+  .inner-cards { margin-inline:.65rem; }
+  .inner-bottom { margin-inline:.65rem; padding:1.25rem; }
+  .inner-bottom form,.deal-signup form { min-width:0; width:100%; }
+  .deal-signup { margin-inline:.65rem; padding:1.25rem; }
+  .deal-signup input { min-width:0; }
+  .footer-main { grid-template-columns:1fr; gap:1.5rem; padding:2.5rem 1rem; }
+  .footer-bottom { padding-inline:1rem; font-size:.58rem; }
+  .footer-bottom span:last-child { gap:.7rem; }
+}
 @media (max-width:520px) { .footer-main { grid-template-columns:1fr; }.search-header,.inner-header { padding-inline:1rem; }.search-header .language-switcher,.inner-header .language-switcher { display:none; }.results-grid { grid-template-columns:1fr; }.results-toolbar { align-items:start; }.results-toolbar select { min-width:120px; }.search-hero { min-height:260px; }.footer-newsletter form { max-width:320px; } }
 
 /* Theme consistency layer: keep every route and shared component aligned. */
