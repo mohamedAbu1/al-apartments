@@ -426,6 +426,14 @@ html[data-theme="light"] .destinations-page,html[data-theme="light"] .experience
 
 /* Site-wide motion system: calm, consistent and accessible. */
 html { scroll-behavior:smooth; }
+/* Branded, subtle scrollbar */
+html { scrollbar-width:thin; scrollbar-color:#18c7c7 #071a29; }
+::-webkit-scrollbar { width:10px; height:10px; }
+::-webkit-scrollbar-track { background:#071a29; }
+::-webkit-scrollbar-thumb { border:2px solid #071a29; border-radius:999px; background:linear-gradient(180deg,#20e2c0,#159fd1); box-shadow:0 0 12px rgba(24,199,199,.2); }
+::-webkit-scrollbar-thumb:hover { background:linear-gradient(180deg,#42f3d1,#20bce7); }
+::-webkit-scrollbar-corner { background:#071a29; }
+* { scrollbar-width:thin; scrollbar-color:#18c7c7 transparent; }
 main:is(.travel-home,.app-shell,.inner-page,.search-page,.destinations-page,.experiences-page,.deals-page) { animation:sitePageIn .55s cubic-bezier(.22,.61,.36,1) both; }
 main:is(.inner-page,.destinations-page,.experiences-page,.deals-page) > section:not(.site-header) { animation:sectionIn .7s cubic-bezier(.22,.61,.36,1) both; }
 main:is(.inner-page,.destinations-page,.experiences-page,.deals-page) > section:nth-of-type(2) { animation-delay:.08s; }
