@@ -1,0 +1,8 @@
+node_modules
+.next
+.env
+.env*.local
+mysql/data/
+mysql/*.pid
+mysql/*.err
+npm-debug.log*
