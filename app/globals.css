@@ -115,6 +115,13 @@ button, input { font:inherit; }
 .travel-home.dark-theme .travel-frame { background:#061424; box-shadow:0 24px 75px rgba(0,0,0,.38); }
 .travel-header { position:relative; z-index:5; display:flex; align-items:center; justify-content:space-between; gap:1.5rem; padding:1.9rem 4.5rem 1.15rem; }
 .travel-logo { display:flex; align-items:center; gap:.55rem; color:inherit; }
+.brand-logo { display:inline-flex; align-items:center; gap:.62rem; color:inherit; }
+.brand-logo-mark { width:2.65rem; height:2.65rem; flex:none; filter:drop-shadow(0 7px 12px rgba(16,201,205,.18)); transition:transform .35s cubic-bezier(.22,.61,.36,1),filter .35s ease; }
+.travel-logo:hover .brand-logo-mark { transform:translateY(-2px) rotate(-3deg); filter:drop-shadow(0 10px 17px rgba(16,201,205,.32)); }
+.brand-logo-copy { display:flex; flex-direction:column; line-height:1; }
+.brand-logo-copy strong { font-size:.94rem; letter-spacing:-.02em; }
+.brand-logo-copy small { margin-top:.28rem; color:#54a6b1; font-size:.43rem; font-weight:800; letter-spacing:.22em; }
+.brand-logo-compact .brand-logo-mark { width:2.2rem; height:2.2rem; }
 .logo-mark { display:grid; place-items:center; width:2.25rem; height:2.25rem; border:2px solid #1c72ff; border-radius:50%; color:#1c72ff; font-family:Manrope,sans-serif; font-weight:800; }
 .travel-logo strong { display:block; font-size:1.05rem; line-height:1; }
 .travel-logo small { display:block; margin-top:.25rem; color:#7e949d; font-size:.5rem; letter-spacing:.16em; }
