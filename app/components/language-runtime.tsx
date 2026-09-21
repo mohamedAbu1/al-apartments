@@ -22,12 +22,17 @@ const ar: Record<string, string> = {
 };
 
 const attrs = ['placeholder', 'aria-label', 'title', 'alt'];
+const arExtra: Record<string, string> = {
+  'TRAVEL STUDIO':'استوديو السفر', 'THE AL-AROUM TRAVEL STUDIO':'استوديو السفر من الأروم', 'See Egypt':'اكتشف مصر', 'with feeling.':'بإحساس مختلف.', 'Thoughtful journeys, trusted local partners, and stays that turn a few days away into a story worth keeping.':'رحلات مدروسة وشركاء محليون موثوقون وإقامات تحول أيامك إلى حكاية تستحق التذكر.', 'Build my journey':'ابنِ رحلتي', 'Browse curated trips':'تصفح الرحلات المختارة', 'Curated for your next move':'مختارة لخطوتك القادمة', 'CHOOSE YOUR KIND OF ESCAPE':'اختر نوع الرحلة التي تناسبك', 'Travel for the':'سافر من أجل', 'way you want to feel.':'الإحساس الذي تريده.', 'Beach escapes':'رحلات شاطئية', 'Culture & history':'الثقافة والتاريخ', 'Oasis retreats':'إقامات الواحات', 'Family holidays':'رحلات عائلية', 'Luxury itineraries':'رحلات فاخرة', 'CURATED JOURNEYS':'رحلات مختارة', 'Three ways to':'ثلاث طرق لـ', 'start exploring.':'بدء الاستكشاف.', 'View all journeys':'عرض كل الرحلات', 'View itinerary':'عرض خط السير', 'WHERE TO NEXT':'إلى أين بعد ذلك؟', 'Egypt has more':'مصر لديها أكثر', 'than one rhythm.':'من إيقاع واحد.', 'WHY BOOK WITH AL-AROUM':'لماذا تحجز مع الأروم؟', 'A beautiful trip':'الرحلة الجميلة', 'needs a clear plan.':'تحتاج إلى خطة واضحة.', 'Human planning':'تخطيط بشري', 'Small details':'تفاصيل صغيرة', 'THE TRAVEL LETTER':'رسالة السفر', 'worth remembering.':'يستحق التذكر.',
+  'STAY COLLECTION':'مجموعة الإقامات', 'Arrive well.':'صل بشكل جيد.', 'Stay longer.':'أقم مدة أطول.', 'Find a stay':'اعثر على إقامة', 'Explore stays':'استكشف الإقامات', 'THE STAY EDIT':'مختارات الإقامة', 'Places that make arrival easy.':'أماكن تجعل الوصول سهلًا.', 'OWNERSHIP STUDIO':'استوديو التملك', 'Find a place.':'اعثر على مكان.', 'Make it yours.':'واجعله لك.', 'Find a home':'اعثر على منزل', 'Ownership guide':'دليل التملك', 'PROPERTY COLLECTION':'مجموعة العقارات', 'The next address starts here.':'العنوان القادم يبدأ هنا.', 'List a property':'أضف عقارك', 'LAND INTELLIGENCE':'ذكاء الأراضي', 'Start with ground.':'ابدأ من الأرض.', 'Build with clarity.':'وابنِ بوضوح.', 'Explore land':'استكشف الأراضي', 'Decision guide':'دليل القرار', 'CURATED OPPORTUNITIES':'فرص مختارة', 'List your land':'أضف أرضك',
+  'LIST WITH AL-AROUM':'أضف عقارك مع الأروم', 'LIST YOUR LAND':'أضف أرضك', 'Let your property':'دع عقارك', 'find its people.':'يصل إلى من يبحث عنه.', 'Put your land':'ضع أرضك', 'in the right hands.':'في الأيدي المناسبة.', 'Human review':'مراجعة بشرية', 'Property details':'تفاصيل العقار', 'Fields marked with * are required.':'الحقول التي تحمل * إلزامية.', 'Your name':'اسمك', 'Phone number':'رقم الهاتف', 'Property title':'عنوان العقار', 'Category':'الفئة', 'Location':'الموقع', 'Tell us more':'أخبرنا المزيد', 'Send listing request':'إرسال طلب إضافة العقار', 'Sending request...':'جارٍ إرسال الطلب...', 'Request received.':'تم استلام الطلب.', 'Back to my section':'العودة إلى قسمي.'
+};
 export function translateStaticText(value: string, language: Language) {
   if (language !== 'ar') return value;
   const leading = value.match(/^\s*/)?.[0] ?? '';
   const trailing = value.match(/\s*$/)?.[0] ?? '';
   const core = value.trim();
-  if (ar[core]) return `${leading}${ar[core]}${trailing}`;
+  if (ar[core] || arExtra[core]) return `${leading}${ar[core] || arExtra[core]}${trailing}`;
   if (core.startsWith('Explore ')) return `${leading}استكشف ${core.slice(8)}${trailing}`;
   const count = core.match(/^(\d+)\s+results?$/i);
   if (count) return `${leading}${count[1]} نتيجة${trailing}`;
@@ -53,7 +58,7 @@ export default function LanguageRuntime({ children }: { children: React.ReactNod
         if (!parent || ['SCRIPT', 'STYLE', 'NOSCRIPT'].includes(parent.tagName)) continue;
         const original = originalText.get(node) ?? node.textContent ?? '';
         originalText.set(node, original);
-        node.textContent = translateStaticText(original, language);
+        node.textContent = language === 'ar' ? translateStaticText(original, language) : original;
       }
       document.querySelectorAll<HTMLElement>('*').forEach((element) => {
         attrs.forEach((attr) => {
@@ -61,7 +66,7 @@ export default function LanguageRuntime({ children }: { children: React.ReactNod
           const key = `data-i18n-original-${attr}`;
           if (value && !element.getAttribute(key)) element.setAttribute(key, value);
           const original = element.getAttribute(key);
-          if (original) element.setAttribute(attr, translateStaticText(original, language));
+          if (original) element.setAttribute(attr, language === 'ar' ? translateStaticText(original, language) : original);
         });
       });
     };

@@ -10,7 +10,7 @@ export default function LanguageSwitcher({ dark = true }: { dark?: boolean }) {
   const rootRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const saved = window.localStorage.getItem('al-aroum-language') as Language | null;
-    if (saved && languages.some((item) => item.code === saved)) setLanguage(saved);
+    if (saved && languages.some((item) => item.code === saved)) { setLanguage(saved); document.documentElement.lang = saved; document.documentElement.dir = saved === 'ar' ? 'rtl' : 'ltr'; document.body.classList.toggle('rtl', saved === 'ar'); }
     const onChange = (event: Event) => setLanguage((event as CustomEvent<Language>).detail);
     const onOutside = (event: MouseEvent) => { if (rootRef.current && !rootRef.current.contains(event.target as Node)) setOpen(false); };
     window.addEventListener('language-change', onChange);
