@@ -340,6 +340,37 @@ button, input { font:inherit; }
 .intent-theme-trip .outline-cta:hover,.intent-theme-stay .outline-cta:hover,.intent-theme-buy-home .outline-cta:hover,.intent-theme-land .outline-cta:hover { border-color:var(--mode-accent); color:var(--mode-accent); }
 .intent-theme-trip .deal-form button,.intent-theme-stay .deal-form button,.intent-theme-buy-home .deal-form button,.intent-theme-land .deal-form button { background:var(--mode-accent); }
 .intent-theme-trip .benefit > span,.intent-theme-stay .benefit > span,.intent-theme-buy-home .benefit > span,.intent-theme-land .benefit > span { color:var(--mode-accent); }
+.intent-theme-land .travel-frame { background:linear-gradient(180deg,#06131f 0%,#071b25 58%,#09231f 100%); }
+.intent-theme-land .travel-hero { border-color:rgba(140,214,108,.3); box-shadow:0 28px 80px rgba(37,95,48,.22); }
+.intent-theme-land .travel-search { max-width:920px; grid-template-columns:1.35fr 1fr 1fr auto; border-radius:20px; background:rgba(7,29,32,.96); }
+.intent-theme-land .travel-search .search-item { border-color:rgba(140,214,108,.16); }
+.land-opportunities-section,.land-diligence-section { display:grid; grid-template-columns:.72fr 1.9fr; gap:3.2rem; max-width:1180px; margin:auto; padding:5rem 3.8rem 2rem; }
+.land-section-intro { align-self:center; }
+.land-section-intro h2 { margin-top:.7rem; font-family:'Playfair Display',serif; font-size:2.65rem; line-height:.98; }
+.land-section-intro h2 em,.land-diligence-section h2 em,.land-advisor-card h3 em { color:var(--mode-accent); font-style:normal; }
+.land-section-intro p { max-width:255px; margin:1rem 0 1.4rem; color:#8499a0; font-size:.68rem; line-height:1.75; }
+.land-opportunity-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:.8rem; }
+.land-opportunity-card { position:relative; min-height:245px; display:flex; align-items:flex-end; overflow:hidden; border:1px solid rgba(140,214,108,.18); border-radius:18px; background-position:center; background-size:cover; transition:transform .3s ease,border-color .3s ease; }
+.land-opportunity-card:hover { transform:translateY(-5px); border-color:rgba(140,214,108,.7); }
+.land-opportunity-card > div { position:relative; z-index:1; display:grid; gap:.35rem; width:100%; padding:1rem; }
+.land-opportunity-card small { color:#a4d883; font-size:.5rem; font-weight:800; letter-spacing:.08em; text-transform:uppercase; }
+.land-opportunity-card strong { color:#fff; font-family:'Playfair Display',serif; font-size:1.2rem; }
+.land-opportunity-card span:not(.land-card-index) { color:#b4c9c2; font-size:.58rem; }
+.land-opportunity-card a { display:inline-flex; align-items:center; gap:.3rem; width:max-content; margin-top:.4rem; color:#a7eb7b; font-size:.62rem; font-weight:800; }
+.land-card-index { position:absolute; top:.85rem; right:.9rem; color:rgba(255,255,255,.7); font-size:.58rem; letter-spacing:.1em; }
+.land-diligence-section { padding-top:4rem; padding-bottom:3.5rem; }
+.land-diligence-content { display:grid; gap:.8rem; }
+.land-step-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:.6rem; }
+.land-step-grid article { min-height:195px; padding:1rem; border:1px solid rgba(140,214,108,.18); border-radius:16px; background:linear-gradient(145deg,rgba(27,70,54,.68),rgba(8,29,34,.94)); }
+.land-step-icon { display:grid; place-items:center; width:2rem; height:2rem; margin-bottom:1.3rem; border:1px solid rgba(140,214,108,.38); border-radius:50%; color:#a5e67b; background:rgba(140,214,108,.1); }
+.land-step-grid small { display:block; color:#6e9d77; font-size:.52rem; letter-spacing:.12em; }
+.land-step-grid strong { display:block; margin-top:.55rem; color:#eef8ed; font-size:.76rem; }
+.land-step-grid p { margin-top:.55rem; color:#91aaa1; font-size:.59rem; line-height:1.65; }
+.land-advisor-card { min-height:190px; padding:1.4rem; border-radius:18px; background:linear-gradient(90deg,rgba(6,31,31,.9),rgba(6,31,31,.35)),url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1200&q=90') center/cover; }
+.land-advisor-card h3 { margin-top:.65rem; color:#fff; font-family:'Playfair Display',serif; font-size:1.85rem; line-height:1; }
+.land-advisor-card p { max-width:330px; margin-top:.7rem; color:#c0d0c8; font-size:.62rem; line-height:1.65; }
+.land-deals-section { border:1px solid rgba(140,214,108,.22); background:linear-gradient(100deg,rgba(7,44,39,.98),rgba(19,79,63,.72)),url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?auto=format&fit=crop&w=1300&q=90') center/cover; }
+@media (max-width:700px) { .land-opportunities-section,.land-diligence-section { display:block; padding:3rem 1.1rem 1rem; }.land-section-intro { margin-bottom:1.5rem; }.land-section-intro h2 { font-size:2rem; }.land-opportunity-grid { grid-template-columns:1fr 1fr; }.land-opportunity-card { min-height:180px; }.land-step-grid { grid-template-columns:1fr; }.land-step-grid article { min-height:0; }.intent-theme-land .travel-search { grid-template-columns:1fr 1fr; } }
 .search-mode-trip .search-hero h1 em,.search-mode-stay .search-hero h1 em,.search-mode-buy-home .search-hero h1 em,.search-mode-land .search-hero h1 em { color:var(--mode-accent); }
 .search-mode-trip .filter-count,.search-mode-trip .filter-segmented button.active,.search-mode-trip .pagination button.active,.search-mode-trip .pagination button:hover:not(:disabled),.search-mode-trip .empty-state button,.search-mode-stay .filter-count,.search-mode-stay .filter-segmented button.active,.search-mode-stay .pagination button.active,.search-mode-stay .pagination button:hover:not(:disabled),.search-mode-stay .empty-state button,.search-mode-buy-home .filter-count,.search-mode-buy-home .filter-segmented button.active,.search-mode-buy-home .pagination button.active,.search-mode-buy-home .pagination button:hover:not(:disabled),.search-mode-buy-home .empty-state button,.search-mode-land .filter-count,.search-mode-land .filter-segmented button.active,.search-mode-land .pagination button.active,.search-mode-land .pagination button:hover:not(:disabled),.search-mode-land .empty-state button { background:var(--mode-accent); border-color:var(--mode-accent); }
 .search-mode-trip .filter-chips button:hover,.search-mode-trip .filter-chips button.active,.search-mode-trip .result-bottom a,.search-mode-stay .filter-chips button:hover,.search-mode-stay .filter-chips button.active,.search-mode-stay .result-bottom a,.search-mode-buy-home .filter-chips button:hover,.search-mode-buy-home .filter-chips button.active,.search-mode-buy-home .result-bottom a,.search-mode-land .filter-chips button:hover,.search-mode-land .filter-chips button.active,.search-mode-land .result-bottom a { border-color:var(--mode-accent); color:var(--mode-accent); }
