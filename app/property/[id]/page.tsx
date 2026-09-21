@@ -1,11 +1,11 @@
 import { ArrowRight, Bath, BedDouble, FileCheck2, Hammer, LandPlot, MapPin, Maximize, Ruler, ShieldCheck, Sparkles, Trees, Waves } from 'lucide-react';
 import Link from 'next/link';
-import { properties } from '../../data';
+import { properties, propertySection } from '../../data';
 import BookingActions from '../../components/booking-actions';
 import SiteHeader from '../../components/site-header';
 
 type DetailMode = 'land' | 'home' | 'stay';
-function modeFor(property: typeof properties[number]): DetailMode { if (property.type.toLowerCase().includes('land')) return 'land'; return property.operation === 'For rent' ? 'stay' : 'home'; }
+function modeFor(property: typeof properties[number]): DetailMode { const section = propertySection(property); return section === 'land' ? 'land' : section === 'stay' ? 'stay' : 'home'; }
 const modeContent = {
   land: { label: 'LAND OPPORTUNITY', eyebrow: 'LAND INTELLIGENCE', title: 'Build the right future on the right ground.', description: 'A focused land profile covering use, access, documentation, and the next decision—not just a beautiful location.', action: 'Request land dossier', alternatives: 'Other land with similar potential', alternativesText: 'Compare nearby plots selected for the same kind of development or investment.', map: 'Area context and access notes', accent: 'detail-land' },
   home: { label: 'OWNERSHIP PROFILE', eyebrow: 'PROPERTY INTELLIGENCE', title: 'A home chosen for how you want to live.', description: 'Explore the spaces, location, and ownership details that make this property worth your next step.', action: 'Arrange a viewing', alternatives: 'Homes with a similar point of view', alternativesText: 'Thoughtful alternatives matched by sale status, property type, and location.', map: 'Neighbourhood and services', accent: 'detail-home' },

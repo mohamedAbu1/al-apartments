@@ -1,6 +1,39 @@
+export type PropertySection = 'stay' | 'buy-home' | 'land';
 export type Property = {
-  id: string; title: string; type: string; operation: 'For rent' | 'For sale'; location: string; price: string; priceValue: number; area: number; rooms: number; baths: number; image: string; featured?: boolean; status: 'New' | 'Pre-owned'; description: string;
+  id: string; title: string; type: string; section?: PropertySection; operation: 'For rent' | 'For sale'; location: string; price: string; priceValue: number; area: number; rooms: number; baths: number; image: string; featured?: boolean; status: 'New' | 'Pre-owned'; description: string;
 };
+
+export function propertySection(property: Property): PropertySection {
+  if (property.type.toLowerCase().includes('land')) return 'land';
+  return property.operation === 'For sale' ? 'buy-home' : 'stay';
+}
+
+export const sectionCatalog = {
+  trip: {
+    title: 'Travel planning',
+    promise: 'Curated destinations, experiences, and stays assembled around the way you want to travel.',
+    services: ['Destination discovery', 'Experiences', 'Stay planning', 'Travel support'],
+    featuredAreas: ['Cairo', 'Luxor', 'Sharm El Sheikh', 'Siwa Oasis'],
+  },
+  stay: {
+    title: 'Stays & hospitality',
+    promise: 'Verified apartments, villas, and chalets with clear dates, guests, and arrival details.',
+    services: ['Short stays', 'Family villas', 'Chalets', 'Host support'],
+    featuredAreas: ['North Coast', 'Marsa Alam', 'Dahab', 'El Gouna'],
+  },
+  'buy-home': {
+    title: 'Homes & ownership',
+    promise: 'Homes and chalets selected for design, location, ownership clarity, and long-term value.',
+    services: ['Homes for sale', 'Chalets for sale', 'Viewing requests', 'Ownership guidance'],
+    featuredAreas: ['New Cairo', 'North Coast', 'Sharm El Sheikh', 'Alexandria'],
+  },
+  land: {
+    title: 'Land & investment',
+    promise: 'Land opportunities organized around access, permitted use, documents, and realistic potential.',
+    services: ['Residential plots', 'Agricultural land', 'Hospitality plots', 'Site review'],
+    featuredAreas: ['Dahab', 'Ras Sudr', 'Fayoum', 'Ain Sokhna'],
+  },
+} as const;
 
 export const properties: Property[] = [
   { id:'white-sands', title:'White Sands Coastal Chalet', type:'Chalet', operation:'For rent', location:'North Coast, Egypt', price:'EGP 3,850 / night', priceValue:3850, area:145, rooms:3, baths:2, status:'New', featured:true, image:'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=85', description:'A calm coastal stay with open views, modern interiors, and space designed for families and short escapes.' },

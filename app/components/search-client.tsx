@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { ArrowRight, BedDouble, Check, ChevronLeft, ChevronRight, Heart, MapPin, RotateCcw, Search, SlidersHorizontal, X } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
-import { properties } from '../data';
+import { properties, propertySection } from '../data';
 import { siteTranslations } from '../i18n';
 import SiteFooter from './site-footer';
 import SiteHeader from './site-header';
@@ -25,7 +25,7 @@ const modeTypeOptions: Record<SearchMode, string[][]> = {
   trip: [['all', 'All stays'], ['Apartment', 'Apartments'], ['Villa', 'Villas'], ['Chalet', 'Chalets']],
   stay: [['all', 'All stays'], ['Apartment', 'Apartments'], ['Villa', 'Villas'], ['Chalet', 'Chalets']],
   'buy-home': [['all', 'All homes'], ['Apartment', 'Apartments'], ['Villa', 'Villas'], ['Chalet', 'Chalets']],
-  land: [['all', 'All land'], ['land', 'Residential land'], ['Agricultural land', 'Agricultural land'], ['Commercial', 'Commercial land']],
+  land: [['all', 'All land'], ['Residential land', 'Residential land'], ['Agricultural land', 'Agricultural land'], ['Commercial', 'Commercial land']],
 };
 
 export default function SearchClient() {
@@ -47,9 +47,7 @@ export default function SearchClient() {
   const clear = () => { setFilters(initialFilters); setPage(1); };
   const toggleSaved = (id: string) => setSaved((current) => { const next = current.includes(id) ? current.filter((item) => item !== id) : [...current, id]; window.localStorage.setItem('al-aroum-favorites', JSON.stringify(next)); return next; });
   const results = useMemo(() => properties.filter((property) => {
-    const isLand = property.type.toLowerCase().includes('land');
-    const isHome = ['Apartment', 'Villa', 'Chalet'].includes(property.type);
-    const belongsToMode = safeMode === 'land' ? isLand : safeMode === 'buy-home' ? isHome && property.operation === 'For sale' : isHome && property.operation === 'For rent';
+    const belongsToMode = safeMode === 'trip' ? propertySection(property) === 'stay' : propertySection(property) === safeMode;
     return belongsToMode && (filters.operation === 'all' || (filters.operation === 'rent' ? property.operation === 'For rent' : property.operation === 'For sale')) && (filters.type === 'all' || property.type.toLowerCase().includes(filters.type.toLowerCase())) && (!filters.location || property.location.toLowerCase().includes(filters.location.toLowerCase())) && (!filters.min || property.priceValue >= Number(filters.min)) && (!filters.max || property.priceValue <= Number(filters.max)) && (filters.rooms === 'all' || property.rooms >= Number(filters.rooms)) && (filters.status === 'all' || property.status === filters.status);
   }).sort((a, b) => filters.sort === 'price-low' ? a.priceValue - b.priceValue : b.priceValue - a.priceValue), [filters, safeMode]);
   const pageCount = Math.max(1, Math.ceil(results.length / pageSize));
