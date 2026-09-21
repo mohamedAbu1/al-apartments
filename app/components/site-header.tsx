@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Menu, Moon, Sun } from 'lucide-react';
+import { ArrowLeft, Menu, Moon, Sun } from 'lucide-react';
 import BrandLogo from './brand-logo';
 import { useSiteTheme } from './theme-provider';
 import LanguageSwitcher from './language-switcher';
@@ -25,5 +25,5 @@ export default function SiteHeader({ minimal = false, section = 'default' }: { m
   const [activeSection, setActiveSection] = useState<HeaderSection>(section);
   useEffect(() => { if (section !== 'default') return; const mode = new URLSearchParams(window.location.search).get('mode') as HeaderSection | null; if (mode && mode in sectionNavigation) setActiveSection(mode); }, [section]);
   const navigation = sectionNavigation[activeSection];
-  return <header className={`site-header ${minimal ? 'minimal' : ''} header-section-${activeSection}`}><Link href={activeSection === 'default' ? routes.home() : routes.home(activeSection)} className="travel-logo"><BrandLogo/></Link>{!minimal && <nav className={menuOpen ? 'open' : ''} onClick={() => setMenuOpen(false)}>{navigation.map((item) => <Link href={item.href} key={`${item.label}-${item.href}`}>{item.label}</Link>)}</nav>}<div className="site-header-actions"><LanguageSwitcher dark={darkMode}/><button aria-label="Toggle theme" className="theme-toggle" onClick={toggleTheme}>{darkMode ? <Sun size={16}/> : <Moon size={16}/>}</button>{!minimal && <Link href={routes.login} className="header-login">Sign in</Link>}{!minimal && <Link href={activeSection === 'default' ? routes.search() : routes.search(activeSection)} className="header-cta">Search</Link>}<button className="mobile-menu" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((open) => !open)}><Menu size={20}/></button></div></header>;
+  return <header className={`site-header ${minimal ? 'minimal' : ''} header-section-${activeSection}`}><Link href={activeSection === 'default' ? routes.home() : routes.home(activeSection)} className="travel-logo"><BrandLogo/></Link>{!minimal && activeSection !== 'default' && <Link href={routes.home()} className="header-sections"><ArrowLeft size={14}/><span>All sections</span></Link>}{!minimal && <nav className={menuOpen ? 'open' : ''} onClick={() => setMenuOpen(false)}>{navigation.map((item) => <Link href={item.href} key={`${item.label}-${item.href}`}>{item.label}</Link>)}</nav>}<div className="site-header-actions"><LanguageSwitcher dark={darkMode}/><button aria-label="Toggle theme" className="theme-toggle" onClick={toggleTheme}>{darkMode ? <Sun size={16}/> : <Moon size={16}/>}</button>{!minimal && <Link href={routes.login} className="header-login">Sign in</Link>}{!minimal && <Link href={activeSection === 'default' ? routes.search() : routes.search(activeSection)} className="header-cta">Search</Link>}<button className="mobile-menu" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((open) => !open)}><Menu size={20}/></button></div></header>;
 }

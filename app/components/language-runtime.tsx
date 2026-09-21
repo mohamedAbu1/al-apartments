@@ -6,6 +6,7 @@ import { Language, languages } from '../i18n';
 // Static copy is kept in one place so server-rendered routes also switch language
 // without duplicating page markup or losing the selected language on navigation.
 const ar: Record<string, string> = {
+  'All sections':'كل الأقسام',
   'YOUR NEXT ESCAPE':'رحلتك القادمة', 'Search':'بحث', 'Language':'اللغة', 'Filters':'الفلاتر', 'Clear all':'مسح الكل', 'results':'نتيجة', 'Operation':'نوع العملية', 'Property type':'نوع العقار', 'City or neighborhood':'المدينة أو الحي', 'Min price':'الحد الأدنى للسعر', 'Max price':'الحد الأقصى للسعر', 'Status':'الحالة', 'All':'الكل', 'Sort by':'ترتيب حسب', 'Newest first':'الأحدث أولًا', 'Explore.':'استكشف.', 'Dream.':'احلم.', 'Discover.':'اكتشف.', 'Company':'الشركة', 'Privacy':'الخصوصية', 'Terms':'الشروط', 'TRAVEL & STAYS':'السفر والإقامات', '© 2026 Al-Aroum. All rights reserved.':'© 2026 Al-Aroum. جميع الحقوق محفوظة.',
   'Find the most beautiful places around the world and make your trip unforgettable.':'اعثر على أجمل الأماكن حول العالم واجعل رحلتك لا تُنسى.', 'Explore Now':'استكشف الآن', 'Watch Video':'شاهد الفيديو',
   'Destination':'الوجهة', 'Where to?':'إلى أين؟', 'Check In':'تاريخ الوصول', 'Add date':'أضف تاريخًا', 'Check Out':'تاريخ المغادرة', 'Travelers':'المسافرون', '2 Travelers':'مسافران',
