@@ -15,8 +15,8 @@ const sectionNavigation: Record<HeaderSection, NavItem[]> = {
   default: [{ label: 'Destinations', href: '/destinations' }, { label: 'Experiences', href: '/experiences' }, { label: 'Deals', href: '/deals' }, { label: 'About Us', href: '/about' }, { label: 'Contact', href: '/contact' }],
   trip: [{ label: 'Destinations', href: '/travel/destinations' }, { label: 'Experiences', href: '/travel/experiences' }, { label: 'Trip offers', href: '/travel#collection' }, { label: 'Travel FAQ', href: '/faq' }, { label: 'Contact', href: '/contact' }],
   stay: [{ label: 'Find a stay', href: routes.search('stay') }, { label: 'Stay collection', href: '/stays#collection' }, { label: 'Offers', href: '/stays#guide' }, { label: 'Booking guide', href: '/faq' }, { label: 'Contact', href: '/contact' }],
-  'buy-home': [{ label: 'Homes & chalets', href: routes.search('buy-home') }, { label: 'Ownership guide', href: '/homes#guide' }, { label: 'List a property', href: routes.contact }, { label: 'About Us', href: routes.about }, { label: 'Contact', href: routes.contact }],
-  land: [{ label: 'Land opportunities', href: routes.search('land') }, { label: 'Decision guide', href: '/land#guide' }, { label: 'List your land', href: routes.contact }, { label: 'About Us', href: routes.about }, { label: 'Contact', href: routes.contact }],
+  'buy-home': [{ label: 'Homes & chalets', href: routes.search('buy-home') }, { label: 'Ownership guide', href: '/homes#guide' }, { label: 'List a property', href: routes.listProperty }, { label: 'About Us', href: routes.about }, { label: 'Contact', href: routes.contact }],
+  land: [{ label: 'Land opportunities', href: routes.search('land') }, { label: 'Decision guide', href: '/land#guide' }, { label: 'List your land', href: `${routes.listProperty}?type=land` }, { label: 'About Us', href: routes.about }, { label: 'Contact', href: routes.contact }],
 };
 
 export default function SiteHeader({ minimal = false, section = 'default' }: { minimal?: boolean; section?: HeaderSection }) {

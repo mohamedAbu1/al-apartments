@@ -8,6 +8,7 @@ export const routes = {
   sectionSearch: (section: AppSection) => `${section === 'trip' ? '/travel' : section === 'stay' ? '/stays' : section === 'buy-home' ? '/homes' : '/land'}#search`,
   property: (id: string) => `/property/${encodeURIComponent(id)}`,
   contact: '/contact',
+  listProperty: '/list-property',
   about: '/about',
   faq: '/faq',
   login: '/login',
