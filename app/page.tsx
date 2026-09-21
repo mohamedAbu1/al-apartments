@@ -9,8 +9,9 @@ import SiteHeader from './components/site-header';
 import DateRangePicker from './components/date-range-picker';
 import TravelerPicker from './components/traveler-picker';
 import WelcomeScreen from './components/welcome-screen';
+import { routes, type AppSection } from './lib/routes';
 
-type Intent = 'trip' | 'stay' | 'buy-home' | 'land';
+type Intent = AppSection;
 type Destination = { name: string; price: string; image: string };
 type ModeCard = [string, string, React.ReactNode];
 type HomeMode = {
@@ -76,10 +77,11 @@ export default function Home() {
   const { darkMode } = useSiteTheme();
   const [intent, setIntent] = useState<Intent>('stay'); const [heroIndex, setHeroIndex] = useState(0); const [destination, setDestination] = useState(''); const [checkIn, setCheckIn] = useState(''); const [checkOut, setCheckOut] = useState(''); const [travelers, setTravelers] = useState('2'); const [propertyType, setPropertyType] = useState('all'); const [landOperation, setLandOperation] = useState('sale'); const [destinationSlide, setDestinationSlide] = useState(0); const [showVideo, setShowVideo] = useState(false); const [showWelcome, setShowWelcome] = useState(true);
   const mode = homeModes[intent]; const hero = mode.slides[heroIndex]; const pages = Math.ceil(mode.destinations.length / 4);
+  useEffect(() => { const requested = new URLSearchParams(window.location.search).get('mode') as Intent | null; if (requested && ['trip', 'stay', 'buy-home', 'land'].includes(requested)) { setIntent(requested); setShowWelcome(false); } }, []);
   useEffect(() => { setHeroIndex(0); setDestinationSlide(0); setDestination(''); setPropertyType('all'); setLandOperation('sale'); setCheckIn(''); setCheckOut(''); setTravelers('2'); }, [intent]);
   useEffect(() => { const timer = window.setInterval(() => setHeroIndex((current) => (current + 1) % mode.slides.length), 6500); return () => window.clearInterval(timer); }, [intent, mode.slides.length]);
   useEffect(() => { const timer = window.setInterval(() => setDestinationSlide((current) => (current + 1) % pages), 5600); return () => window.clearInterval(timer); }, [pages, intent]);
-  const submitSearch = (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); const params = new URLSearchParams({ mode: intent }); if (destination) params.set('location', destination); if (propertyType !== 'all') params.set('type', propertyType); if (intent === 'land') params.set('operation', landOperation); if (intent === 'trip' || intent === 'stay') { if (checkIn) params.set('checkIn', checkIn); if (checkOut) params.set('checkOut', checkOut); if (travelers) params.set('travelers', travelers); } window.location.href = `/search?${params.toString()}`; };
+  const submitSearch = (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); const params = new URLSearchParams({ mode: intent }); if (destination) params.set('location', destination); if (propertyType !== 'all') params.set('type', propertyType); if (intent === 'land') params.set('operation', landOperation); if (intent === 'trip' || intent === 'stay') { if (checkIn) params.set('checkIn', checkIn); if (checkOut) params.set('checkOut', checkOut); if (travelers) params.set('travelers', travelers); } window.location.href = `${routes.search(intent)}${params.toString().replace(`mode=${intent}`, '')}`; };
   const chooseDestination = (name: string) => { setDestination(name); document.querySelector('.travel-search')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); window.setTimeout(() => document.querySelector<HTMLInputElement>('input[aria-label="Destination"]')?.focus(), 450); };
   return <main className={`travel-home intent-theme-${intent} ${darkMode ? 'dark-theme' : 'light-theme'}`}>
     {showWelcome && <WelcomeScreen onChoose={(nextIntent) => { setIntent(nextIntent); setShowWelcome(false); }}/>}<section className="travel-frame"><SiteHeader section={intent}/>
