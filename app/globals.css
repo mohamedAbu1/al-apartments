@@ -814,6 +814,19 @@ html[dir="rtl"] .travel-hero-navigation { direction:ltr; }
 html[dir="rtl"] .travel-hero-note { text-align:right; }
 html[dir="rtl"] .travel-category-card,html[dir="rtl"] .travel-destination-card { direction:rtl; }
 html[dir="rtl"] .travel-destination-card > svg,html[dir="rtl"] .travel-category-card > svg { transform:scaleX(-1); }
+
+/* Stays keep the same visual language while respecting the selected theme. */
+html[data-theme="light"] .section-site { background:var(--page-bg); color:var(--page-text); }
+html[data-theme="light"] .section-site .section-panel,html[data-theme="light"] .section-site .section-listing-card,html[data-theme="light"] .section-site .section-service-grid article { background:var(--page-surface); border-color:var(--page-border); color:var(--page-text); box-shadow:0 16px 36px rgba(20,75,87,.08); }
+html[data-theme="light"] .section-site .section-panel p,html[data-theme="light"] .section-site .section-content-intro p,html[data-theme="light"] .section-site .section-listing-card p,html[data-theme="light"] .section-site .section-service-grid p { color:var(--page-muted); }
+html[data-theme="light"] .section-site .section-search-fields span,html[data-theme="light"] .section-site .planner-options a { background:#f5faf9; border-color:var(--page-border); }
+html[data-theme="light"] .section-site .section-search-fields small,html[data-theme="light"] .section-site .planner-options small,html[data-theme="light"] .section-site .section-hero-stamp small { color:#55727a; }
+html[data-theme="light"] .detail-page .detail-back,html[data-theme="light"] .detail-page .outline-button { color:#285761; border-color:var(--page-border); }
+html[data-theme="light"] .detail-page .detail-story,html[data-theme="light"] .detail-page .detail-facts,html[data-theme="light"] .detail-page .detail-map,html[data-theme="light"] .detail-page .detail-action-card,html[data-theme="light"] .detail-page .smart-match-card { border-color:var(--page-border); }
+html[data-theme="light"] .detail-page .detail-action-card { background:linear-gradient(145deg,#fff,#e6f2ef); color:var(--page-text); }
+html[data-theme="light"] .detail-page .detail-action-card .muted-text,html[data-theme="light"] .detail-page .detail-story p,html[data-theme="light"] .detail-page .detail-map p { color:var(--page-muted); }
+main.search-mode-stay .map-panel { display:none; }
+main.search-mode-stay .results-content { grid-template-columns:1fr; }
 html[dir="rtl"] .password-field input { padding-left:2.6rem; padding-right:.8rem; }
 
 /* Keep photographic hero text readable while letting the surrounding page follow the selected theme. */

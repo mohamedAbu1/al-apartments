@@ -19,7 +19,7 @@ const copy = {
   land: { label: 'LAND INTELLIGENCE', title: 'Start with ground.\nBuild with clarity.', text: 'Land opportunities organized around use, access, documents, and long-term potential.', primary: 'Explore land', secondary: 'Decision guide', nav: 'land' as const },
 };
 
-function getItems(section: AppSection) { return section === 'land' ? properties.filter((p) => propertySection(p) === 'land') : section === 'buy-home' ? properties.filter((p) => propertySection(p) === 'buy-home') : section === 'stay' || section === 'trip' ? properties.filter((p) => propertySection(p) === 'stay') : []; }
+function getItems(section: AppSection) { return section === 'land' ? properties.filter((p) => propertySection(p) === 'land') : section === 'buy-home' ? properties.filter((p) => propertySection(p) === 'buy-home') : section === 'stay' || section === 'trip' ? properties.filter((p) => propertySection(p) === 'stay' && !p.type.toLowerCase().includes('commercial')) : []; }
 
 export default function SectionSite({ section }: SectionSiteProps) {
   const content = copy[section]; const catalog = sectionCatalog[section]; const items = getItems(section).slice(0, 6); const isLand = section === 'land'; const isHome = section === 'buy-home'; const isTrip = section === 'trip';
