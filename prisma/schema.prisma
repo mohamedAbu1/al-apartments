@@ -43,6 +43,41 @@ model AuthSession {
   @@index([userId])
   @@index([expiresAt])
 }
+
+model Inquiry {
+  id         Int      @id @default(autoincrement())
+  kind       InquiryKind
+  propertyId String?  @db.VarChar(120)
+  propertyTitle String? @db.VarChar(180)
+  name       String   @db.VarChar(120)
+  email      String   @db.VarChar(191)
+  message    String?  @db.Text
+  viewingDate DateTime?
+  status     InquiryStatus @default(NEW)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([email])
+  @@index([propertyId])
+  @@index([status])
+}
+
+model NewsletterSubscriber {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique @db.VarChar(191)
+  createdAt DateTime @default(now())
+}
+
+enum InquiryKind {
+  CONTACT
+  VIEWING
+}
+
+enum InquiryStatus {
+  NEW
+  CONTACTED
+  CLOSED
+}
 enum PropertyType {
   APARTMENT
   VILLA

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { ThemeProvider } from './components/theme-provider';
 import LanguageRuntime from './components/language-runtime';
+import NewsletterBridge from './components/newsletter-bridge';
 
 export const metadata: Metadata = {
   title: 'Al-Aroum | Apartments & Land',
@@ -9,5 +10,5 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="en" dir="ltr"><body><ThemeProvider><LanguageRuntime>{children}</LanguageRuntime></ThemeProvider></body></html>;
+  return <html lang="en" dir="ltr"><body><ThemeProvider><LanguageRuntime><NewsletterBridge/>{children}</LanguageRuntime></ThemeProvider></body></html>;
 }

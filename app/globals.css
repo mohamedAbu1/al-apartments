@@ -659,6 +659,24 @@ html[data-theme="light"] .footer-social a { border-color:var(--page-border); col
 html[data-theme="light"] .footer-newsletter form { border-color:var(--page-border); background:rgba(255,255,255,.62); }
 html[data-theme="light"] .footer-newsletter input { color:var(--page-text); }
 html[data-theme="light"] .footer-newsletter input::placeholder { color:#789096; }
+
+.newsletter-form-wrap form { display:flex; align-items:center; gap:.45rem; }
+.newsletter-form-wrap input { min-width:0; flex:1; }
+.newsletter-form-wrap button { white-space:nowrap; }
+.newsletter-form-wrap .form-success,.newsletter-form-wrap .form-error { margin:.5rem 0 0; font-size:.72rem; }
+.legal-page { max-width:760px; margin:0 auto; padding:7rem 1.25rem 5rem; }
+.legal-page h1 { margin:.5rem 0 1.5rem; font-family:'Playfair Display',serif; font-size:clamp(3rem,7vw,5.5rem); line-height:.95; }
+.legal-page h1 em { color:#20d9c2; font-style:normal; }
+.legal-page h2 { margin:2.2rem 0 .55rem; font-size:1.25rem; }
+.legal-page p { color:var(--muted,#91a9b0); line-height:1.9; }
+.intent-buy-home .date-range-picker,.intent-buy-home .traveler-picker,.intent-land .date-range-picker,.intent-land .traveler-picker { display:none; }
+.intent-buy-home,.intent-land { grid-template-columns:1.7fr auto; }
+.mode-select-item select { width:100%; border:0; outline:0; background:transparent; color:inherit; font-weight:700; font-size:.8rem; }
+.mode-select-item select option { color:#142936; background:#fff; }
+.story-action { display:inline-flex; align-items:center; gap:.35rem; margin-top:.5rem; color:#55e8d4; font-size:.72rem; font-weight:800; }
+.deal-form { position:relative; }
+.deal-form .form-success,.deal-form .form-error { position:absolute; left:1rem; top:calc(100% + .35rem); font-size:.7rem; }
+@media (max-width:700px) { .intent-buy-home,.intent-land { grid-template-columns:1fr auto; } .legal-page { padding-top:5rem; } }
 html[data-theme="light"] .footer-bottom { border-color:var(--page-border); color:#6d858b; }
 html[data-theme="light"] .site-header nav a { color:#4c6870; }
 

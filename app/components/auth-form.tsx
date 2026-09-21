@@ -49,4 +49,3 @@ export default function AuthForm({ mode, language }: { mode: Mode; language: Lan
 function Field({ name, label, type = 'text', icon, error }: { name: string; label: string; type?: string; icon: React.ReactNode; error?: string }) {
   return <div><label className="auth-label" htmlFor={name}>{icon}{label}</label><div className="auth-input-wrap"><input id={name} name={name} type={type} placeholder={label}/></div>{error && <p className="form-error">{error}</p>}</div>;
 }
-
