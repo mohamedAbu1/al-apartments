@@ -300,9 +300,32 @@ button, input { font:inherit; }
 .benefit strong { font-size:.67rem; }
 .benefit small { margin-top:.3rem; color:#8ea4ad; font-size:.53rem; line-height:1.45; }
 .travel-footer { display:flex; justify-content:space-between; max-width:1180px; margin:auto; padding:1.4rem 3.8rem; color:#718891; font-size:.65rem; }
+.intent-section { display:grid; grid-template-columns:.85fr 1.65fr; gap:2.5rem; align-items:center; max-width:1180px; margin:3.5rem auto 1.25rem; padding:0 3.8rem; }
+.intent-heading .eyebrow { display:block; }
+.intent-heading h2 { margin:.55rem 0 .5rem; color:inherit; font-family:'Playfair Display',serif; font-size:2rem; line-height:1.05; }
+.intent-heading h2 em { color:#1dcdd1; font-style:normal; }
+.intent-heading p { max-width:330px; color:#78939b; font-size:.72rem; line-height:1.7; }
+.intent-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:.7rem; }
+.intent-card { position:relative; display:flex; align-items:center; gap:.8rem; min-height:100px; padding:1rem; overflow:hidden; border:1px solid rgba(144,193,199,.14); border-radius:18px; background:linear-gradient(145deg,rgba(18,48,67,.92),rgba(8,26,42,.95)); color:#eaf8f8; text-align:left; cursor:pointer; transition:transform .3s ease,border-color .3s ease,box-shadow .3s ease,background .3s ease; }
+.intent-card::after { position:absolute; inset:auto -15px -25px auto; width:70px; height:70px; border-radius:50%; background:var(--intent-glow,#1cd2c4); opacity:.12; content:''; filter:blur(8px); }
+.intent-card:hover,.intent-card.active { transform:translateY(-4px); border-color:var(--intent-color,#24d4cf); box-shadow:0 16px 30px rgba(0,0,0,.2),0 0 0 1px rgba(35,210,208,.08); }
+.intent-card.active { background:linear-gradient(145deg,rgba(22,67,80,.98),rgba(8,31,47,.98)); }
+.intent-icon { display:grid; width:2.8rem; height:2.8rem; flex:none; place-items:center; border:1px solid color-mix(in srgb,var(--intent-color,#24d4cf) 45%,transparent); border-radius:14px; background:color-mix(in srgb,var(--intent-color,#24d4cf) 12%,transparent); color:var(--intent-color,#24d4cf); }
+.intent-copy { display:flex; min-width:0; flex-direction:column; gap:.35rem; }
+.intent-copy strong { font-size:.78rem; }
+.intent-copy small { max-width:190px; color:#8da8ae; font-size:.6rem; line-height:1.45; }
+.intent-arrow { margin-left:auto; flex:none; color:var(--intent-color,#24d4cf); transition:transform .25s ease; }
+.intent-card:hover .intent-arrow,.intent-card.active .intent-arrow { transform:translateX(3px); }
+.intent-sky { --intent-color:#43baff; --intent-glow:#43baff; }.intent-teal { --intent-color:#21dfc1; --intent-glow:#21dfc1; }.intent-gold { --intent-color:#f4c66d; --intent-glow:#f4c66d; }.intent-green { --intent-color:#8cd66c; --intent-glow:#8cd66c; }
+.travel-search.intent-trip { border-color:rgba(67,186,255,.42); }.travel-search.intent-buy-home { border-color:rgba(244,198,109,.38); }.travel-search.intent-land { border-color:rgba(140,214,108,.38); }
+.search-mode-badge { display:flex; min-width:180px; flex-direction:column; gap:.35rem; padding:1rem 1.1rem; border:1px solid rgba(40,210,205,.22); border-radius:16px; background:rgba(4,24,39,.55); color:#8faeb4; font-size:.62rem; text-transform:uppercase; letter-spacing:.12em; }
+.search-mode-badge strong { color:#eefafa; font-size:.88rem; letter-spacing:0; text-transform:none; }
+.search-mode-trip .search-hero { background-image:linear-gradient(90deg,rgba(4,23,43,.96),rgba(4,23,43,.3)),url('https://images.unsplash.com/photo-1503220317375-aaad61436b1b?auto=format&fit=crop&w=1600&q=85'); }
+.search-mode-buy-home .search-hero { background-image:linear-gradient(90deg,rgba(15,25,34,.96),rgba(15,25,34,.3)),url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=85'); }
+.search-mode-land .search-hero { background-image:linear-gradient(90deg,rgba(5,28,27,.96),rgba(5,28,27,.28)),url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=85'); }
 .light-theme .travel-footer { color:#63757b; }
 @media (max-width:900px) { .travel-header { padding-inline:2rem; } .travel-nav { gap:1rem; } .travel-section { padding-inline:2rem; } .hero-copy { padding-left:2.5rem; } .benefits-strip { padding-inline:2rem; } }
-@media (max-width:700px) { .travel-header { padding:1rem; } .travel-nav,.contact-button,.travel-actions .language-switcher { display:none; } .mobile-menu { display:grid; } .travel-hero { min-height:545px; margin-inline:.45rem; border-radius:18px; background-position:62% center; } .hero-copy { max-width:280px; padding:5rem 1.35rem 3rem; } .hero-copy h1 { font-size:3.4rem; } .hero-copy p { font-size:.72rem; } .travel-search { grid-template-columns:1fr 1fr; gap:.2rem; width:calc(100% - 1.5rem); margin-top:-4.5rem; border-radius:22px; padding:.65rem; } .search-item { min-height:3.4rem; padding:0 .55rem; border-left:0; border-bottom:1px solid rgba(131,157,168,.15); } .search-item:nth-child(odd) { border-left:1px solid rgba(131,157,168,.15); } .date-range-group { border-left:0; } .date-range-group .date-picker-item { padding-inline:.4rem; } .search-submit { width:100%; height:2.6rem; grid-column:span 2; border-radius:14px; } .travel-section { padding:2.7rem 1.1rem .5rem; } .section-heading h2,.experience-intro h2 { font-size:1.5rem; } .carousel-actions .section-link { display:none; } .destination-slide { grid-template-columns:1fr 1fr; gap:.5rem; } .destination-card { min-width:0; min-height:150px; } .experiences-section { display:block; padding-top:3rem; } .experience-intro { margin-bottom:1.5rem; } .experience-types { gap:.35rem; } .experience-types article { min-height:132px; padding:.65rem; } .experience-icon { margin-bottom:1.3rem; } .experience-types p { display:none; } .story-card { min-height:190px; } .deals-section { display:block; margin:1.5rem .8rem 0; padding:1.35rem; } .deal-form { min-width:0; margin-top:1rem; } .benefits-strip { grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.5rem; padding:1.2rem .8rem; } .benefit { border-left:0; } }
+@media (max-width:700px) { .travel-header { padding:1rem; } .travel-nav,.contact-button,.travel-actions .language-switcher { display:none; } .mobile-menu { display:grid; } .travel-hero { min-height:545px; margin-inline:.45rem; border-radius:18px; background-position:62% center; } .hero-copy { max-width:280px; padding:5rem 1.35rem 3rem; } .hero-copy h1 { font-size:3.4rem; } .hero-copy p { font-size:.72rem; } .intent-section { display:block; margin-top:2.5rem; padding-inline:1.1rem; }.intent-heading { margin-bottom:1.25rem; }.intent-heading h2 { font-size:1.65rem; }.intent-grid { grid-template-columns:1fr 1fr; gap:.5rem; }.intent-card { min-height:145px; flex-direction:column; align-items:flex-start; justify-content:space-between; padding:.75rem; }.intent-copy small { font-size:.55rem; }.intent-arrow { position:absolute; right:.65rem; bottom:.65rem; }.travel-search { grid-template-columns:1fr 1fr; gap:.2rem; width:calc(100% - 1.5rem); margin-top:1.5rem; border-radius:22px; padding:.65rem; } .search-item { min-height:3.4rem; padding:0 .55rem; border-left:0; border-bottom:1px solid rgba(131,157,168,.15); } .search-item:nth-child(odd) { border-left:1px solid rgba(131,157,168,.15); } .date-range-group { border-left:0; } .date-range-group .date-picker-item { padding-inline:.4rem; } .search-submit { width:100%; height:2.6rem; grid-column:span 2; border-radius:14px; } .travel-section { padding:2.7rem 1.1rem .5rem; } .section-heading h2,.experience-intro h2 { font-size:1.5rem; } .carousel-actions .section-link { display:none; } .destination-slide { grid-template-columns:1fr 1fr; gap:.5rem; } .destination-card { min-width:0; min-height:150px; } .experiences-section { display:block; padding-top:3rem; } .experience-intro { margin-bottom:1.5rem; } .experience-types { gap:.35rem; } .experience-types article { min-height:132px; padding:.65rem; } .experience-icon { margin-bottom:1.3rem; } .experience-types p { display:none; } .story-card { min-height:190px; } .deals-section { display:block; margin:1.5rem .8rem 0; padding:1.35rem; } .deal-form { min-width:0; margin-top:1rem; } .benefits-strip { grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.5rem; padding:1.2rem .8rem; } .benefit { border-left:0; } }
 .professional-footer { margin-top:4rem; background:#061727; color:#eaf5f6; }
 .footer-main { display:grid; grid-template-columns:1.6fr .8fr .8fr 1.25fr; gap:3rem; max-width:1180px; margin:auto; padding:3.5rem 3.8rem; }
 .footer-brand p { max-width:260px; margin:1.2rem 0; color:#91a9b0; font-size:.72rem; line-height:1.7; }
@@ -481,7 +504,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
   .hero-copy p { max-width:235px; font-size:.68rem; line-height:1.65; }
   .hero-ctas { gap:.55rem; }
   .primary-cta,.video-cta { padding:.62rem .78rem; font-size:.65rem; }
-  .travel-search { grid-template-columns:1fr 1fr; width:calc(100% - 1rem); margin-top:-3.5rem; padding:.45rem; }
+  .travel-search { grid-template-columns:1fr 1fr; width:calc(100% - 1rem); margin-top:1.2rem; padding:.45rem; }
   .travel-search .search-item { min-width:0; min-height:3.15rem; }
   .search-item > svg { width:17px; height:17px; }
   .search-item small { font-size:.53rem; }
@@ -516,6 +539,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
   .professional-auth-card h1 { font-size:2.4rem; }
   .auth-divider { flex-wrap:wrap; text-align:center; }
   .search-hero,.inner-hero { min-height:250px; margin-inline:.65rem; padding:2rem 1.15rem; border-radius:20px; }
+  .search-mode-badge { display:none; }
   .search-hero h1,.inner-hero h1,.contact-layout h1,.faq-layout h1 { font-size:2.3rem; }
   .search-layout { padding-inline:.65rem; }
   .results-toolbar { align-items:flex-start; gap:.8rem; }
