@@ -30,14 +30,15 @@ const modeTypeOptions: Record<SearchMode, string[][]> = {
 
 export default function SearchClient() {
   const t = siteTranslations.en;
-  const [mobileFilters, setMobileFilters] = useState(false);
-  const [page, setPage] = useState(1);
-  const [filters, setFilters] = useState<Filters>(initialFilters);
   const searchParams = useSearchParams();
   const modeParam = searchParams.get('mode') || 'stay';
   const mode = (modeContent[modeParam as SearchMode] ? modeParam : 'stay') as SearchMode;
+  const [mobileFilters, setMobileFilters] = useState(false);
+  const [page, setPage] = useState(1);
+  const [filters, setFilters] = useState<Filters>(() => ({ ...initialFilters, location: searchParams.get('location') || '', type: searchParams.get('type') || 'all', operation: searchParams.get('operation') || 'all', rooms: searchParams.get('travelers') || 'all' }));
   useEffect(() => {
     setFilters((current) => ({ ...current, location: searchParams.get('location') || '', type: searchParams.get('type') || 'all', operation: searchParams.get('operation') || 'all', rooms: searchParams.get('travelers') || 'all' }));
+    setPage(1);
   }, [searchParams]);
   const safeMode = mode;
   const content = modeContent[safeMode];
