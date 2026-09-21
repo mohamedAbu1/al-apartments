@@ -8,6 +8,7 @@ import SiteFooter from './components/site-footer';
 import SiteHeader from './components/site-header';
 import DateRangePicker from './components/date-range-picker';
 import TravelerPicker from './components/traveler-picker';
+import WelcomeScreen from './components/welcome-screen';
 
 const destinations = [
   { name:'Bali, Indonesia', price:'$499', image:'https://images.unsplash.com/photo-1537996194471-e657df975ab4?auto=format&fit=crop&w=900&q=90' },
@@ -53,6 +54,7 @@ export default function Home() {
   const destinationPages = Math.ceil(destinations.length / 4);
   const [showVideo, setShowVideo] = useState(false);
   const [intent, setIntent] = useState<Intent>('stay');
+  const [showWelcome, setShowWelcome] = useState(true);
   useEffect(() => {
     const timer = window.setInterval(() => setHeroIndex((current) => (current + 1) % heroSlides.length), 6500);
     return () => window.clearInterval(timer);
@@ -82,6 +84,7 @@ export default function Home() {
   };
 
   return <main className={`travel-home intent-theme-${intent} ${darkMode ? 'dark-theme' : 'light-theme'}`}>
+    {showWelcome && <WelcomeScreen onChoose={(nextIntent) => { setIntent(nextIntent); setShowWelcome(false); }} />}
     <section className="travel-frame">
       <SiteHeader/>
       <section className="travel-hero" style={{ backgroundImage: `linear-gradient(90deg,rgba(3,17,31,.95) 0%,rgba(3,17,31,.8) 30%,rgba(3,17,31,.18) 75%),url('${hero.image}')` }}><div className="hero-copy" key={heroIndex} aria-live="polite"><div className="hero-kicker"><Sparkles size={14}/> {hero.kicker}</div><h1>{hero.title[0]}<br/>{hero.title[1]}<br/><em>{hero.title[2]}</em></h1><p>{hero.text}</p><div className="hero-ctas"><Link href="/search" className="primary-cta"><Plane size={15}/> Explore Now</Link><button className="video-cta" type="button" onClick={() => setShowVideo(true)}><span>▶</span> Watch Video</button></div></div><div className="hero-progress" aria-label={`Slide ${heroIndex + 1} of ${heroSlides.length}`}>{heroSlides.map((slide, index) => <button key={slide.kicker} type="button" aria-label={`Show slide ${index + 1}`} className={index === heroIndex ? 'active' : ''} onClick={() => setHeroIndex(index)}/>)}</div></section>
