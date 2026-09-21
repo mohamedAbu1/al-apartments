@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { FormEvent, useEffect, useState } from 'react';
+import { FormEvent, Suspense, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { ArrowRight, Building2, CalendarCheck, ChevronLeft, ChevronRight, CreditCard, Headphones, House, Landmark, MapPin, Plane, Search, ShieldCheck, Sparkles, Sunrise, Trees, Utensils, Users, X } from 'lucide-react';
 import { useSiteTheme } from './components/theme-provider';
 import SiteFooter from './components/site-footer';
@@ -9,6 +10,8 @@ import SiteHeader from './components/site-header';
 import DateRangePicker from './components/date-range-picker';
 import TravelerPicker from './components/traveler-picker';
 import WelcomeScreen from './components/welcome-screen';
+import SectionSite from './components/section-site';
+import TravelLanding from './travel/travel-landing';
 import { routes, type AppSection } from './lib/routes';
 
 type Intent = AppSection;
@@ -73,9 +76,14 @@ const homeModes: Record<Intent, HomeMode> = {
 const intents = [{ id: 'trip' as Intent, label: 'Book a trip', description: 'Plan flights, experiences, and unforgettable escapes.', icon: <Plane size={22}/>, accent: 'intent-sky' }, { id: 'stay' as Intent, label: 'Book a hotel or home', description: 'Find verified hotels, apartments, villas, and chalets.', icon: <House size={22}/>, accent: 'intent-teal' }, { id: 'buy-home' as Intent, label: 'Buy a home or chalet', description: 'Discover homes and holiday properties made for your next chapter.', icon: <Building2 size={22}/>, accent: 'intent-gold' }, { id: 'land' as Intent, label: 'Buy or rent land', description: 'Explore land opportunities for living, farming, or investment.', icon: <Trees size={22}/>, accent: 'intent-green' }];
 const todayIso = () => { const date = new Date(); return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`; };
 
-export default function Home() {
+function HomeContent() {
   const { darkMode } = useSiteTheme();
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [intent, setIntent] = useState<Intent>('stay'); const [heroIndex, setHeroIndex] = useState(0); const [destination, setDestination] = useState(''); const [checkIn, setCheckIn] = useState(''); const [checkOut, setCheckOut] = useState(''); const [travelers, setTravelers] = useState('2'); const [propertyType, setPropertyType] = useState('all'); const [landOperation, setLandOperation] = useState('sale'); const [destinationSlide, setDestinationSlide] = useState(0); const [showVideo, setShowVideo] = useState(false); const [showWelcome, setShowWelcome] = useState(true);
+  const rootMode = searchParams.get('mode') as Intent | null;
+  if (rootMode === 'trip') return <TravelLanding/>;
+  if (rootMode && ['stay', 'buy-home', 'land'].includes(rootMode)) return <SectionSite section={rootMode}/>;
   const mode = homeModes[intent]; const hero = mode.slides[heroIndex]; const pages = Math.ceil(mode.destinations.length / 4);
   useEffect(() => { const requested = new URLSearchParams(window.location.search).get('mode') as Intent | null; if (requested && ['trip', 'stay', 'buy-home', 'land'].includes(requested)) { setIntent(requested); setShowWelcome(false); } }, []);
   useEffect(() => { setHeroIndex(0); setDestinationSlide(0); setDestination(''); setPropertyType('all'); setLandOperation('sale'); setCheckIn(''); setCheckOut(''); setTravelers('2'); }, [intent]);
@@ -84,7 +92,7 @@ export default function Home() {
   const submitSearch = (event: FormEvent<HTMLFormElement>) => { event.preventDefault(); const params = new URLSearchParams({ mode: intent }); if (destination) params.set('location', destination); if (propertyType !== 'all') params.set('type', propertyType); if (intent === 'land') params.set('operation', landOperation); if (intent === 'trip' || intent === 'stay') { if (checkIn) params.set('checkIn', checkIn); if (checkOut) params.set('checkOut', checkOut); if (travelers) params.set('travelers', travelers); } window.location.href = `${routes.search(intent)}${params.toString().replace(`mode=${intent}`, '')}`; };
   const chooseDestination = (name: string) => { setDestination(name); document.querySelector('.travel-search')?.scrollIntoView({ behavior: 'smooth', block: 'center' }); window.setTimeout(() => document.querySelector<HTMLInputElement>('input[aria-label="Destination"]')?.focus(), 450); };
   return <main className={`travel-home intent-theme-${intent} ${darkMode ? 'dark-theme' : 'light-theme'}`}>
-    {showWelcome && <WelcomeScreen onChoose={(nextIntent) => { setIntent(nextIntent); setShowWelcome(false); }}/>}<section className="travel-frame"><SiteHeader section={intent}/>
+    {showWelcome && <WelcomeScreen onChoose={(nextIntent) => { router.push(routes.home(nextIntent)); setIntent(nextIntent); setShowWelcome(false); }}/>}<section className="travel-frame"><SiteHeader section={intent}/>
       <section className={`travel-hero mode-hero-${intent}`} style={{ backgroundImage: `linear-gradient(90deg,rgba(3,17,31,.95) 0%,rgba(3,17,31,.8) 30%,rgba(3,17,31,.18) 75%),url('${hero.image}')` }}><div className="hero-copy" key={`${intent}-${heroIndex}`} aria-live="polite"><div className="hero-kicker"><Sparkles size={14}/> {hero.kicker}</div><h1>{hero.title[0]}<br/>{hero.title[1]}<br/><em>{hero.title[2]}</em></h1><p>{hero.text}</p><div className="hero-ctas"><Link href={routes.section(intent)} className="primary-cta"><Search size={15}/> {intent === 'land' ? 'Explore land' : intent === 'buy-home' ? 'Explore properties' : intent === 'stay' ? 'Find a stay' : 'Explore trips'}</Link><button className="video-cta" type="button" onClick={() => setShowVideo(true)}><span>▶</span> Watch Video</button></div></div><div className="hero-progress" aria-label={`Slide ${heroIndex + 1} of ${mode.slides.length}`}>{mode.slides.map((slide, index) => <button key={slide.kicker} type="button" aria-label={`Show slide ${index + 1}`} className={index === heroIndex ? 'active' : ''} onClick={() => setHeroIndex(index)}/>)}</div></section>
       {showVideo && <div className="luxury-video-overlay" role="dialog" aria-modal="true" aria-label="Al-Aroum travel film" onClick={() => setShowVideo(false)}><div className="luxury-video-modal" onClick={(event) => event.stopPropagation()}><button type="button" className="luxury-video-close" aria-label="Close video" onClick={() => setShowVideo(false)}><X size={20}/></button><div className="luxury-video-heading"><span>AL-AROUM JOURNAL</span><h2>A clearer way<br/><em>to make your next move.</em></h2></div><video autoPlay controls playsInline poster={hero.image}><source src="https://cdn.coverr.co/videos/coverr-aerial-view-of-a-beach-1574/1080p.mp4" type="video/mp4"/>Your browser does not support video playback.</video></div></div>}
       <form className={`travel-search intent-${intent}`} onSubmit={submitSearch}><label className="search-item"><MapPin size={21}/><span><small>{mode.searchLabel}</small><input name="location" aria-label="Destination" value={destination} onChange={(event) => setDestination(event.target.value)} placeholder={mode.searchPlaceholder}/></span></label>{(intent === 'trip' || intent === 'stay') && <><DateRangePicker checkIn={checkIn} checkOut={checkOut} minDate={todayIso()} onCheckInChange={setCheckIn} onCheckOutChange={setCheckOut}/><TravelerPicker value={travelers} onChange={setTravelers}/></>}{(intent === 'buy-home' || intent === 'land') && <><label className="search-item mode-select-item"><Landmark size={21}/><span><small>{mode.searchTypeLabel}</small><select value={propertyType} onChange={(event) => setPropertyType(event.target.value)} aria-label={mode.searchTypeLabel}>{mode.searchTypeOptions.map((option) => <option key={option} value={option.toLowerCase().includes('all') ? 'all' : option}>{option}</option>)}</select></span></label>{intent === 'land' && <label className="search-item mode-select-item"><Building2 size={21}/><span><small>Purpose</small><select value={landOperation} onChange={(event) => setLandOperation(event.target.value)} aria-label="Land purpose"><option value="sale">Buy land</option><option value="rent">Rent land</option></select></span></label>}</>}<button className="search-submit" type="submit" aria-label="Search"><Search size={19}/></button></form>
@@ -95,4 +103,5 @@ export default function Home() {
     </section>
   </main>;
 }
+export default function Home() { return <Suspense fallback={<div className="route-loading" aria-label="Loading Al-Aroum"/>}><HomeContent/></Suspense>; }
 function Benefit({ icon, title, text }: { icon: React.ReactNode; title: string; text: string }) { return <div className="benefit"><span>{icon}</span><div><strong>{title}</strong><small>{text}</small></div></div>; }
