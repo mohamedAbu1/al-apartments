@@ -81,7 +81,7 @@ export default function Home() {
     window.setTimeout(() => document.querySelector<HTMLInputElement>('input[aria-label="Destination"]')?.focus(), 450);
   };
 
-  return <main className={`travel-home ${darkMode ? 'dark-theme' : 'light-theme'}`}>
+  return <main className={`travel-home intent-theme-${intent} ${darkMode ? 'dark-theme' : 'light-theme'}`}>
     <section className="travel-frame">
       <SiteHeader/>
       <section className="travel-hero" style={{ backgroundImage: `linear-gradient(90deg,rgba(3,17,31,.95) 0%,rgba(3,17,31,.8) 30%,rgba(3,17,31,.18) 75%),url('${hero.image}')` }}><div className="hero-copy" key={heroIndex} aria-live="polite"><div className="hero-kicker"><Sparkles size={14}/> {hero.kicker}</div><h1>{hero.title[0]}<br/>{hero.title[1]}<br/><em>{hero.title[2]}</em></h1><p>{hero.text}</p><div className="hero-ctas"><Link href="/search" className="primary-cta"><Plane size={15}/> Explore Now</Link><button className="video-cta" type="button" onClick={() => setShowVideo(true)}><span>▶</span> Watch Video</button></div></div><div className="hero-progress" aria-label={`Slide ${heroIndex + 1} of ${heroSlides.length}`}>{heroSlides.map((slide, index) => <button key={slide.kicker} type="button" aria-label={`Show slide ${index + 1}`} className={index === heroIndex ? 'active' : ''} onClick={() => setHeroIndex(index)}/>)}</div></section>
