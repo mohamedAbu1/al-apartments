@@ -1,5 +1,5 @@
-import SectionSite from '../components/section-site';
+import TravelLanding from './travel-landing';
 
 export default function TravelPage() {
-  return <SectionSite section="trip" />;
+  return <TravelLanding />;
 }
