@@ -5,8 +5,9 @@ import LanguageRuntime from './components/language-runtime';
 import NewsletterBridge from './components/newsletter-bridge';
 
 export const metadata: Metadata = {
-  title: 'Al-Aroum | Apartments & Land',
+  title: 'Al-Aroum | Travel, Stays & Property',
   description: 'Your smart destination for curated holiday apartments and land opportunities',
+  icons: { icon: '/icon.svg', shortcut: '/icon.svg', apple: '/icon.svg' },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

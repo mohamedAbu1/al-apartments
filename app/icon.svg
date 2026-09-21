@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="front" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#22e3c2"/><stop offset="1" stop-color="#11a9d4"/></linearGradient>
+    <linearGradient id="side" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0d94c4"/><stop offset="1" stop-color="#07567d"/></linearGradient>
+    <linearGradient id="roof" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#7effe3"/><stop offset="1" stop-color="#25cde1"/></linearGradient>
+  </defs>
+  <path d="M32 3 59 19v26L32 61 5 45V19L32 3Z" fill="#08283b" stroke="#27d8d0" stroke-width="1.5"/>
+  <path d="m32 8 22 13v22L32 56V8Z" fill="url(#side)"/>
+  <path d="M32 8 10 21v22l22 13V8Z" fill="url(#front)"/>
+  <path d="m32 8 22 13-22 13-22-13L32 8Z" fill="url(#roof)"/>
+  <path d="M21 40V23l11-7 11 7v17l-11 6-11-6Z" fill="#062338" fill-opacity=".86"/>
+  <path d="m32 16 11 7-11 6-11-6 11-7Z" fill="#c9fff2"/>
+  <path d="M26 26h4v15h-4V26Zm8 0h4v15h-4V26Z" fill="#1cd7d0"/>
+</svg>
