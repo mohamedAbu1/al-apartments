@@ -807,6 +807,13 @@ html[dir="rtl"] .header-cta svg { transform:scaleX(-1); }
 html[dir="rtl"] .footer-main,html[dir="rtl"] .footer-bottom { direction:rtl; }
 html[dir="rtl"] .language-switcher select { direction:rtl; }
 html[dir="rtl"] .password-field button { left:.7rem; right:auto; }
+html[dir="rtl"] .travel-studio-page { direction:rtl; }
+html[dir="rtl"] .travel-studio-hero-copy,html[dir="rtl"] .travel-section-heading,html[dir="rtl"] .travel-service-section > div:first-child,html[dir="rtl"] .travel-studio-newsletter { text-align:right; }
+html[dir="rtl"] .travel-studio-actions,html[dir="rtl"] .travel-studio-proof { direction:rtl; }
+html[dir="rtl"] .travel-hero-navigation { direction:ltr; }
+html[dir="rtl"] .travel-hero-note { text-align:right; }
+html[dir="rtl"] .travel-category-card,html[dir="rtl"] .travel-destination-card { direction:rtl; }
+html[dir="rtl"] .travel-destination-card > svg,html[dir="rtl"] .travel-category-card > svg { transform:scaleX(-1); }
 html[dir="rtl"] .password-field input { padding-left:2.6rem; padding-right:.8rem; }
 
 /* Keep photographic hero text readable while letting the surrounding page follow the selected theme. */
