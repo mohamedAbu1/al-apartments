@@ -3,16 +3,18 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 
 type ThemeContextValue = { darkMode: boolean; toggleTheme: () => void };
-const ThemeContext = createContext<ThemeContextValue>({ darkMode:true, toggleTheme:()=>{} });
+const ThemeContext = createContext<ThemeContextValue>({ darkMode:false, toggleTheme:()=>{} });
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [darkMode, setDarkMode] = useState(true);
-  useEffect(() => {
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window === 'undefined') return false;
     const saved = window.localStorage.getItem('al-aroum-theme');
-    const next = saved ? saved === 'dark' : true;
-    setDarkMode(next);
-    document.documentElement.dataset.theme = next ? 'dark' : 'light';
-  }, []);
+    return saved === 'dark';
+  });
+  useEffect(() => {
+    document.documentElement.dataset.theme = darkMode ? 'dark' : 'light';
+    window.localStorage.setItem('al-aroum-theme', darkMode ? 'dark' : 'light');
+  }, [darkMode]);
   const toggleTheme = () => setDarkMode((current) => {
     const next = !current;
     window.localStorage.setItem('al-aroum-theme', next ? 'dark' : 'light');
