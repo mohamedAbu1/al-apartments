@@ -6,8 +6,8 @@ import SiteFooter from '../components/site-footer';
 import SiteHeader from '../components/site-header';
 
 export default function ListPropertyPage() {
-  const [isLand, setIsLand] = useState(false);
-  const [category, setCategory] = useState('Villa');
+  const [isLand, setIsLand] = useState(() => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('type') === 'land');
+  const [category, setCategory] = useState(() => typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('type') === 'land' ? 'Land' : 'Villa');
   const [sent, setSent] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState('');
@@ -15,6 +15,7 @@ export default function ListPropertyPage() {
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault(); setBusy(true); setError('');
     const form = new FormData(event.currentTarget);
+    if (isLand) form.set('operation', 'For sale');
     const message = [`Listing request: ${form.get('title')}`, `Category: ${form.get('category')}`, `Operation: ${form.get('operation')}`, `Location: ${form.get('location')}`, `Phone: ${form.get('phone')}`, isLand ? `Land area: ${form.get('area')} m²` : '', isLand ? `Land use: ${form.get('landUse')}` : '', isLand ? `Documents: ${form.get('documents')}` : '', `Details: ${form.get('details')}`].filter(Boolean).join('\n');
     try {
       const response = await fetch('/api/inquiries', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ kind: 'contact', propertyTitle: form.get('title'), name: form.get('name'), email: form.get('email'), message }) });
