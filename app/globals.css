@@ -411,6 +411,15 @@ button, input { font:inherit; }
 .welcome-stay { --welcome-accent:#21dfc1; --welcome-image:url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&q=90'); }
 .welcome-home { --welcome-accent:#f4c66d; --welcome-image:url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&q=90'); }
 .welcome-land { --welcome-accent:#8cd66c; --welcome-image:url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1600&q=90'); }
+html[data-theme="light"] .welcome-screen { background:#eef5f4; color:#122833; }
+html[data-theme="light"] .welcome-screen::before { opacity:.2; }
+html[data-theme="light"] .welcome-screen::after { background:linear-gradient(115deg,rgba(238,245,244,.96) 0%,rgba(238,245,244,.82) 46%,color-mix(in srgb,var(--welcome-accent) 16%,transparent) 100%); }
+html[data-theme="light"] .welcome-intro-copy p,html[data-theme="light"] .welcome-cards-heading small { color:#55727a; }
+html[data-theme="light"] .welcome-card { border-color:rgba(20,75,87,.18); background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(235,246,244,.92)),var(--card-image) center/cover; color:#122833; box-shadow:0 16px 35px rgba(20,75,87,.1); }
+html[data-theme="light"] .welcome-card-index { color:rgba(18,40,51,.65); }
+html[data-theme="light"] .welcome-card-body em { color:#55727a; }
+html[data-theme="light"] .welcome-card-action { border-color:rgba(20,75,87,.24); }
+html[data-theme="light"] .welcome-footer { color:#55727a; }
 @keyframes welcomeIntroIn { from { opacity:0; transform:translate(-50%,-43%); filter:blur(8px); } to { opacity:1; transform:translate(-50%,-50%); filter:blur(0); } }
 @keyframes welcomeIntroOut { to { opacity:0; transform:translate(-50%,-57%); filter:blur(7px); } }
 @media (max-width:800px) {
