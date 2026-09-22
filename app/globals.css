@@ -817,6 +817,7 @@ html[dir="rtl"] .welcome-cards-heading { flex-direction:row-reverse; }
 html[dir="rtl"] .welcome-card { text-align:right; }
 html[dir="rtl"] .welcome-card-body { align-items:flex-start; }
 html[dir="rtl"] .welcome-card-action svg { transform:scaleX(-1); }
+html[dir="rtl"] .section-services h2 { max-width:100%; font-size:clamp(1.55rem,3vw,2.25rem); line-height:1.12; overflow-wrap:anywhere; }
 html[dir="rtl"] .travel-category-card,html[dir="rtl"] .travel-destination-card { direction:rtl; }
 html[dir="rtl"] .travel-destination-card > svg,html[dir="rtl"] .travel-category-card > svg { transform:scaleX(-1); }
 
