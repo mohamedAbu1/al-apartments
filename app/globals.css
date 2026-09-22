@@ -812,6 +812,11 @@ html[dir="rtl"] .travel-studio-hero-copy,html[dir="rtl"] .travel-section-heading
 html[dir="rtl"] .travel-studio-actions,html[dir="rtl"] .travel-studio-proof { direction:rtl; }
 html[dir="rtl"] .travel-hero-navigation { direction:ltr; }
 html[dir="rtl"] .travel-hero-note { text-align:right; }
+html[dir="rtl"] .welcome-screen { direction:rtl; }
+html[dir="rtl"] .welcome-cards-heading { flex-direction:row-reverse; }
+html[dir="rtl"] .welcome-card { text-align:right; }
+html[dir="rtl"] .welcome-card-body { align-items:flex-start; }
+html[dir="rtl"] .welcome-card-action svg { transform:scaleX(-1); }
 html[dir="rtl"] .travel-category-card,html[dir="rtl"] .travel-destination-card { direction:rtl; }
 html[dir="rtl"] .travel-destination-card > svg,html[dir="rtl"] .travel-category-card > svg { transform:scaleX(-1); }
 
