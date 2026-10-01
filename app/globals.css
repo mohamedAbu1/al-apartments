@@ -405,6 +405,13 @@ button, input { font:inherit; }
 .welcome-card-body em { max-width:220px; color:#b4c6c9; font-size:.63rem; font-style:normal; line-height:1.55; }
 .welcome-card-action { display:grid; position:absolute!important; right:1.05rem; bottom:1.05rem; width:2.35rem; height:2.35rem; place-items:center; border:1px solid rgba(255,255,255,.22); border-radius:50%; color:var(--welcome-accent); transition:background .3s ease,color .3s ease,transform .3s ease; }
 .welcome-card:hover .welcome-card-action,.welcome-card.is-active .welcome-card-action { background:var(--welcome-accent); color:#06212c; transform:rotate(45deg); }
+.welcome-card.is-coming-soon { cursor:not-allowed; filter:saturate(.72); }
+.welcome-card.is-coming-soon::after { position:absolute; inset:0; z-index:2; display:grid; place-items:center; padding:1rem; border-radius:inherit; background:rgba(3,17,29,.28); color:#fff; content:'Coming soon'; font-size:.65rem; font-weight:900; letter-spacing:.16em; text-transform:uppercase; opacity:0; pointer-events:none; transition:opacity .25s ease; }
+.welcome-card.is-coming-soon:hover::after,.welcome-card.is-coming-soon:focus-visible::after,.welcome-card.is-coming-soon.is-active::after { opacity:1; }
+.welcome-card.is-coming-soon:hover,.welcome-card.is-coming-soon:focus-visible,.welcome-card.is-coming-soon.is-active { transform:translateY(-6px); border-color:rgba(255,255,255,.4); box-shadow:0 20px 45px rgba(0,0,0,.35); }
+.welcome-card.is-coming-soon .welcome-card-action { color:#b6c6c8; }
+.welcome-coming-soon { position:absolute; z-index:3; top:1rem; right:1rem; padding:.38rem .55rem; border:1px solid rgba(255,255,255,.28); border-radius:999px; background:rgba(3,17,29,.62); color:#fff; font-size:.5rem; font-weight:900; letter-spacing:.1em; text-transform:uppercase; opacity:0; transform:translateY(-5px); transition:opacity .25s ease,transform .25s ease; }
+.welcome-card.is-coming-soon:hover .welcome-coming-soon,.welcome-card.is-coming-soon:focus-visible .welcome-coming-soon,.welcome-card.is-coming-soon.is-active .welcome-coming-soon { opacity:1; transform:translateY(0); }
 .welcome-footer { display:flex; justify-content:space-between; width:min(1180px,100%); margin:2rem auto 0; color:#779298; font-size:.56rem; letter-spacing:.15em; }
 .welcome-footer span:first-child { color:var(--welcome-accent); font-weight:900; }
 .welcome-trip { --welcome-accent:#45bfff; --welcome-image:url('https://images.unsplash.com/photo-1503220317375-aaad61436b1b?auto=format&fit=crop&w=1600&q=90'); }
@@ -419,6 +426,8 @@ html[data-theme="light"] .welcome-card { border-color:rgba(20,75,87,.18); backgr
 html[data-theme="light"] .welcome-card-index { color:rgba(18,40,51,.65); }
 html[data-theme="light"] .welcome-card-body em { color:#55727a; }
 html[data-theme="light"] .welcome-card-action { border-color:rgba(20,75,87,.24); }
+html[data-theme="light"] .welcome-card.is-coming-soon::after { background:rgba(238,245,244,.62); color:#18363f; }
+html[data-theme="light"] .welcome-coming-soon { border-color:rgba(20,75,87,.25); background:rgba(255,255,255,.82); color:#18363f; }
 html[data-theme="light"] .welcome-footer { color:#55727a; }
 @keyframes welcomeIntroIn { from { opacity:0; transform:translate(-50%,-43%); filter:blur(8px); } to { opacity:1; transform:translate(-50%,-50%); filter:blur(0); } }
 @keyframes welcomeIntroOut { to { opacity:0; transform:translate(-50%,-57%); filter:blur(7px); } }
