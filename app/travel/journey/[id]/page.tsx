@@ -3,15 +3,15 @@ import { Accessibility, ArrowLeft, ArrowRight, BedDouble, CalendarDays, Check, C
 import { notFound } from 'next/navigation';
 import SiteFooter from '../../../components/site-footer';
 import SiteHeader from '../../../components/site-header';
-import { tripPackages } from '../../../data';
 import JourneyGallery from '../../../components/journey-gallery';
 import JourneyBookingWidget from '../../../components/journey-booking-widget';
+import { getTravelTrip, getTravelTrips } from '../../../lib/travel-data';
 
-export function generateStaticParams() { return tripPackages.map((trip) => ({ id: trip.id })); }
+export async function generateStaticParams() { const trips = await getTravelTrips(); return trips.map((trip) => ({ id: trip.id })); }
 
 export default async function JourneyPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const trip = tripPackages.find((item) => item.id === id);
+  const trip = await getTravelTrip(id);
   if (!trip) notFound();
 
   const gallery = trip.gallery?.length ? trip.gallery : [trip.image];
@@ -23,7 +23,8 @@ export default async function JourneyPage({ params }: { params: Promise<{ id: st
   const highlightItems = trip.highlights.split(' · ');
   const hasReviews = Boolean(trip.reviewCount);
   const currentCities = trip.route.toLowerCase().split(/·|→/).map((city) => city.trim()).filter(Boolean);
-  const relatedTrips = tripPackages.filter((item) => {
+  const catalog = await getTravelTrips();
+  const relatedTrips = catalog.filter((item) => {
     if (item.id === trip.id || item.category !== trip.category) return false;
     const sharedCities = item.route.toLowerCase().split(/·|→/).map((city) => city.trim()).filter((city) => currentCities.includes(city));
     return sharedCities.length >= 2;
