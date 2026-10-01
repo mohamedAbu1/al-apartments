@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { ArrowRight, Check, ChevronDown, Clock3, Grid2X2, Heart, List, MapPin, RotateCcw, Search, SlidersHorizontal, Star, X } from 'lucide-react';
-import { useMemo, useState } from 'react';
-import { tripPackages } from '../data';
+import { useEffect, useMemo, useState } from 'react';
+import type { TripPackage } from '../data';
 import SiteFooter from './site-footer';
 import SiteHeader from './site-header';
 
@@ -17,6 +17,9 @@ function daysOf(duration: string) { return Number(duration.match(/\d+/)?.[0] || 
 function matchesBudget(price: number, budget: string) { return budget === 'all' || (budget === 'under-15000' && price < 15000) || (budget === '15000-22000' && price >= 15000 && price <= 22000) || (budget === 'over-22000' && price > 22000); }
 
 export default function TripSearchClient() {
+  const [tripPackages, setTripPackages] = useState<TripPackage[]>([]);
+  const [catalogLoading, setCatalogLoading] = useState(true);
+  useEffect(() => { fetch('/api/trips', { cache: 'no-store' }).then((response) => response.ok ? response.json() : Promise.reject(new Error('Travel catalog unavailable'))).then((result) => setTripPackages(result.trips || [])).catch(() => setTripPackages([])).finally(() => setCatalogLoading(false)); }, []);
   const [filters, setFilters] = useState<TripFilters>(() => { const params = new URLSearchParams(typeof window === 'undefined' ? '' : window.location.search); return { ...initialFilters, search: params.get('location') || '', category: params.get('type') || 'all' }; });
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [mobileFilters, setMobileFilters] = useState(false);

@@ -7,6 +7,9 @@ import SiteFooter from '../components/site-footer';
 import SiteHeader from '../components/site-header';
 import NewsletterForm from '../components/newsletter-form';
 import { routes } from '../lib/routes';
+import type { TripPackage } from '../data';
+
+type LandingJourney = { id: string; title: string; place: string; days: string; price: string; rating: string; image: string; tag: string };
 
 const categories = [
   { title: 'Beach escapes', text: 'Red Sea shores, clear water, and slow mornings.', icon: Waves, image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=88', query: 'Marsa Alam' },
@@ -15,12 +18,6 @@ const categories = [
   { title: 'Oasis retreats', text: 'Palm shade, natural springs, and quiet space.', icon: Palmtree, image: 'https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=700&q=88', query: 'Siwa Oasis' },
   { title: 'Family holidays', text: 'Easy days and thoughtful stays for everyone.', icon: Users, image: 'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=700&q=88', query: 'North Coast' },
   { title: 'Luxury itineraries', text: 'Private transfers, fine stays, and elevated details.', icon: Crown, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=700&q=88', query: 'Sharm El Sheikh' },
-];
-
-const journeys = [
-  { id: 'red-sea-escape', title: 'Red Sea Escape', place: 'Hurghada · Giftun Island · El Gouna', days: '5 days / 4 nights', price: 'From EGP 13,500', rating: '4.7', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1100&q=90', tag: 'BEST FOR THE SEA' },
-  { id: 'nile-cruise-classic', title: 'Classic Nile Cruise', place: 'Luxor → Aswan', days: '4 days / 3 nights', price: 'From EGP 15,750', rating: '4.8', image: 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?auto=format&fit=crop&w=1100&q=90', tag: 'EDITOR’S ROUTE' },
-  { id: 'sinai-desert-sea', title: 'Sinai Desert & Sea', place: 'Dahab · Blue Hole · St. Catherine', days: '6 days / 5 nights', price: 'From EGP 21,400', rating: '4.9', image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1100&q=90', tag: 'ADVENTURE PICK' },
 ];
 
 const destinations = [
@@ -41,8 +38,11 @@ const tripCities = ['Luxor', 'Aswan', 'Cairo', 'Hurghada', 'Siwa'];
 const tripTypes = ['Temples & history', 'Nile cruises', 'Beach & diving', 'Adventure'];
 
 export default function TravelLanding() {
+  const [journeys, setJourneys] = useState<LandingJourney[]>([]);
+  const [journeysLoading, setJourneysLoading] = useState(true);
   const [heroIndex, setHeroIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+  useEffect(() => { fetch('/api/trips', { cache: 'no-store' }).then((response) => response.ok ? response.json() : Promise.reject(new Error('Travel catalog unavailable'))).then((result) => setJourneys((result.trips || []).slice(0, 3).map((trip: TripPackage) => ({ id: trip.id, title: trip.title, place: trip.route, days: trip.duration, price: trip.price, rating: trip.rating === 'New' ? '—' : trip.rating, image: trip.image, tag: trip.category.toUpperCase() })))).catch(() => setJourneys([])).finally(() => setJourneysLoading(false)); }, []);
   const hero = heroSlides[heroIndex];
   const handleCarBooking = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

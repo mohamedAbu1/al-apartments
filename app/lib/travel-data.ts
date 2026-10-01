@@ -1,5 +1,5 @@
 import { prisma } from './prisma';
-import { TripPackage, tripPackages } from '../data';
+import type { TripPackage } from '../data';
 
 type DbTrip = { id: string; title: string | null; description: string | null; cover_image: string | null; solo_price: number | string | null; group_price: number | string | null; duration: number | null; duration_unit: string | null; currency: string | null; gallery_images: string | null; category_names: string | null; city_names: string | null; review_count: number | string | null; average_rating: number | string | null };
 type DbDay = { trip_id: string; day_number: number; activities: string | null };
@@ -29,5 +29,5 @@ async function queryTrips(id?: string) {
 }
 async function queryDays(tripId: string) { return prisma.$queryRawUnsafe<DbDay[]>(`SELECT td.trip_id, td.day_number, GROUP_CONCAT(JSON_UNQUOTE(JSON_EXTRACT(da.activity_translations, '$.en')) ORDER BY da.time SEPARATOR ' · ') AS activities FROM trip_days td LEFT JOIN day_activities da ON da.day_id = td.id WHERE td.trip_id = ${JSON.stringify(tripId)} GROUP BY td.trip_id, td.day_number ORDER BY td.day_number`); }
 
-export async function getTravelTrips() { try { const rows = await queryTrips(); if (!rows.length) return tripPackages; const days = await Promise.all(rows.map((row) => queryDays(row.id))); return rows.map((row, index) => mapTrip(row, days[index])); } catch (error) { console.warn('Travel database unavailable; using local journey catalog.', error instanceof Error ? error.message : error); return tripPackages; } }
-export async function getTravelTrip(id: string) { try { const rows = await queryTrips(id); if (rows[0]) return mapTrip(rows[0], await queryDays(id)); } catch (error) { console.warn('Travel database unavailable; using local journey catalog.', error instanceof Error ? error.message : error); } return tripPackages.find((trip) => trip.id === id); }
+export async function getTravelTrips() { const rows = await queryTrips(); const days = await Promise.all(rows.map((row) => queryDays(row.id))); return rows.map((row, index) => mapTrip(row, days[index])); }
+export async function getTravelTrip(id: string) { const rows = await queryTrips(id); if (rows[0]) return mapTrip(rows[0], await queryDays(id)); return undefined; }

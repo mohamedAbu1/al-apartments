@@ -7,7 +7,7 @@ import JourneyGallery from '../../../components/journey-gallery';
 import JourneyBookingWidget from '../../../components/journey-booking-widget';
 import { getTravelTrip, getTravelTrips } from '../../../lib/travel-data';
 
-export async function generateStaticParams() { const trips = await getTravelTrips(); return trips.map((trip) => ({ id: trip.id })); }
+export function generateStaticParams() { return []; }
 
 export default async function JourneyPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
