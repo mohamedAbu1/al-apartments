@@ -5,7 +5,7 @@ const text = (value: unknown) => typeof value === 'string' ? value.trim() : '';
 const emailPattern = /^\S+@\S+\.\S+$/;
 
 export async function GET(request: NextRequest) {
-  const token = request.cookies.get('al-aroum-session')?.value;
+  const token = request.cookies.get('montu-travel-session')?.value;
   if (!token) return NextResponse.json({ message: 'Authentication required.' }, { status: 401 });
   const session = await prisma.authSession.findUnique({ where: { token }, include: { user: true } });
   if (!session || session.expiresAt <= new Date() || session.user.role !== 'admin') return NextResponse.json({ message: 'Admin access required.' }, { status: 403 });

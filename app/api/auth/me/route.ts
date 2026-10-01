@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../../lib/prisma';
 
 export async function GET(request: NextRequest) {
-  const token = request.cookies.get('al-aroum-session')?.value;
+  const token = request.cookies.get('montu-travel-session')?.value;
   if (!token) return NextResponse.json({ user: null }, { status: 401 });
   const session = await prisma.authSession.findUnique({ where: { token }, include: { user: true } });
   if (!session || session.expiresAt <= new Date()) return NextResponse.json({ user: null }, { status: 401 });

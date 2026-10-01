@@ -1,5 +1,5 @@
 export default function BrandLogo({ compact = false }: { compact?: boolean }) {
-  return <span className={`brand-logo ${compact ? 'brand-logo-compact' : ''}`} aria-label="Al-Aroum">
+  return <span className={`brand-logo ${compact ? 'brand-logo-compact' : ''}`} aria-label="Montu Travel">
     <svg className="brand-logo-mark" viewBox="0 0 58 58" role="img" aria-hidden="true">
       <defs>
         <linearGradient id="logoFront" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#22e3c2"/><stop offset="1" stopColor="#11a9d4"/></linearGradient>
@@ -16,6 +16,6 @@ export default function BrandLogo({ compact = false }: { compact?: boolean }) {
       <path d="M24 24h3v12h-3V24Zm7 0h3v12h-3V24Z" fill="#1cd7d0"/>
       <path d="m29 15 9 6v15l-9 5V26l9-5-9-6Z" fill="#0b6c91" opacity=".28"/>
     </svg>
-    {!compact && <span className="brand-logo-copy"><strong>Al-Aroum</strong><small>PROPERTY &amp; LAND</small></span>}
+    {!compact && <span className="brand-logo-copy"><strong>Montu Travel</strong><small>TRAVEL · STAYS · RENTALS</small></span>}
   </span>;
 }

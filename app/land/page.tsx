@@ -1,5 +1,5 @@
-import SectionSite from '../components/section-site';
+import { redirect } from 'next/navigation';
 
 export default function LandPage() {
-  return <SectionSite section="land" />;
+  redirect('/');
 }
