@@ -7,10 +7,10 @@ import { routes, type AppSection } from '../lib/routes';
 
 type SectionSiteProps = { section: AppSection };
 const heroImages: Record<AppSection, string> = {
-  trip: 'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?auto=format&fit=crop&w=1800&q=90',
-  stay: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1800&q=90',
-  'buy-home': 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1800&q=90',
-  land: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1800&q=90',
+  trip: '/images/Giza-Pyramid-Complex-Trip-1-e1668979516849.webp',
+  stay: '/images/Lounge-area-on-Nile-Dream-720x540.jpeg',
+  'buy-home': '/images/Lounge-area-on-Nile-Dream-720x540.jpeg',
+  land: '/images/pexels-zaki25-16114957.webp',
 };
 const copy = {
   trip: { label: 'TRAVEL STUDIO', title: 'Go further.\nFeel more.', text: 'Build a considered trip from destinations, experiences, and stays that belong together.', primary: 'Plan a trip', secondary: 'Browse destinations', nav: 'trip' as const },

@@ -26,7 +26,32 @@ type HomeMode = {
   cards: ModeCard[]; benefits: [string, string, React.ReactNode][]; newsletterTitle: string; newsletterText: string;
 };
 
-const image = (id: string, width = 900) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=90`;
+const localImageBySource: Record<string, string> = {
+  'photo-1464226184884-fa280b87c399': '/images/Tunis-Village-2.jpg',
+  'photo-1499793983690-e29da59ef1c2': '/images/Lounge-area-on-Nile-Dream-720x540.jpeg',
+  'photo-1500382017468-9049fed747ef': '/images/pexels-zaki25-16114957.webp',
+  'photo-1500534623283-312aade485b7': '/images/Tunis-Village-2.jpg',
+  'photo-1501785888041-af3ef285b470': '/images/pexels-zaki25-16114957.webp',
+  'photo-1503220317375-aaad61436b1b': '/images/Giza-Pyramid-Complex-Trip-1-e1668979516849.webp',
+  'photo-1507525428034-b723cf961d3e': '/images/HurghadaHulaHulaIslandFull-DayBoatTrip.webp',
+  'photo-1511739001486-6bfe10ce785f': '/images/pexels-zaki25-16114957.webp',
+  'photo-1514282401047-d79a71a590e8': '/images/HurghadaHulaHulaIslandFull-DayBoatTrip.webp',
+  'photo-1537996194471-e657df975ab4': '/images/Tunis-Village-2.jpg',
+  'photo-1537996194471-e657df975ab4b': '/images/Tunis-Village-2.jpg',
+  'photo-1539650116574-75c0c6d73f6e': '/images/mortuary-temple-hatshepsut.webp',
+  'photo-1548013146-72479768bada': '/images/nile-cruise-egypt-slider-1200x600.jpg',
+  'photo-1568322445389-f64ac2515020': '/images/Giza-Pyramid-Complex-Trip-1-e1668979516849.webp',
+  'photo-1570077188670-e3a8d69ac5ff': '/images/HurghadaHulaHulaIslandFull-DayBoatTrip.webp',
+  'photo-1600566753086-00f18fb6b3ea': '/images/Lounge-area-on-Nile-Dream-720x540.jpeg',
+  'photo-1600566753190-17f0baa2a6c3': '/images/Lounge-area-on-Nile-Dream-720x540.jpeg',
+  'photo-1600585154340-be6161a56a0c': '/images/Lounge-area-on-Nile-Dream-720x540.jpeg',
+  'photo-1600607687920-4e2a09cf159d': '/images/Lounge-area-on-Nile-Dream-720x540.jpeg',
+  'photo-1600607687939-ce8a6c25118c': '/images/Lounge-area-on-Nile-Dream-720x540.jpeg',
+  'photo-1600607688969-a5bfcd646154': '/images/Lounge-area-on-Nile-Dream-720x540.jpeg',
+  'photo-1602002418082-a4443e081dd1': '/images/HurghadaHulaHulaIslandFull-DayBoatTrip.webp',
+  'photo-1613490493576-7fde63acd811': '/images/Lounge-area-on-Nile-Dream-720x540.jpeg',
+};
+const image = (id: string, _width = 900) => localImageBySource[id] || '/images/Giza-Pyramid-Complex-Trip-1-e1668979516849.webp';
 const travelDestinations: Destination[] = [
   { name: 'Cairo, Egypt', price: 'From EGP 299', image: image('photo-1568322445389-f64ac2515020') },
   { name: 'Luxor, Egypt', price: 'From EGP 349', image: image('photo-1539650116574-75c0c6d73f6e') },

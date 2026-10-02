@@ -7,7 +7,7 @@ import SiteFooter from '../components/site-footer';
 import SiteHeader from '../components/site-header';
 
 type TripPlan = { destination: string; startDate: string; endDate: string; travelers: number; style: string; pace: string; budget: string; interests: string[]; stay: string; transport: string; notes: string };
-const destinations = [['Cairo', 'Museums, markets, and city energy', 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?auto=format&fit=crop&w=700&q=88'], ['Luxor & Aswan', 'Temples, tombs, and Nile mornings', 'https://images.unsplash.com/photo-1539650116574-75c0c6d73f6e?auto=format&fit=crop&w=700&q=88'], ['Red Sea', 'Reefs, beaches, and easy-going days', 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=700&q=88'], ['Siwa & the desert', 'Oases, stars, and slower rhythms', 'https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=700&q=88']];
+const destinations = [['Cairo', 'Museums, markets, and city energy', '/images/Giza-Pyramid-Complex-Trip-1-e1668979516849.webp'], ['Luxor & Aswan', 'Temples, tombs, and Nile mornings', '/images/mortuary-temple-hatshepsut.webp'], ['Red Sea', 'Reefs, beaches, and easy-going days', '/images/HurghadaHulaHulaIslandFull-DayBoatTrip.webp'], ['Siwa & the desert', 'Oases, stars, and slower rhythms', '/images/Tunis-Village-2.jpg']];
 const styles = ['History & culture', 'Nile cruise', 'Beach escape', 'Adventure', 'Food & local life', 'Luxury retreat'];
 const paces = ['Slow & spacious', 'Balanced', 'Full days'];
 const budgets = ['Comfort', 'Premium', 'Luxury'];

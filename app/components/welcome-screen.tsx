@@ -7,9 +7,9 @@ type Intent = 'trip' | 'stay' | 'buy-home';
 type Props = { onChoose: (intent: Intent) => void };
 
 const cards: { id: Intent; index: string; title: string; subtitle: string; detail: string; icon: React.ReactNode; image: string; theme: string }[] = [
-  { id:'trip', index:'01', title:'Book a trip', subtitle:'Travel & experiences', detail:'Curated escapes for the moments you will remember.', icon:<Plane size={24}/>, image:'https://images.unsplash.com/photo-1503220317375-aaad61436b1b?auto=format&fit=crop&w=1000&q=90', theme:'welcome-trip' },
-  { id:'stay', index:'02', title:'Book a hotel or home', subtitle:'Stays & hospitality', detail:'Beautiful places made for slower mornings and longer memories.', icon:<House size={24}/>, image:'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=90', theme:'welcome-stay' },
-  { id:'buy-home', index:'03', title:'Rent a home or chalet', subtitle:'Homes for rent', detail:'Find a beautiful place to stay, settle in, and feel at home.', icon:<Building2 size={24}/>, image:'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=90', theme:'welcome-home' },
+  { id:'trip', index:'01', title:'Book a trip', subtitle:'Travel & experiences', detail:'Curated escapes for the moments you will remember.', icon:<Plane size={24}/>, image:'/images/Giza-Pyramid-Complex-Trip-1-e1668979516849.webp', theme:'welcome-trip' },
+  { id:'stay', index:'02', title:'Book a hotel or home', subtitle:'Stays & hospitality', detail:'Beautiful places made for slower mornings and longer memories.', icon:<House size={24}/>, image:'/images/Lounge-area-on-Nile-Dream-720x540.jpeg', theme:'welcome-stay' },
+  { id:'buy-home', index:'03', title:'Rent a home or chalet', subtitle:'Homes for rent', detail:'Find a beautiful place to stay, settle in, and feel at home.', icon:<Building2 size={24}/>, image:'/images/Lounge-area-on-Nile-Dream-720x540.jpeg', theme:'welcome-home' },
 ];
 
 export default function WelcomeScreen({ onChoose }: Props) {

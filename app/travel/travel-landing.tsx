@@ -16,26 +16,26 @@ type LandingCategory = { id: string; title: string; text: string; image: string;
 type LandingDestination = { id: string; name: string; text: string; image: string };
 
 const categories = [
-  { id: 'beach', title: 'Beach escapes', text: 'Red Sea shores, clear water, and slow mornings.', icon: Waves, image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=700&q=88', query: 'Marsa Alam' },
-  { id: 'culture', title: 'Culture & history', text: 'Ancient stories, museums, and local guides.', icon: Camera, image: 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?auto=format&fit=crop&w=700&q=88', query: 'Luxor' },
-  { id: 'adventure', title: 'Adventure', text: 'Desert trails, diving, and days outside.', icon: Mountain, image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=700&q=88', query: 'Dahab' },
-  { id: 'oasis', title: 'Oasis retreats', text: 'Palm shade, natural springs, and quiet space.', icon: Palmtree, image: 'https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=700&q=88', query: 'Siwa Oasis' },
-  { id: 'family', title: 'Family holidays', text: 'Easy days and thoughtful stays for everyone.', icon: Users, image: 'https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=700&q=88', query: 'North Coast' },
-  { id: 'luxury', title: 'Luxury itineraries', text: 'Private transfers, fine stays, and elevated details.', icon: Crown, image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=700&q=88', query: 'Sharm El Sheikh' },
+  { id: 'beach', title: 'Beach escapes', text: 'Red Sea shores, clear water, and slow mornings.', icon: Waves, image: '/images/HurghadaHulaHulaIslandFull-DayBoatTrip.webp', query: 'Marsa Alam' },
+  { id: 'culture', title: 'Culture & history', text: 'Ancient stories, museums, and local guides.', icon: Camera, image: '/images/Giza-Pyramid-Complex-Trip-1-e1668979516849.webp', query: 'Luxor' },
+  { id: 'adventure', title: 'Adventure', text: 'Desert trails, diving, and days outside.', icon: Mountain, image: '/images/pexels-zaki25-16114957.webp', query: 'Dahab' },
+  { id: 'oasis', title: 'Oasis retreats', text: 'Palm shade, natural springs, and quiet space.', icon: Palmtree, image: '/images/Tunis-Village-2.jpg', query: 'Siwa Oasis' },
+  { id: 'family', title: 'Family holidays', text: 'Easy days and thoughtful stays for everyone.', icon: Users, image: '/images/Tunis-Village-2.jpg', query: 'North Coast' },
+  { id: 'luxury', title: 'Luxury itineraries', text: 'Private transfers, fine stays, and elevated details.', icon: Crown, image: '/images/Lounge-area-on-Nile-Dream-720x540.jpeg', query: 'Sharm El Sheikh' },
 ];
 
 const destinations = [
-  ['Cairo', 'History, design, and a city that never stands still.', 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?auto=format&fit=crop&w=900&q=88'],
-  ['Luxor', 'The world’s greatest open-air museum.', 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?auto=format&fit=crop&w=900&q=88'],
-  ['Sharm El Sheikh', 'Coral reefs, warm water, and polished resorts.', 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=900&q=88'],
-  ['Siwa Oasis', 'A slower rhythm among palms and natural springs.', 'https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=900&q=88'],
+  ['Cairo', 'History, design, and a city that never stands still.', '/images/Giza-Pyramid-Complex-Trip-1-e1668979516849.webp'],
+  ['Luxor', 'The world’s greatest open-air museum.', '/images/Giza-Pyramid-Complex-Trip-1-e1668979516849.webp'],
+  ['Sharm El Sheikh', 'Coral reefs, warm water, and polished resorts.', '/images/HurghadaHulaHulaIslandFull-DayBoatTrip.webp'],
+  ['Siwa Oasis', 'A slower rhythm among palms and natural springs.', '/images/Tunis-Village-2.jpg'],
 ];
 
 const heroSlides = [
-  { kicker: 'THE MONTU TRAVEL TRAVEL STUDIO', title: ['See Egypt', 'with feeling.'], text: 'Thoughtful journeys, trusted local partners, and stays that turn a few days away into a story worth keeping.', note: ['Start where', 'the light is warm.'], noteText: 'Personal routes across Egypt', image: 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?auto=format&fit=crop&w=1900&q=90' },
-  { kicker: 'THE NILE, REIMAGINED', title: ['Follow the river', 'through time.'], text: 'Sail from ancient temples to quiet river mornings with a route shaped around Egypt’s most enduring stories.', note: ['Let the Nile', 'set the pace.'], noteText: 'Cairo, Luxor, and Aswan', image: 'https://images.unsplash.com/photo-1568322445389-f64ac2515020?auto=format&fit=crop&w=1900&q=90' },
-  { kicker: 'RED SEA ESCAPES', title: ['Find your blue', 'horizon.'], text: 'Trade the rush for reef mornings, warm water, and a few beautifully planned days by the Red Sea.', note: ['Stay close to', 'the open water.'], noteText: 'Hurghada, El Gouna, and Marsa Alam', image: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?auto=format&fit=crop&w=1900&q=90' },
-  { kicker: 'DESERT & OASIS', title: ['Take the road', 'less hurried.'], text: 'Move through palm shade, desert light, and places where the best part of the day is simply having time.', note: ['Make room for', 'the unexpected.'], noteText: 'Siwa, Dahab, and Sinai', image: 'https://images.unsplash.com/photo-1544986581-efac024faf62?auto=format&fit=crop&w=1900&q=90' },
+  { kicker: 'THE MONTU TRAVEL TRAVEL STUDIO', title: ['See Egypt', 'with feeling.'], text: 'Thoughtful journeys, trusted local partners, and stays that turn a few days away into a story worth keeping.', note: ['Start where', 'the light is warm.'], noteText: 'Personal routes across Egypt', image: '/images/Giza-Pyramid-Complex-Trip-1-e1668979516849.webp' },
+  { kicker: 'THE NILE, REIMAGINED', title: ['Follow the river', 'through time.'], text: 'Sail from ancient temples to quiet river mornings with a route shaped around Egypt’s most enduring stories.', note: ['Let the Nile', 'set the pace.'], noteText: 'Cairo, Luxor, and Aswan', image: '/images/Giza-Pyramid-Complex-Trip-1-e1668979516849.webp' },
+  { kicker: 'RED SEA ESCAPES', title: ['Find your blue', 'horizon.'], text: 'Trade the rush for reef mornings, warm water, and a few beautifully planned days by the Red Sea.', note: ['Stay close to', 'the open water.'], noteText: 'Hurghada, El Gouna, and Marsa Alam', image: '/images/HurghadaHulaHulaIslandFull-DayBoatTrip.webp' },
+  { kicker: 'DESERT & OASIS', title: ['Take the road', 'less hurried.'], text: 'Move through palm shade, desert light, and places where the best part of the day is simply having time.', note: ['Make room for', 'the unexpected.'], noteText: 'Siwa, Dahab, and Sinai', image: '/images/Tunis-Village-2.jpg' },
 ];
 
 const tripCities = ['Luxor', 'Aswan', 'Cairo', 'Hurghada', 'Siwa'];
