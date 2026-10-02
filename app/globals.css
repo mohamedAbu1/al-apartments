@@ -59,6 +59,9 @@ button, input { font:inherit; }
 .contact-card { position:sticky; top:1.5rem; }
 .dashboard-link { display:flex; align-items:center; gap:.65rem; border-radius:14px; padding:.75rem .85rem; color:#9aafb3; }
 .dashboard-link.active,.dashboard-link:hover { color:#eef7f5; background:rgba(30,232,183,.1); }
+.logout-button { display:inline-flex; align-items:center; justify-content:center; gap:.45rem; min-height:2.35rem; padding:.65rem .95rem; border:1px solid rgba(255,125,125,.3); border-radius:999px; color:#ffb6b6; background:rgba(255,100,100,.08); font-size:.7rem; font-weight:800; cursor:pointer; transition:background .2s ease,border-color .2s ease,transform .2s ease; }
+.logout-button:hover { border-color:rgba(255,125,125,.65); background:rgba(255,100,100,.15); transform:translateY(-1px); }
+.logout-button:disabled { cursor:not-allowed; opacity:.55; transform:none; }
 .dashboard-task { display:block; border:1px solid rgba(138,185,191,.14); background:rgba(4,22,35,.42); transition:transform .2s ease,border-color .2s ease,background .2s ease; }
 .dashboard-task:hover { transform:translateY(-3px); border-color:rgba(67,200,255,.5); background:rgba(18,57,76,.62); }
 .dashboard-list-item { display:flex; align-items:center; justify-content:space-between; gap:1rem; padding:.75rem; border:1px solid rgba(138,185,191,.12); border-radius:14px; }
