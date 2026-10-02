@@ -1192,6 +1192,111 @@ html[data-theme="light"] .journey-itinerary-item { background:#fff; border-color
 @media (max-width:620px) { .journey-itinerary-item summary { grid-template-columns:2.5rem 1fr auto; gap:.6rem; padding:.85rem; }.journey-itinerary-item summary strong { font-size:.7rem; }.journey-itinerary-item > div { padding:0 .85rem .9rem 3.95rem; }.journey-related-heading { align-items:flex-start; flex-direction:column; gap:1rem; }.journey-related-heading h2 { font-size:2.4rem; } }
 .montu-about-page { min-height:100vh; overflow:hidden; background:#06121e; color:#eef7f5; }.montu-about-hero { display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center; max-width:1240px; min-height:670px; margin:0 auto; padding:5rem 2rem 6rem; }.montu-about-hero-copy h1 { margin-top:1rem; font-family:'Playfair Display',serif; font-size:clamp(4rem,7vw,7.5rem); line-height:.84; letter-spacing:-.06em; }.montu-about-hero-copy h1 em,.montu-about-intro h2 em,.montu-about-story-copy h2 em,.montu-about-cta h2 em { color:#43c8ff; font-style:normal; }.montu-about-hero-copy > p { max-width:440px; margin-top:1.5rem; color:#aec3c6; font-size:.84rem; line-height:1.85; }.montu-about-actions { display:flex; align-items:center; gap:1.2rem; margin-top:2rem; }.montu-about-actions .primary-cta,.montu-about-cta .primary-cta { background:#43c8ff; color:#042332; }.montu-about-text-link { display:inline-flex; align-items:center; gap:.4rem; color:#b9d7d9; font-size:.66rem; font-weight:800; }.montu-about-text-link:hover { color:#43c8ff; }.montu-about-hero-art { position:relative; min-height:560px; }.montu-about-image { position:absolute; border:1px solid rgba(67,200,255,.3); background-position:center; background-size:cover; box-shadow:0 25px 65px rgba(0,0,0,.28); }.montu-about-image::after { position:absolute; inset:0; background:linear-gradient(0deg,rgba(3,18,31,.72),transparent 45%); content:''; }.montu-about-image span { position:absolute; z-index:1; bottom:1rem; left:1rem; color:#eaf7f4; font-size:.56rem; font-weight:900; letter-spacing:.15em; }.montu-about-image-large { inset:0 4rem 4rem 0; border-radius:28px; }.montu-about-image-small { right:0; bottom:0; width:48%; height:48%; border-radius:22px; }.montu-about-orbit { position:absolute; top:2rem; right:-1rem; display:grid; place-items:center; gap:.4rem; width:110px; height:110px; border:1px solid rgba(67,200,255,.4); border-radius:50%; color:#43c8ff; background:rgba(6,27,43,.86); text-align:center; transform:rotate(10deg); }.montu-about-orbit span { font-size:.48rem; font-weight:900; letter-spacing:.12em; }.montu-about-intro { display:grid; grid-template-columns:1fr 1fr; gap:4rem; max-width:1180px; margin:0 auto; padding:5rem 2rem; border-top:1px solid rgba(144,193,199,.14); }.montu-about-intro h2,.montu-about-story-copy h2 { margin-top:.8rem; font-family:'Playfair Display',serif; font-size:clamp(2.5rem,4.5vw,4.5rem); line-height:.9; letter-spacing:-.04em; }.montu-about-intro > p { align-self:end; max-width:500px; color:#9eb7ba; font-size:.78rem; line-height:1.9; }.montu-about-pillars { display:grid; grid-template-columns:repeat(3,1fr); gap:.7rem; max-width:1180px; margin:0 auto; padding:0 2rem 5rem; }.montu-about-pillars article { min-height:245px; padding:1.3rem; border:1px solid rgba(144,193,199,.15); border-radius:20px; background:linear-gradient(145deg,rgba(16,44,63,.75),rgba(9,27,42,.7)); }.montu-about-icon { display:grid; place-items:center; width:2.6rem; height:2.6rem; border:1px solid rgba(67,200,255,.35); border-radius:50%; color:#43c8ff; }.montu-about-pillars article > span { display:block; margin-top:1.3rem; color:#43c8ff; font-size:.56rem; font-weight:900; }.montu-about-pillars h3 { margin-top:.5rem; font-family:'Playfair Display',serif; font-size:1.45rem; }.montu-about-pillars p { margin-top:.6rem; color:#91adb1; font-size:.67rem; line-height:1.7; }.montu-about-story { display:grid; grid-template-columns:1.05fr .95fr; gap:4rem; align-items:center; max-width:1180px; margin:0 auto; padding:5rem 2rem; }.montu-about-story-image { min-height:500px; border-radius:28px; background-position:center; background-size:cover; box-shadow:0 25px 65px rgba(0,0,0,.24); }.montu-about-story-image span { display:inline-flex; margin:1.2rem; padding:.5rem .7rem; border:1px solid rgba(255,255,255,.3); border-radius:99px; background:rgba(3,18,31,.55); color:#fff; font-size:.56rem; font-weight:900; letter-spacing:.12em; }.montu-about-story-copy > p { max-width:470px; margin-top:1.1rem; color:#9eb7ba; font-size:.74rem; line-height:1.85; }.montu-about-story-copy .montu-about-text-link { margin-top:1.5rem; }.montu-about-proof { display:grid; grid-template-columns:repeat(3,1fr); gap:.7rem; max-width:1180px; margin:0 auto; padding:2rem; border-top:1px solid rgba(144,193,199,.14); border-bottom:1px solid rgba(144,193,199,.14); }.montu-about-proof > div { display:grid; grid-template-columns:auto 1fr; gap:.3rem .7rem; padding:1rem; }.montu-about-proof svg { grid-row:span 2; color:#43c8ff; }.montu-about-proof strong { font-size:.72rem; }.montu-about-proof span { color:#91adb1; font-size:.6rem; line-height:1.5; }.montu-about-cta { max-width:1180px; margin:4rem auto; padding:4rem 2rem; border:1px solid rgba(67,200,255,.25); border-radius:26px; background:linear-gradient(110deg,rgba(17,63,82,.8),rgba(8,29,45,.86)); }.montu-about-cta h2 { margin-top:.7rem; font-family:'Playfair Display',serif; font-size:clamp(2.8rem,5vw,5rem); line-height:.88; }.montu-about-cta p { margin-top:1rem; color:#a5c0c3; font-size:.75rem; }.montu-about-cta > div { display:flex; align-items:center; gap:1.2rem; margin-top:1.7rem; }
 html[data-theme="light"] .montu-about-page { background:var(--page-bg); color:var(--page-text); }.montu-about-page .eyebrow { color:#43c8ff; } html[data-theme="light"] .montu-about-hero-copy > p,html[data-theme="light"] .montu-about-intro > p,html[data-theme="light"] .montu-about-story-copy > p { color:#55727a; } html[data-theme="light"] .montu-about-pillars article { border-color:var(--page-border); background:#fff; box-shadow:0 15px 35px rgba(20,75,87,.06); } html[data-theme="light"] .montu-about-pillars p,html[data-theme="light"] .montu-about-proof span { color:#55727a; } html[data-theme="light"] .montu-about-text-link { color:#285761; } html[data-theme="light"] .montu-about-proof { border-color:var(--page-border); } html[data-theme="light"] .montu-about-cta { border-color:var(--page-border); background:linear-gradient(110deg,#d9ece8,#c5e3df); } html[data-theme="light"] .montu-about-cta p { color:#55727a; }
+
+/* Final Light mode contrast pass: keep readable text, controls, and feedback states
+   consistent across every page instead of inheriting dark-mode literals. */
+html[data-theme="light"] .eyebrow,
+html[data-theme="light"] .travel-studio-kicker,
+html[data-theme="light"] .section-kicker,
+html[data-theme="light"] .trip-builder-page .eyebrow,
+html[data-theme="light"] .journey-detail-page .eyebrow,
+html[data-theme="light"] .b2b-page .eyebrow,
+html[data-theme="light"] .travel-card-link { color:#087fbd; }
+
+html[data-theme="light"] .travel-studio-page .travel-section-heading > p,
+html[data-theme="light"] .travel-studio-page .travel-service-section > div:first-child p,
+html[data-theme="light"] .travel-studio-page .travel-journey-body p,
+html[data-theme="light"] .travel-studio-page .travel-journey-body > div span,
+html[data-theme="light"] .travel-studio-page .travel-service-grid p,
+html[data-theme="light"] .travel-studio-page .travel-studio-newsletter p { color:#4c6870; }
+
+html[data-theme="light"] .travel-journey-body h3,
+html[data-theme="light"] .travel-service-grid strong,
+html[data-theme="light"] .travel-category-card strong,
+html[data-theme="light"] .travel-destination-card strong { color:#122833; }
+
+html[data-theme="light"] .travel-journey-body > div,
+html[data-theme="light"] .travel-service-grid article,
+html[data-theme="light"] .travel-category-card,
+html[data-theme="light"] .travel-destination-card { border-color:var(--page-border); }
+
+html[data-theme="light"] .travel-category-icon { background:rgba(255,255,255,.84); border-color:rgba(8,127,189,.35); }
+html[data-theme="light"] .travel-app-promo-art { background:linear-gradient(145deg,#d9ece8,#c5e3df); }
+html[data-theme="light"] .travel-app-promo-art svg { color:#087fbd; }
+
+html[data-theme="light"] .trip-builder-hero,
+html[data-theme="light"] .trip-results-hero { color:#eef7f5; }
+html[data-theme="light"] .trip-builder-hero h1,
+html[data-theme="light"] .trip-results-hero h1 { color:#f4fbfa; }
+html[data-theme="light"] .trip-builder-hero h1 em,
+html[data-theme="light"] .trip-results-hero h1 em { color:#43c8ff; }
+html[data-theme="light"] .trip-builder-hero p,
+html[data-theme="light"] .trip-results-hero p { color:#d2e4e3; }
+
+html[data-theme="light"] .trip-builder-step h3,
+html[data-theme="light"] .trip-builder-step h4,
+html[data-theme="light"] .trip-builder-step > p,
+html[data-theme="light"] .trip-builder-page .trip-builder-top h2,
+html[data-theme="light"] .trip-builder-page .trip-builder-step label,
+html[data-theme="light"] .trip-builder-page .trip-travelers-control strong { color:var(--page-text); }
+html[data-theme="light"] .trip-builder-page .trip-builder-step > p,
+html[data-theme="light"] .trip-builder-page .trip-date-fields label,
+html[data-theme="light"] .trip-builder-page .trip-detail-selects label,
+html[data-theme="light"] .trip-builder-page .trip-notes-label,
+html[data-theme="light"] .trip-builder-page .trip-travelers-control small { color:var(--page-muted); }
+html[data-theme="light"] .trip-builder-page .trip-builder-back { color:#285761; border-color:var(--page-border); background:#fff; }
+html[data-theme="light"] .trip-builder-page .trip-detail-selects select,
+html[data-theme="light"] .trip-builder-page .trip-date-fields input,
+html[data-theme="light"] .trip-builder-page .trip-notes-label textarea { color:var(--page-text); background:var(--page-surface-soft); border-color:var(--page-border); }
+html[data-theme="light"] .trip-builder-page .trip-detail-selects select option { color:var(--page-text); background:#fff; }
+html[data-theme="light"] .trip-builder-page .trip-live-summary { background:linear-gradient(145deg,#fff,#e6f2ef); border-color:var(--page-border); }
+html[data-theme="light"] .trip-builder-page .trip-live-summary h3,
+html[data-theme="light"] .trip-builder-page .trip-live-summary > span:not(.eyebrow) { color:var(--page-text); }
+html[data-theme="light"] .trip-builder-page .trip-live-summary > p,
+html[data-theme="light"] .trip-builder-page .trip-summary-note { color:var(--page-muted); }
+
+html[data-theme="light"] .site-reviews-section .site-review-card,
+html[data-theme="light"] .site-reviews-section .site-review-form,
+html[data-theme="light"] .site-reviews-section .site-reviews-empty { border-color:var(--page-border); background:var(--page-surface); color:var(--page-text); }
+html[data-theme="light"] .site-review-card-top strong,
+html[data-theme="light"] .site-review-form > div:first-child strong,
+html[data-theme="light"] .site-reviews-empty strong { color:var(--page-text); }
+html[data-theme="light"] .site-review-card-top small,
+html[data-theme="light"] .site-review-card p,
+html[data-theme="light"] .site-review-form > div:first-child small,
+html[data-theme="light"] .site-reviews-empty span,
+html[data-theme="light"] .site-review-message { color:var(--page-muted); }
+html[data-theme="light"] .site-review-form textarea { color:var(--page-text); background:var(--page-surface-soft); border-color:var(--page-border); }
+html[data-theme="light"] .site-review-form textarea::placeholder { color:#6b858b; }
+html[data-theme="light"] .site-review-login { color:#087fbd; border-color:rgba(8,127,189,.28); }
+
+html[data-theme="light"] .journey-detail-page .journey-detail-intro h1,
+html[data-theme="light"] .journey-detail-page .journey-section-heading h2,
+html[data-theme="light"] .journey-detail-page .journey-inclusive-section h2,
+html[data-theme="light"] .journey-detail-page .journey-reviews-section h2 { color:var(--page-text); }
+html[data-theme="light"] .journey-detail-page .journey-book-note,
+html[data-theme="light"] .journey-detail-page .journey-calendar-note,
+html[data-theme="light"] .journey-detail-page .journey-review-list p,
+html[data-theme="light"] .journey-detail-page .journey-review-list small { color:var(--page-muted); }
+html[data-theme="light"] .journey-detail-page .journey-review-list article,
+html[data-theme="light"] .journey-detail-page .journey-review-form { background:var(--page-surface-soft); border-color:var(--page-border); }
+html[data-theme="light"] .journey-detail-page .journey-review-form textarea { color:var(--page-text); background:#fff; border-color:var(--page-border); }
+html[data-theme="light"] .journey-detail-page .journey-calendar-grid button { color:var(--page-text); }
+html[data-theme="light"] .journey-detail-page .journey-calendar-grid button:disabled { color:#8ca1a5; }
+
+html[data-theme="light"] .header-user { color:var(--page-text); background:rgba(255,255,255,.82); border-color:var(--page-border); }
+html[data-theme="light"] .header-user-copy strong { color:var(--page-text); }
+html[data-theme="light"] .header-user-copy small { color:var(--page-muted); }
+html[data-theme="light"] .logout-button { color:#a13d45; border-color:rgba(161,61,69,.28); background:rgba(213,84,95,.08); }
+html[data-theme="light"] .logout-button:hover { border-color:rgba(161,61,69,.5); background:rgba(213,84,95,.14); }
+
+html[data-theme="light"] .travel-car-booking-form { background:rgba(255,255,255,.94); border-color:var(--page-border); box-shadow:0 18px 45px rgba(20,75,87,.16); }
+html[data-theme="light"] .travel-car-form-title strong,
+html[data-theme="light"] .travel-car-booking-form label { color:var(--page-text); }
+html[data-theme="light"] .travel-car-form-title small { color:var(--page-muted); }
+html[data-theme="light"] .travel-car-booking-form input,
+html[data-theme="light"] .travel-car-booking-form select { color:var(--page-text); background:var(--page-surface-soft); border-color:var(--page-border); }
+html[data-theme="light"] .travel-car-booking-form select option { color:var(--page-text); background:#fff; }
 @media (max-width:800px) { .montu-about-hero { grid-template-columns:1fr; min-height:0; gap:2rem; padding:4rem 1.2rem 3rem; }.montu-about-hero-copy h1 { font-size:4.5rem; }.montu-about-hero-art { min-height:440px; }.montu-about-intro,.montu-about-story { grid-template-columns:1fr; gap:1.5rem; padding:4rem 1.2rem; }.montu-about-pillars { grid-template-columns:1fr; padding-inline:1.2rem; }.montu-about-story-image { min-height:360px; }.montu-about-proof { grid-template-columns:1fr; padding-inline:1.2rem; }.montu-about-cta { margin:2rem 1.2rem; padding:2.5rem 1.2rem; }.montu-about-cta > div,.montu-about-actions { align-items:flex-start; flex-direction:column; gap:.9rem; } }
  .journey-review-content { grid-column:1 / -1; display:grid; gap:1rem; margin-top:.4rem; }
  .journey-review-list { display:grid; grid-template-columns:repeat(2,1fr); gap:.6rem; }
