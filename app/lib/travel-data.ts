@@ -8,7 +8,7 @@ export type TravelTaxonomyItem = { id: string; name: string; image: string; trip
 
 function parseJson(value: string | null, fallback: unknown = {}) { if (!value) return fallback; try { return JSON.parse(value); } catch { return fallback; } }
 function localized(value: string | null, fallback = '') { const parsed = parseJson(value, value || fallback) as Record<string, string> | string; if (typeof parsed === 'string') return parsed || fallback; return parsed.en || parsed.ar || parsed.de || Object.values(parsed).find(Boolean) || fallback; }
-const legacyImageHosts = new Set(['onetimelifetravel.com', 'www.onetimelifetravel.com', 'wasettravel.com', 'www.wasettravel.com']);
+const localImageHosts = new Set(['montutraveleg.com', 'www.montutraveleg.com', 'onetimelifetravel.com', 'www.onetimelifetravel.com', 'wasettravel.com', 'www.wasettravel.com']);
 
 /**
  * The imported catalog contains image URLs from the previous site. Keep URLs
@@ -22,9 +22,9 @@ function imageUrl(value: string) {
 
   try {
     const parsed = new URL(source);
-    if (legacyImageHosts.has(parsed.hostname.toLowerCase())) {
-      const filename = decodeURIComponent(parsed.pathname.split('/').pop() || '');
-      return filename ? `/images/${encodeURIComponent(filename)}` : '';
+    if (localImageHosts.has(parsed.hostname.toLowerCase()) && parsed.pathname.includes('/images/')) {
+      const imagePath = parsed.pathname.slice(parsed.pathname.indexOf('/images/') + '/images/'.length);
+      return imagePath ? `/images/${imagePath.split('/').map((part) => encodeURIComponent(decodeURIComponent(part))).join('/')}` : '';
     }
   } catch {
     // Preserve non-URL values so a valid relative or CDN path is not lost.
