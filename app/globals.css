@@ -738,10 +738,14 @@ select { appearance:none; min-height:2.65rem; padding:.7rem 2.35rem .7rem .85rem
 select:hover { border-color:rgba(67,200,255,.65); background-color:rgba(12,45,62,.8); }
 select:focus-visible { border-color:#43c8ff; box-shadow:0 0 0 3px rgba(67,200,255,.16); }
 select option { background:#0c2334; color:#eef7f5; }
+select:disabled { cursor:not-allowed; opacity:.55; }
+select:invalid { color:#8fa9ae; }
+select option:checked { background:#43c8ff; color:#042332; }
 html[data-theme="light"] select { border-color:var(--page-border); background-color:#fff; color:var(--page-text); background-image:linear-gradient(45deg,transparent 50%,#087fbd 50%),linear-gradient(135deg,#087fbd 50%,transparent 50%); }
 html[data-theme="light"] select option { background:#fff; color:#122833; }
 .trip-planner-card select,.trip-request-form select,.travel-car-booking-form select { border-color:rgba(144,193,199,.16); background-color:rgba(3,18,31,.28); }
 .trip-planner-card select { min-height:0; padding:.1rem 1.8rem .1rem 0; border:0; background-color:transparent; background-position:calc(100% - 8px) 50%,calc(100% - 3px) 50%; }
+.trip-planner-card select:focus-visible { box-shadow:0 0 0 3px rgba(67,200,255,.16); border-radius:6px; }
 
 .site-reviews-section { max-width:1180px; margin:5rem auto 0; padding:3.3rem 2rem; border-top:1px solid rgba(67,200,255,.14); border-bottom:1px solid rgba(67,200,255,.14); }
 .site-reviews-heading { display:flex; align-items:end; justify-content:space-between; gap:2rem; }
