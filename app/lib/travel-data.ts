@@ -3,6 +3,8 @@ import type { TripPackage } from '../data';
 
 type DbTrip = { id: string; title: string | null; description: string | null; cover_image: string | null; solo_price: number | string | null; group_price: number | string | null; duration: number | null; duration_unit: string | null; currency: string | null; gallery_images: string | null; category_names: string | null; city_names: string | null; review_count: number | string | null; average_rating: number | string | null };
 type DbDay = { trip_id: string; day_number: number; activities: string | null };
+type DbTaxonomy = { id: string; name: string | null; images: string | null };
+export type TravelTaxonomyItem = { id: string; name: string; image: string; tripCount: number };
 
 function parseJson(value: string | null, fallback: unknown = {}) { if (!value) return fallback; try { return JSON.parse(value); } catch { return fallback; } }
 function localized(value: string | null, fallback = '') { const parsed = parseJson(value, value || fallback) as Record<string, string> | string; if (typeof parsed === 'string') return parsed || fallback; return parsed.en || parsed.ar || parsed.de || Object.values(parsed).find(Boolean) || fallback; }
@@ -30,6 +32,15 @@ function imageUrl(value: string) {
 
   return source;
 }
+function firstImage(value: string | null) {
+  const parsed = parseJson(value, value || '');
+  const candidates = Array.isArray(parsed) ? parsed : [parsed];
+  for (const candidate of candidates) {
+    const raw = typeof candidate === 'string' ? candidate : candidate && typeof candidate === 'object' ? (candidate as { url?: string; image?: string; src?: string }).url || (candidate as { image?: string }).image || (candidate as { src?: string }).src : '';
+    if (raw) return imageUrl(raw);
+  }
+  return '';
+}
 function toPrice(value: number | string | null) { const price = Number(value || 0); return Number.isFinite(price) ? price : 0; }
 
 function mapTrip(row: DbTrip, days: DbDay[] = []): TripPackage {
@@ -52,5 +63,17 @@ async function queryTrips(id?: string) {
 }
 async function queryDays(tripId: string) { return prisma.$queryRawUnsafe<DbDay[]>(`SELECT td.trip_id, td.day_number, GROUP_CONCAT(JSON_UNQUOTE(JSON_EXTRACT(da.activity_translations, '$.en')) ORDER BY da.time SEPARATOR ' · ') AS activities FROM trip_days td LEFT JOIN day_activities da ON da.day_id = td.id WHERE td.trip_id = ${JSON.stringify(tripId)} GROUP BY td.trip_id, td.day_number ORDER BY td.day_number`); }
 
+async function queryTaxonomy(table: 'categories' | 'cities', joinTable: 'trip_categories' | 'trip_cities', foreignKey: 'category_id' | 'city_id') {
+  return prisma.$queryRawUnsafe<Array<DbTaxonomy & { trip_count: number | string }>>(`SELECT x.id, x.name, x.images, COUNT(DISTINCT j.trip_id) AS trip_count FROM ${table} x LEFT JOIN ${joinTable} j ON j.${foreignKey} = x.id GROUP BY x.id ORDER BY trip_count DESC, x.created_at DESC`);
+}
+
 export async function getTravelTrips() { const rows = await queryTrips(); const days = await Promise.all(rows.map((row) => queryDays(row.id))); return rows.map((row, index) => mapTrip(row, days[index])); }
 export async function getTravelTrip(id: string) { const rows = await queryTrips(id); if (rows[0]) return mapTrip(rows[0], await queryDays(id)); return undefined; }
+export async function getTravelTaxonomy() {
+  const [categoryRows, cityRows] = await Promise.all([
+    queryTaxonomy('categories', 'trip_categories', 'category_id'),
+    queryTaxonomy('cities', 'trip_cities', 'city_id'),
+  ]);
+  const map = (row: DbTaxonomy & { trip_count: number | string }): TravelTaxonomyItem => ({ id: row.id, name: localized(row.name, 'Egypt'), image: firstImage(row.images), tripCount: Number(row.trip_count || 0) });
+  return { categories: categoryRows.map(map), cities: cityRows.map(map) };
+}
