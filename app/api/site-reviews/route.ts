@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../lib/prisma';
+import { ensureSiteReviewsTable } from '../../lib/site-reviews';
 
 export async function GET() {
   try {
+    await ensureSiteReviewsTable();
     const reviews = await prisma.$queryRawUnsafe<Array<{ id: string; name: string; comment: string; rating: number; avatar_url: string | null; created_at: Date }>>(`SELECT id, name, comment, rating, avatar_url, created_at FROM site_reviews WHERE status = 'published' ORDER BY created_at DESC LIMIT 12`);
     return NextResponse.json({ reviews });
   } catch (error) {
@@ -16,6 +18,7 @@ export async function POST(request: NextRequest) {
   if (!token) return NextResponse.json({ message: 'Please sign in before sharing a review.' }, { status: 401 });
 
   try {
+    await ensureSiteReviewsTable();
     const session = await prisma.authSession.findUnique({ where: { token }, include: { user: true } });
     if (!session || session.expiresAt <= new Date()) return NextResponse.json({ message: 'Your session has expired.' }, { status: 401 });
     const body = await request.json() as { comment?: string; rating?: number };
