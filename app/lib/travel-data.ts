@@ -6,7 +6,30 @@ type DbDay = { trip_id: string; day_number: number; activities: string | null };
 
 function parseJson(value: string | null, fallback: unknown = {}) { if (!value) return fallback; try { return JSON.parse(value); } catch { return fallback; } }
 function localized(value: string | null, fallback = '') { const parsed = parseJson(value, value || fallback) as Record<string, string> | string; if (typeof parsed === 'string') return parsed || fallback; return parsed.en || parsed.ar || parsed.de || Object.values(parsed).find(Boolean) || fallback; }
-function imageUrl(value: string) { return value.replace('/iamges/', '/images/'); }
+const legacyImageHosts = new Set(['onetimelifetravel.com', 'www.onetimelifetravel.com', 'wasettravel.com', 'www.wasettravel.com']);
+
+/**
+ * The imported catalog contains image URLs from the previous site. Keep URLs
+ * from other providers intact, but transparently serve legacy catalog images
+ * from this deployment when their filename is available in public/images.
+ */
+function imageUrl(value: string) {
+  const source = value.trim().replace('/iamges/', '/images/');
+  if (!source) return '';
+  if (source.startsWith('/images/')) return source;
+
+  try {
+    const parsed = new URL(source);
+    if (legacyImageHosts.has(parsed.hostname.toLowerCase())) {
+      const filename = decodeURIComponent(parsed.pathname.split('/').pop() || '');
+      return filename ? `/images/${encodeURIComponent(filename)}` : '';
+    }
+  } catch {
+    // Preserve non-URL values so a valid relative or CDN path is not lost.
+  }
+
+  return source;
+}
 function toPrice(value: number | string | null) { const price = Number(value || 0); return Number.isFinite(price) ? price : 0; }
 
 function mapTrip(row: DbTrip, days: DbDay[] = []): TripPackage {
