@@ -30,7 +30,7 @@ export default async function JourneyPage({ params }: { params: Promise<{ id: st
     return sharedCities.length >= 2;
   }).slice(0, 3);
   const whatsappMessage = `Hello Montu Travel, I would like to plan "${trip.title}". Please share availability, dates, and the final quote.`;
-  const whatsappHref = `https://wa.me/201222987370?text=${encodeURIComponent(whatsappMessage)}`;
+  const whatsappHref = `https://wa.me/201038822537?text=${encodeURIComponent(whatsappMessage)}`;
   const facts = [
     { label: 'Duration', value: trip.duration, icon: Clock3 },
     { label: 'Travel style', value: trip.travelStyle || 'Private journey', icon: ShieldCheck },
@@ -65,7 +65,7 @@ export default async function JourneyPage({ params }: { params: Promise<{ id: st
           <section className="journey-reviews-section"><div><span className="eyebrow">✦ TRAVELLER VOICES</span><h2>Reviews &amp; ratings.</h2><p>{hasReviews ? 'Real stories from guests who experienced this journey.' : 'This journey is newly curated. Guest reviews will appear here after the first stays.'}</p></div><div className="journey-review-empty">{hasReviews ? <><div className="journey-review-stars"><Star size={18} fill="currentColor" /><Star size={18} fill="currentColor" /><Star size={18} fill="currentColor" /><Star size={18} fill="currentColor" /><Star size={18} fill="currentColor" /></div><strong>{trip.rating} guest rating</strong></> : <strong>No reviews yet</strong>}<span>{hasReviews ? 'Share your experience with future travellers.' : 'Be the first to share your experience of this route.'}</span><Link href="/login"><Link2 size={14} /> Sign in to write a review</Link></div></section>
           <section className="journey-faq-section"><span className="eyebrow">BEFORE YOU BOOK</span><h2>Questions, answered.</h2><div>{faqs.map((faq) => <details key={faq.question}><summary>{faq.question}<span>+</span></summary><p>{faq.answer}</p></details>)}</div></section>
         </div>
-        <JourneyBookingWidget title={trip.title} priceValue={trip.priceValue} priceLabel={trip.price} whatsappBase="https://wa.me/201222987370" />
+        <JourneyBookingWidget title={trip.title} priceValue={trip.priceValue} priceLabel={trip.price} whatsappBase="https://wa.me/201038822537" />
       </section>
       {relatedTrips.length > 0 && <section className="journey-related-section"><div className="journey-related-heading"><div><span className="eyebrow">MORE IN THIS STORY</span><h2>Similar journeys<br /><em>to consider.</em></h2></div><Link href="/search?mode=trip" className="journey-related-all">View all journeys <ArrowRight size={14} /></Link></div><div className="journey-related-grid">{relatedTrips.map((item) => <article className="journey-related-card" key={item.id}><div className="journey-related-image" style={{ backgroundImage: `url(${item.gallery?.[0] || item.image})` }}><span>{item.category}</span><strong><Star size={13} fill="currentColor" /> {item.rating}</strong></div><div className="journey-related-body"><span><MapPin size={13} /> {item.route}</span><h3>{item.title}</h3><p>{item.description}</p><div><strong>{item.price}</strong><Link href={`/travel/journey/${item.id}`}>View journey <ArrowRight size={14} /></Link></div></div></article>)}</div></section>}
     </div>

@@ -71,7 +71,7 @@ export default function TravelLanding() {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const message = `Hello Montu Travel, I would like to request a car transfer. Pick-up: ${data.get('pickup')}; Drop-off: ${data.get('dropoff')}; Date: ${data.get('carDate')}; Time: ${data.get('carTime')}; Passengers: ${data.get('passengers')}.`;
-    window.open(`https://wa.me/201222987370?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
+    window.open(`https://wa.me/201038822537?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
   };
 
   useEffect(() => {

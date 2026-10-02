@@ -9,7 +9,7 @@ export default async function AboutPage({ searchParams }: { searchParams: Promis
   const mode = (await searchParams).mode;
   const section: AppSection | 'default' = mode === 'trip' || mode === 'stay' || mode === 'buy-home' || mode === 'land' ? mode : 'default';
   if (section === 'land' || section === 'stay' || section === 'buy-home') return <LegacyAbout section={section} />;
-  const whatsappHref = 'https://wa.me/201222987370?text=Hello%20Montu%20Travel%2C%20I%27d%20like%20to%20learn%20more%20about%20planning%20a%20journey.';
+  const whatsappHref = 'https://wa.me/201038822537?text=Hello%20Montu%20Travel%2C%20I%27d%20like%20to%20learn%20more%20about%20planning%20a%20journey.';
 
   return <main className="montu-about-page">
     <SiteHeader section={section === 'default' ? 'default' : 'trip'} />
