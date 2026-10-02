@@ -26,3 +26,7 @@ export default async function AboutPage({ searchParams }: { searchParams: Promis
 function LegacyAbout({ section }: { section: AppSection }) {
   return <InnerPage section={section} eyebrow="OUR STORY" title={<>Travel should<br /><em>feel like you.</em></>} description="Montu Travel brings together thoughtful places, local experiences, and the confidence to go somewhere new." cards={[{ title: 'Curated with care', text: 'Every place is selected for the details that make a stay feel special.', image: '/images/old-cairo-district.jpg' }, { title: 'People first', text: 'We believe the best journeys begin with a human recommendation.', image: '/images/Khan-el-Khalili.webp' }, { title: 'Built for discovery', text: 'A calmer way to find the places you have been looking for.', image: '/images/Tunis-Village-2.jpg' }]} />;
 }
+import type { Metadata } from 'next';
+import { createPageMetadata } from '../lib/seo';
+
+export const metadata: Metadata = createPageMetadata({ title: 'About Montu Travel', description: 'Learn how Montu Travel creates thoughtful Egypt journeys with trusted local partners and human planning.', path: '/about' });

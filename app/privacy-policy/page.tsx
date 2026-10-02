@@ -13,3 +13,7 @@ const sections = [
 export default function PrivacyPolicyPage() {
   return <main className="inner-page"><SiteHeader section="trip"/><section className="legal-page"><span className="eyebrow">MONTU TRAVEL · YOUR PRIVACY</span><h1>Privacy <em>policy.</em></h1><p className="legal-lead">A clear explanation of how Montu Travel collects, uses, and protects information when you explore Egypt with us.</p><div className="legal-meta"><span>Effective date</span><strong>October 2, 2026</strong></div>{sections.map(([title, text]) => <section key={title}><h2>{title}</h2><p>{text}</p></section>)}<section><h2>Contact the owner</h2><p>If you have a privacy question or want to exercise your rights, contact the owner directly:</p><ul><li><strong>Owner:</strong> Ahmed Youssef Awad</li><li><strong>Phone / WhatsApp:</strong> <a href="https://wa.me/201038822537">+20 10 3882 2537</a></li><li><strong>Email:</strong> <a href="mailto:info@montutraveleg.com">info@montutraveleg.com</a></li></ul></section></section><SiteFooter section="trip"/></main>;
 }
+import type { Metadata } from 'next';
+import { createPageMetadata } from '../lib/seo';
+
+export const metadata: Metadata = createPageMetadata({ title: 'Privacy Policy', description: 'Read how Montu Travel handles personal data, preferences, enquiries, and account information.', path: '/privacy-policy' });

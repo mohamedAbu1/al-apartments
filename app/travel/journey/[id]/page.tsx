@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { Accessibility, ArrowLeft, ArrowRight, BedDouble, CalendarDays, Check, Clock3, Handshake, Heart, MapPin, MessageCircle, ShieldCheck, Star, Users, Utensils, X } from 'lucide-react';
 import { notFound } from 'next/navigation';
 import SiteFooter from '../../../components/site-footer';
@@ -7,8 +8,16 @@ import JourneyGallery from '../../../components/journey-gallery';
 import JourneyBookingWidget from '../../../components/journey-booking-widget';
 import JourneyReviewForm from '../../../components/journey-review-form';
 import { getTravelTrip, getTravelTrips } from '../../../lib/travel-data';
+import { absoluteUrl, createPageMetadata } from '../../../lib/seo';
 
 export function generateStaticParams() { return []; }
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const trip = await getTravelTrip(id);
+  if (!trip) return createPageMetadata({ title: 'Egypt Journey', path: `/travel/journey/${id}` });
+  return createPageMetadata({ title: trip.title, description: trip.description, path: `/travel/journey/${id}`, image: trip.image ? (trip.image.startsWith('http') ? trip.image : absoluteUrl(trip.image)) : '/icon.svg' });
+}
 
 export default async function JourneyPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;

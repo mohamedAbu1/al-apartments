@@ -1,8 +1,10 @@
 import { ArrowRight, Bath, BedDouble, FileCheck2, Hammer, LandPlot, MapPin, Maximize, Ruler, ShieldCheck, Sparkles, Trees, Waves } from 'lucide-react';
 import Link from 'next/link';
+import type { Metadata } from 'next';
 import { properties, propertySection } from '../../data';
 import BookingActions from '../../components/booking-actions';
 import SiteHeader from '../../components/site-header';
+import { createPageMetadata } from '../../lib/seo';
 
 type DetailMode = 'land' | 'home' | 'stay' | 'commercial';
 function modeFor(property: typeof properties[number]): DetailMode { const section = propertySection(property); return section === 'land' ? 'land' : property.type.toLowerCase().includes('commercial') ? 'commercial' : section === 'stay' ? 'stay' : 'home'; }
@@ -13,6 +15,13 @@ const modeContent = {
   stay: { label: 'STAY PROFILE', eyebrow: 'THE STAY EDIT', title: 'A place that makes the trip feel easy.', description: 'See the space, setting, and essentials before you request the stay that fits your dates and rhythm.', action: 'Request this stay', alternatives: 'Stays for the same kind of escape', alternativesText: 'Similar available stays matched by rental status, type, and destination.', map: 'Nearby places and arrival context', accent: 'detail-stay' },
 };
 function DetailStat({ icon, value, label }: { icon: React.ReactNode; value: string; label: string }) { return <div className="detail-stat"><span>{icon}</span><strong>{value}</strong><small>{label}</small></div>; }
+
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const property = properties.find((item) => item.id === id);
+  if (!property) return createPageMetadata({ title: 'Property details', path: `/property/${id}` });
+  return createPageMetadata({ title: property.title, description: property.description, path: `/property/${id}`, image: property.image });
+}
 
 export default async function PropertyPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params; const property = properties.find((item) => item.id === id) || properties[0]; const detailMode = modeFor(property); const content = modeContent[detailMode];
