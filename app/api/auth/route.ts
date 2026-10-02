@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '../../lib/prisma';
 import { hashPassword, verifyPassword } from '../../lib/password';
 
-const ADMIN_EMAIL = 'mohamedahmed33m11@gmail.com';
+const ADMIN_EMAIL = 'montutravel96@gmail.com';
 const SESSION_DAYS = 30;
 const text = (value: unknown) => typeof value === 'string' ? value.trim() : '';
 const error = (message: string, code: string, status: number) => NextResponse.json({ message, code }, { status });
@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
       }});
     } else {
       if (!user || !(await verifyPassword(password, user.passwordHash))) return error('Email or password is incorrect.', 'invalid_credentials', 401);
-      if (user.email === ADMIN_EMAIL && user.role !== 'admin') user = await prisma.user.update({ where: { id: user.id }, data: { role: 'admin' } });
+      if (user.role !== role) user = await prisma.user.update({ where: { id: user.id }, data: { role } });
     }
 
     const expiresAt = new Date(Date.now() + SESSION_DAYS * 24 * 60 * 60 * 1000);

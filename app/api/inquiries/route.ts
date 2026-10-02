@@ -3,12 +3,13 @@ import { prisma } from '../../lib/prisma';
 
 const text = (value: unknown) => typeof value === 'string' ? value.trim() : '';
 const emailPattern = /^\S+@\S+\.\S+$/;
+const ADMIN_EMAIL = 'montutravel96@gmail.com';
 
 export async function GET(request: NextRequest) {
   const token = request.cookies.get('montu-travel-session')?.value;
   if (!token) return NextResponse.json({ message: 'Authentication required.' }, { status: 401 });
   const session = await prisma.authSession.findUnique({ where: { token }, include: { user: true } });
-  if (!session || session.expiresAt <= new Date() || session.user.role !== 'admin') return NextResponse.json({ message: 'Admin access required.' }, { status: 403 });
+  if (!session || session.expiresAt <= new Date() || session.user.email.toLowerCase() !== ADMIN_EMAIL) return NextResponse.json({ message: 'Admin access required.' }, { status: 403 });
   const inquiries = await prisma.inquiry.findMany({ orderBy: { createdAt: 'desc' }, take: 100 });
   return NextResponse.json({ inquiries });
 }
