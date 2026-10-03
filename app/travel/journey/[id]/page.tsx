@@ -9,19 +9,22 @@ import JourneyBookingWidget from '../../../components/journey-booking-widget';
 import JourneyReviewForm from '../../../components/journey-review-form';
 import { getTravelTrip, getTravelTrips } from '../../../lib/travel-data';
 import { absoluteUrl, createPageMetadata } from '../../../lib/seo';
+import { cookies } from 'next/headers';
 
 export function generateStaticParams() { return []; }
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
-  const trip = await getTravelTrip(id);
+  const language = (await cookies()).get('montu-travel-language')?.value === 'ar' ? 'ar' : 'en';
+  const trip = await getTravelTrip(id, language);
   if (!trip) return createPageMetadata({ title: 'Egypt Journey', path: `/travel/journey/${id}` });
   return createPageMetadata({ title: trip.title, description: trip.description, path: `/travel/journey/${id}`, image: trip.image ? (trip.image.startsWith('http') ? trip.image : absoluteUrl(trip.image)) : '/icon.svg' });
 }
 
 export default async function JourneyPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const trip = await getTravelTrip(id);
+  const language = (await cookies()).get('montu-travel-language')?.value === 'ar' ? 'ar' : 'en';
+  const trip = await getTravelTrip(id, language);
   if (!trip) notFound();
 
   const gallery = trip.gallery?.length ? trip.gallery : [trip.image];
@@ -33,7 +36,7 @@ export default async function JourneyPage({ params }: { params: Promise<{ id: st
   const highlightItems = trip.highlights.split(' · ');
   const hasReviews = Boolean(trip.reviewCount);
   const currentCities = trip.route.toLowerCase().split(/·|→/).map((city) => city.trim()).filter(Boolean);
-  const catalog = await getTravelTrips();
+  const catalog = await getTravelTrips(language);
   const relatedTrips = catalog.filter((item) => {
     if (item.id === trip.id || item.category !== trip.category) return false;
     const sharedCities = item.route.toLowerCase().split(/·|→/).map((city) => city.trim()).filter((city) => currentCities.includes(city));

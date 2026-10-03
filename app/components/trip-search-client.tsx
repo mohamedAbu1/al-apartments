@@ -5,6 +5,7 @@ import { ArrowRight, Check, ChevronDown, Clock3, Grid2X2, Heart, List, MapPin, R
 import { useEffect, useMemo, useState } from 'react';
 import type { TripPackage } from '../data';
 import SiteFooter from './site-footer';
+import { languages } from '../i18n';
 import SiteHeader from './site-header';
 
 type TripFilters = { search: string; category: string; duration: string; budget: string; rating: string; sort: string };
@@ -19,7 +20,17 @@ function matchesBudget(price: number, budget: string) { return budget === 'all' 
 export default function TripSearchClient() {
   const [tripPackages, setTripPackages] = useState<TripPackage[]>([]);
   const [catalogLoading, setCatalogLoading] = useState(true);
-  useEffect(() => { fetch('/api/trips', { cache: 'no-store' }).then((response) => response.ok ? response.json() : Promise.reject(new Error('Travel catalog unavailable'))).then((result) => setTripPackages(result.trips || [])).catch(() => setTripPackages([])).finally(() => setCatalogLoading(false)); }, []);
+  useEffect(() => {
+    const loadCatalog = () => {
+      const savedLanguage = window.localStorage.getItem('montu-travel-language');
+      const language = languages.some((item) => item.code === savedLanguage) ? savedLanguage : 'en';
+      setCatalogLoading(true);
+      fetch(`/api/trips?lang=${language}`, { cache: 'no-store' }).then((response) => response.ok ? response.json() : Promise.reject(new Error('Travel catalog unavailable'))).then((result) => setTripPackages(result.trips || [])).catch(() => setTripPackages([])).finally(() => setCatalogLoading(false));
+    };
+    loadCatalog();
+    window.addEventListener('language-change', loadCatalog);
+    return () => window.removeEventListener('language-change', loadCatalog);
+  }, []);
   const [filters, setFilters] = useState<TripFilters>(() => { const params = new URLSearchParams(typeof window === 'undefined' ? '' : window.location.search); return { ...initialFilters, search: params.get('location') || '', category: params.get('type') || 'all' }; });
   const [view, setView] = useState<'grid' | 'list'>('grid');
   const [mobileFilters, setMobileFilters] = useState(false);

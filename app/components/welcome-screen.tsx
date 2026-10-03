@@ -9,7 +9,7 @@ type Props = { onChoose: (intent: Intent) => void };
 const cards: { id: Intent; index: string; title: string; subtitle: string; detail: string; icon: React.ReactNode; image: string; theme: string }[] = [
   { id:'trip', index:'01', title:'Book a trip', subtitle:'Travel & experiences', detail:'Curated escapes for the moments you will remember.', icon:<Plane size={24}/>, image:'/images/Giza-Pyramid-Complex-Trip-1-e1668979516849.webp', theme:'welcome-trip' },
   { id:'stay', index:'02', title:'Book a hotel or home', subtitle:'Stays & hospitality', detail:'Beautiful places made for slower mornings and longer memories.', icon:<House size={24}/>, image:'/images/Lounge-area-on-Nile-Dream-720x540.jpeg', theme:'welcome-stay' },
-  { id:'buy-home', index:'03', title:'Rent a home or chalet', subtitle:'Homes for rent', detail:'Find a beautiful place to stay, settle in, and feel at home.', icon:<Building2 size={24}/>, image:'/images/Lounge-area-on-Nile-Dream-720x540.jpeg', theme:'welcome-home' },
+  { id:'buy-home', index:'03', title:'Rent a home or chalet', subtitle:'Homes for rent', detail:'Find a beautiful place to stay, settle in, and feel at home.', icon:<Building2 size={24}/>, image:'/images/lounge-01.webp', theme:'welcome-home' },
 ];
 
 export default function WelcomeScreen({ onChoose }: Props) {

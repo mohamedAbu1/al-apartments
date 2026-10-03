@@ -10,7 +10,7 @@ export default function LanguageSwitcher({ dark = true }: { dark?: boolean }) {
   const rootRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const saved = window.localStorage.getItem('montu-travel-language') as Language | null;
-    if (saved && languages.some((item) => item.code === saved)) { setLanguage(saved); document.documentElement.lang = saved; document.documentElement.dir = saved === 'ar' ? 'rtl' : 'ltr'; document.body.classList.toggle('rtl', saved === 'ar'); }
+    if (saved && languages.some((item) => item.code === saved)) { setLanguage(saved); document.documentElement.lang = saved; document.documentElement.dir = saved === 'ar' ? 'rtl' : 'ltr'; document.body.classList.toggle('rtl', saved === 'ar'); document.cookie = `montu-travel-language=${saved}; path=/; max-age=31536000; samesite=lax`; }
     const onChange = (event: Event) => setLanguage((event as CustomEvent<Language>).detail);
     const onOutside = (event: MouseEvent) => { if (rootRef.current && !rootRef.current.contains(event.target as Node)) setOpen(false); };
     window.addEventListener('language-change', onChange);
@@ -18,7 +18,7 @@ export default function LanguageSwitcher({ dark = true }: { dark?: boolean }) {
     return () => { window.removeEventListener('language-change', onChange); document.removeEventListener('mousedown', onOutside); };
   }, []);
   const changeLanguage = (next: Language) => {
-    setLanguage(next); setOpen(false); window.localStorage.setItem('montu-travel-language', next);
+    setLanguage(next); setOpen(false); window.localStorage.setItem('montu-travel-language', next); document.cookie = `montu-travel-language=${next}; path=/; max-age=31536000; samesite=lax`;
     document.documentElement.lang = next; document.documentElement.dir = next === 'ar' ? 'rtl' : 'ltr'; document.body.classList.toggle('rtl', next === 'ar');
     window.dispatchEvent(new CustomEvent('language-change', { detail: next }));
   };

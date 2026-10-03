@@ -1297,6 +1297,78 @@ html[data-theme="light"] .travel-car-form-title small { color:var(--page-muted);
 html[data-theme="light"] .travel-car-booking-form input,
 html[data-theme="light"] .travel-car-booking-form select { color:var(--page-text); background:var(--page-surface-soft); border-color:var(--page-border); }
 html[data-theme="light"] .travel-car-booking-form select option { color:var(--page-text); background:#fff; }
+
+/* Comprehensive Light mode surface and contrast pass.
+   The legacy homepage and section landing pages use a second card system
+   that previously kept dark-only surfaces and text literals. Keep imagery,
+   but give every surface, overlay, and interactive state a predictable light
+   theme contract. */
+html[data-theme="light"] .travel-home,
+html[data-theme="light"] .travel-home.light-theme { background:var(--page-bg); color:var(--page-text); }
+html[data-theme="light"] .travel-home .experience-card,
+html[data-theme="light"] .travel-home .intent-card,
+html[data-theme="light"] .travel-home .experience-types article { background:var(--page-surface); color:var(--page-text); border-color:var(--page-border); box-shadow:0 14px 32px rgba(20,75,87,.08); }
+html[data-theme="light"] .travel-home .intent-card small,
+html[data-theme="light"] .travel-home .experience-types p { color:var(--page-muted); }
+html[data-theme="light"] .travel-home .intent-card:hover,
+html[data-theme="light"] .travel-home .intent-card.active { background:#e7f5f2; border-color:#0b9f96; box-shadow:0 16px 32px rgba(20,75,87,.14); }
+html[data-theme="light"] .travel-home .intent-card strong,
+html[data-theme="light"] .travel-home .experience-types strong { color:var(--page-text); }
+html[data-theme="light"] .travel-home .story-card,
+html[data-theme="light"] .travel-home .deals-section,
+html[data-theme="light"] .travel-home .land-deals-section { border:1px solid var(--page-border); box-shadow:0 16px 36px rgba(20,75,87,.1); }
+html[data-theme="light"] .travel-home .benefits-strip { background:#dceeea; color:var(--page-text); border-top:1px solid var(--page-border); border-bottom:1px solid var(--page-border); }
+html[data-theme="light"] .travel-home .benefit { border-color:var(--page-border); }
+html[data-theme="light"] .travel-home .benefit small { color:#4c6870; }
+html[data-theme="light"] .travel-home .benefit strong { color:var(--page-text); }
+html[data-theme="light"] .travel-home .deal-copy p,
+html[data-theme="light"] .travel-home .deal-form input::placeholder { color:#d7e9e5; }
+html[data-theme="light"] .travel-home .deal-form { border-color:rgba(255,255,255,.42); background:rgba(18,72,77,.62); }
+
+html[data-theme="light"] .section-site-hero { color:#fff; border-color:var(--page-border); }
+html[data-theme="light"] .section-site-hero h1,
+html[data-theme="light"] .section-site-hero .section-text-link { color:#fff; text-shadow:0 2px 12px rgba(0,0,0,.28); }
+html[data-theme="light"] .section-site-hero p { color:rgba(255,255,255,.84); }
+html[data-theme="light"] .section-hero-stamp { background:linear-gradient(145deg,rgba(255,255,255,.94),rgba(225,241,237,.9)); border-color:var(--page-border); color:var(--page-text); box-shadow:0 16px 36px rgba(20,75,87,.1); }
+html[data-theme="light"] .section-hero-stamp small { color:var(--page-muted); }
+html[data-theme="light"] .section-panel,
+html[data-theme="light"] .section-service-grid article,
+html[data-theme="light"] .planner-options a,
+html[data-theme="light"] .section-search-fields span { color:var(--page-text); }
+html[data-theme="light"] .section-panel p,
+html[data-theme="light"] .section-content-intro p,
+html[data-theme="light"] .section-listing-card p,
+html[data-theme="light"] .section-service-grid p,
+html[data-theme="light"] .planner-options small { color:var(--page-muted); }
+html[data-theme="light"] .planner-options a:hover { background:#e7f5f2; border-color:var(--section-accent); }
+
+html[data-theme="light"] .travel-category-card::after,
+html[data-theme="light"] .travel-destination-card::after { position:absolute; inset:0; z-index:0; border-radius:inherit; background:linear-gradient(0deg,rgba(3,25,35,.76),rgba(3,25,35,.08) 72%); content:''; pointer-events:none; }
+html[data-theme="light"] .travel-category-card > *,
+html[data-theme="light"] .travel-destination-card > * { position:relative; z-index:1; }
+html[data-theme="light"] .travel-category-card strong,
+html[data-theme="light"] .travel-destination-card strong { color:#fff; text-shadow:0 1px 8px rgba(0,0,0,.28); }
+html[data-theme="light"] .travel-category-card small,
+html[data-theme="light"] .travel-destination-card small { color:#e6f5f3; text-shadow:0 1px 6px rgba(0,0,0,.3); }
+
+html[data-theme="light"] .deals-page .deal-perks > div { background:#f5faf9; border-color:var(--page-border); color:#087fbd; box-shadow:0 12px 28px rgba(20,75,87,.06); }
+html[data-theme="light"] .deals-page .deal-perks strong { color:var(--page-text); }
+html[data-theme="light"] .deals-page .deal-perks p { color:var(--page-muted); }
+html[data-theme="light"] .deals-page .deal-signup input { color:var(--page-text); }
+html[data-theme="light"] .deals-page .deal-signup input::placeholder { color:#71888e; }
+html[data-theme="light"] .experiences-page .experience-row-copy strong,
+html[data-theme="light"] .destinations-page .destination-discovery h2,
+html[data-theme="light"] .experiences-page .experience-quote blockquote { color:var(--page-text); }
+
+html[data-theme="light"] .travel-studio-page .travel-service-grid article { background:#fff; }
+html[data-theme="light"] .travel-studio-page .travel-service-grid strong { color:var(--page-text); }
+html[data-theme="light"] .travel-studio-page .travel-service-grid p { color:var(--page-muted); }
+html[data-theme="light"] .travel-studio-page .travel-journey-card { background:#fff; }
+html[data-theme="light"] .travel-studio-page .travel-journey-body h3 { color:var(--page-text); }
+html[data-theme="light"] .travel-studio-page .travel-card-link { color:#087fbd; }
+
+html[data-theme="light"] :is(.experience-card,.intent-card,.story-card,.deals-section,.benefits-strip,.section-panel,.section-hero-stamp,.offer-card,.deal-perks > div,.travel-category-card,.travel-destination-card) :is(a,button):focus-visible { outline:3px solid #087fbd; outline-offset:3px; }
+html[data-theme="light"] :is(.experience-card,.intent-card,.story-card,.deals-section,.benefits-strip,.section-panel,.section-hero-stamp,.offer-card,.deal-perks > div,.travel-category-card,.travel-destination-card):hover { border-color:#087fbd; }
 @media (max-width:800px) { .montu-about-hero { grid-template-columns:1fr; min-height:0; gap:2rem; padding:4rem 1.2rem 3rem; }.montu-about-hero-copy h1 { font-size:4.5rem; }.montu-about-hero-art { min-height:440px; }.montu-about-intro,.montu-about-story { grid-template-columns:1fr; gap:1.5rem; padding:4rem 1.2rem; }.montu-about-pillars { grid-template-columns:1fr; padding-inline:1.2rem; }.montu-about-story-image { min-height:360px; }.montu-about-proof { grid-template-columns:1fr; padding-inline:1.2rem; }.montu-about-cta { margin:2rem 1.2rem; padding:2.5rem 1.2rem; }.montu-about-cta > div,.montu-about-actions { align-items:flex-start; flex-direction:column; gap:.9rem; } }
  .journey-review-content { grid-column:1 / -1; display:grid; gap:1rem; margin-top:.4rem; }
  .journey-review-list { display:grid; grid-template-columns:repeat(2,1fr); gap:.6rem; }
