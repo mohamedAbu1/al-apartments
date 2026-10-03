@@ -1,11 +1,14 @@
 export type PropertySection = 'stay' | 'buy-home' | 'land';
 export type Property = {
-  id: string; title: string; type: string; section?: PropertySection; operation: 'For rent' | 'For rent'; location: string; price: string; priceValue: number; area: number; rooms: number; baths: number; image: string; featured?: boolean; status: 'New' | 'Pre-owned'; description: string;
+  id: string; title: string; type: string; section?: PropertySection; operation: 'For rent' | 'For sale'; location: string; price: string; priceValue: number; area: number; rooms: number; baths: number; image: string; featured?: boolean; status: 'New' | 'Pre-owned'; description: string;
 };
 
 export function propertySection(property: Property): PropertySection {
   if (property.type.toLowerCase().includes('land')) return 'land';
-  return property.operation === 'For rent' ? 'buy-home' : 'stay';
+  // Nightly inventory is a stay; longer-term rental inventory belongs to homes.
+  // Keeping this distinction in one place prevents the stay search from showing
+  // zero results while the homepage still displays curated stays.
+  return property.price.toLowerCase().includes('/ night') ? 'stay' : 'buy-home';
 }
 
 export const sectionCatalog = {

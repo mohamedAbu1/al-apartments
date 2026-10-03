@@ -1,4 +1,5 @@
 import { prisma } from './prisma';
+import { tripPackages } from '../data';
 import type { TripPackage } from '../data';
 
 export type TravelLanguage = 'en' | 'ar' | 'de' | 'es' | 'it' | 'zh' | 'fr';
@@ -72,14 +73,49 @@ async function queryTaxonomy(table: 'categories' | 'cities', joinTable: 'trip_ca
   return prisma.$queryRawUnsafe<Array<DbTaxonomy & { trip_count: number | string }>>(`SELECT x.id, x.name, x.images, COUNT(DISTINCT j.trip_id) AS trip_count FROM ${table} x LEFT JOIN ${joinTable} j ON j.${foreignKey} = x.id GROUP BY x.id ORDER BY trip_count DESC, x.created_at DESC`);
 }
 
-export async function getTravelTrips(language?: string) { const locale = normalizeLanguage(language); const rows = await queryTrips(undefined, locale); const days = await Promise.all(rows.map((row) => queryDays(row.id, locale))); return rows.map((row, index) => mapTrip(row, days[index], locale)); }
-export async function getTravelTrip(id: string, language?: string) { const locale = normalizeLanguage(language); const rows = await queryTrips(id, locale); if (rows[0]) return mapTrip(rows[0], await queryDays(id, locale), locale); return undefined; }
+function fallbackTrip(id: string, language: TravelLanguage) {
+  const trip = tripPackages.find((item) => item.id === id);
+  if (!trip || language === 'en') return trip;
+  return trip;
+}
+
+export async function getTravelTrips(language?: string) {
+  const locale = normalizeLanguage(language);
+  try {
+    const rows = await queryTrips(undefined, locale);
+    const days = await Promise.all(rows.map((row) => queryDays(row.id, locale)));
+    return rows.length ? rows.map((row, index) => mapTrip(row, days[index], locale)) : tripPackages;
+  } catch (error) {
+    console.error('Travel catalogue query failed; using fallback catalogue.', error);
+    return tripPackages;
+  }
+}
+
+export async function getTravelTrip(id: string, language?: string) {
+  const locale = normalizeLanguage(language);
+  try {
+    const rows = await queryTrips(id, locale);
+    if (rows[0]) {
+      let days: DbDay[] = [];
+      try { days = await queryDays(id, locale); } catch (error) { console.error('Trip days query failed; using fallback itinerary.', error); }
+      return mapTrip(rows[0], days, locale);
+    }
+  } catch (error) {
+    console.error('Trip detail query failed; using fallback trip.', error);
+  }
+  return fallbackTrip(id, locale);
+}
 export async function getTravelTaxonomy(language?: string) {
   const locale = normalizeLanguage(language);
-  const [categoryRows, cityRows] = await Promise.all([
-    queryTaxonomy('categories', 'trip_categories', 'category_id'),
-    queryTaxonomy('cities', 'trip_cities', 'city_id'),
-  ]);
-  const map = (row: DbTaxonomy & { trip_count: number | string }): TravelTaxonomyItem => ({ id: row.id, name: localized(row.name, 'Egypt', locale), image: firstImage(row.images), tripCount: Number(row.trip_count || 0) });
-  return { categories: categoryRows.map(map), cities: cityRows.map(map) };
+  try {
+    const [categoryRows, cityRows] = await Promise.all([
+      queryTaxonomy('categories', 'trip_categories', 'category_id'),
+      queryTaxonomy('cities', 'trip_cities', 'city_id'),
+    ]);
+    const map = (row: DbTaxonomy & { trip_count: number | string }): TravelTaxonomyItem => ({ id: row.id, name: localized(row.name, 'Egypt', locale), image: firstImage(row.images), tripCount: Number(row.trip_count || 0) });
+    return { categories: categoryRows.map(map), cities: cityRows.map(map) };
+  } catch (error) {
+    console.error('Travel taxonomy query failed; using editorial fallback sections.', error);
+    return { categories: [], cities: [] };
+  }
 }
