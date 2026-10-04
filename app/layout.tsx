@@ -4,6 +4,7 @@ import { cookies } from 'next/headers';
 import { ThemeProvider } from './components/theme-provider';
 import LanguageRuntime from './components/language-runtime';
 import NewsletterBridge from './components/newsletter-bridge';
+import ChatWidget from './components/chat-widget';
 import { absoluteUrl, siteDescription, siteName, siteUrl } from './lib/seo';
 import { languages, type Language } from './i18n';
 
@@ -28,5 +29,5 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const requestedLanguage = (await cookies()).get('montu-travel-language')?.value;
   const language = languages.some((item) => item.code === requestedLanguage) ? requestedLanguage as Language : 'en';
   const jsonLd = { '@context': 'https://schema.org', '@type': 'TravelAgency', name: siteName, url: siteUrl, description: siteDescription, email: 'info@montutraveleg.com', telephone: '+201038822537', areaServed: { '@type': 'Country', name: 'Egypt' }, sameAs: ['https://www.facebook.com/', 'https://www.instagram.com/', 'https://www.tiktok.com/'] };
-  return <html lang={language} dir={language === 'ar' ? 'rtl' : 'ltr'} suppressHydrationWarning><head><script dangerouslySetInnerHTML={{ __html: "try{document.documentElement.dataset.theme=localStorage.getItem('montu-travel-theme')==='light'?'light':'dark'}catch(e){}" }}/><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} /></head><body><ThemeProvider><LanguageRuntime><NewsletterBridge/>{children}</LanguageRuntime></ThemeProvider></body></html>;
+  return <html lang={language} dir={language === 'ar' ? 'rtl' : 'ltr'} suppressHydrationWarning><head><script dangerouslySetInnerHTML={{ __html: "try{document.documentElement.dataset.theme=localStorage.getItem('montu-travel-theme')==='light'?'light':'dark'}catch(e){}" }}/><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} /></head><body><ThemeProvider><LanguageRuntime><NewsletterBridge/>{children}<ChatWidget/></LanguageRuntime></ThemeProvider></body></html>;
 }
