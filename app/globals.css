@@ -1131,6 +1131,11 @@ html[data-theme="light"] .journey-detail-page .journey-book-card { color:#122833
 .trip-pagination button { display:grid; place-items:center; width:2.15rem; height:2.15rem; border:1px solid rgba(67,200,255,.28); border-radius:10px; color:#43c8ff; background:rgba(67,200,255,.08); cursor:pointer; }
 .trip-pagination button:hover:not(:disabled) { border-color:#43c8ff; background:rgba(67,200,255,.18); }
 .trip-pagination button:disabled { cursor:not-allowed; opacity:.35; }
+.travel-catalog-state { display:grid; place-items:center; min-height:70vh; padding:6rem 1.2rem; text-align:center; background:radial-gradient(circle at 50% 15%,rgba(22,117,145,.18),transparent 45%),#06121e; }
+.travel-catalog-state h1 { max-width:760px; margin-top:1rem; font-family:'Playfair Display',serif; font-size:clamp(3rem,7vw,6.5rem); line-height:.9; letter-spacing:-.055em; }
+.travel-catalog-state h1 em { color:var(--travel-accent); font-style:normal; }
+.travel-catalog-state p { max-width:470px; margin:1.4rem auto 0; color:#9db6b9; font-size:.82rem; line-height:1.8; }
+.travel-catalog-state .primary-cta { margin-top:1.8rem; }
 .journey-intro-topline { display:flex; align-items:center; justify-content:space-between; gap:.8rem; }
 .journey-category-badge { padding:.4rem .6rem; border:1px solid rgba(67,200,255,.3); border-radius:999px; color:#a9e8ff; background:rgba(67,200,255,.08); font-size:.55rem; font-weight:900; letter-spacing:.08em; text-transform:uppercase; }
 .journey-highlight-strip { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.4rem; }

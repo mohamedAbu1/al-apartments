@@ -16,22 +16,6 @@ type LandingJourney = { id: string; title: string; place: string; days: string; 
 type LandingCategory = { id: string; title: string; text: string; image: string; query: string; icon: typeof Waves };
 type LandingDestination = { id: string; name: string; text: string; image: string };
 
-const categories = [
-  { id: 'beach', title: 'Beach escapes', text: 'Red Sea shores, clear water, and slow mornings.', icon: Waves, image: '/images/ai/red-sea-ai.png', query: 'Marsa Alam' },
-  { id: 'culture', title: 'Culture & history', text: 'Ancient stories, museums, and local guides.', icon: Camera, image: '/images/ai/museum-culture-ai.png', query: 'Luxor' },
-  { id: 'adventure', title: 'Adventure', text: 'Desert trails, diving, and days outside.', icon: Mountain, image: '/images/ai/desert-adventure-ai.png', query: 'Dahab' },
-  { id: 'oasis', title: 'Oasis retreats', text: 'Palm shade, natural springs, and quiet space.', icon: Palmtree, image: '/images/ai/siwa-oasis-ai.png', query: 'Siwa Oasis' },
-  { id: 'family', title: 'Family holidays', text: 'Easy days and thoughtful stays for everyone.', icon: Users, image: '/images/ai/nile-cruise-ai.png', query: 'North Coast' },
-  { id: 'luxury', title: 'Luxury itineraries', text: 'Private transfers, fine stays, and elevated details.', icon: Crown, image: '/images/ai/luxury-stay-ai.png', query: 'Sharm El Sheikh' },
-];
-
-const destinations = [
-  ['Cairo', 'History, design, and a city that never stands still.', '/images/ai/cairo-market-ai.png'],
-  ['Luxor', 'The world’s greatest open-air museum.', '/images/ai/museum-culture-ai.png'],
-  ['Sharm El Sheikh', 'Coral reefs, warm water, and polished resorts.', '/images/ai/red-sea-ai.png'],
-  ['Siwa Oasis', 'A slower rhythm among palms and natural springs.', '/images/ai/siwa-oasis-ai.png'],
-];
-
 const heroSlides = [
   { kicker: 'THE MONTU TRAVEL TRAVEL STUDIO', title: ['See Egypt', 'with feeling.'], text: 'Thoughtful journeys, trusted local partners, and stays that turn a few days away into a story worth keeping.', note: ['Start where', 'the light is warm.'], noteText: 'Personal routes across Egypt', image: '/images/ai/egypt-hero.png' },
   { kicker: 'THE NILE, REIMAGINED', title: ['Follow the river', 'through time.'], text: 'Sail from ancient temples to quiet river mornings with a route shaped around Egypt’s most enduring stories.', note: ['Let the Nile', 'set the pace.'], noteText: 'Cairo, Luxor, and Aswan', image: '/images/ai/nile-cruise-ai.png' },
@@ -49,12 +33,15 @@ export default function TravelLanding() {
   const [dbCategories, setDbCategories] = useState<LandingCategory[]>([]);
   const [dbDestinations, setDbDestinations] = useState<LandingDestination[]>([]);
   const [journeysLoading, setJourneysLoading] = useState(true);
+  const [catalogError, setCatalogError] = useState(false);
   const [heroIndex, setHeroIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   useEffect(() => {
     const loadCatalog = () => {
       const savedLanguage = window.localStorage.getItem('montu-travel-language');
       const language = languages.some((item) => item.code === savedLanguage) ? savedLanguage : 'en';
+      setJourneysLoading(true);
+      setCatalogError(false);
       fetch(`/api/trips?lang=${language}`, { cache: 'no-store' })
       .then((response) => response.ok ? response.json() : Promise.reject(new Error('Travel catalog unavailable')))
       .then((result) => {
@@ -65,15 +52,15 @@ export default function TravelLanding() {
         setDbCategories(mappedCategories);
         setDbDestinations(mappedCities);
       })
-      .catch(() => { setJourneys([]); setDbCategories([]); setDbDestinations([]); })
+      .catch(() => { setJourneys([]); setDbCategories([]); setDbDestinations([]); setCatalogError(true); })
       .finally(() => setJourneysLoading(false));
     };
     loadCatalog();
     window.addEventListener('language-change', loadCatalog);
     return () => window.removeEventListener('language-change', loadCatalog);
   }, []);
-  const displayedCategories = dbCategories.length ? dbCategories : categories;
-  const displayedDestinations = dbDestinations.length ? dbDestinations : destinations.map(([name, text, image]) => ({ id: name, name, text, image }));
+  const displayedCategories = dbCategories;
+  const displayedDestinations = dbDestinations;
   const hero = heroSlides[heroIndex];
   const handleCarBooking = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -87,6 +74,8 @@ export default function TravelLanding() {
     const timer = window.setInterval(() => setHeroIndex((index) => (index + 1) % heroSlides.length), 6500);
     return () => window.clearInterval(timer);
   }, [isPaused]);
+
+  if (journeysLoading || catalogError) return <main className="travel-studio-page"><SiteHeader section="trip"/><section className="travel-catalog-state" aria-live="polite"><div className="travel-studio-kicker">MONTU TRAVEL CATALOG</div><h1>{journeysLoading ? <>Loading the latest<br/><em>Egypt journeys.</em></> : <>The travel catalog<br/><em>is temporarily unavailable.</em></>}</h1><p>{journeysLoading ? 'We are connecting to the published journeys, categories, and destinations.' : 'Please refresh in a moment. We only show journeys after the database responds successfully.'}</p>{catalogError && <button type="button" className="primary-cta" onClick={() => window.location.reload()}>Try again <ArrowRight size={15}/></button>}</section><SiteFooter section="trip"/></main>;
 
   return <main className="travel-studio-page"><SiteHeader section="trip"/>
     <section className="travel-studio-hero" onMouseEnter={() => setIsPaused(true)} onMouseLeave={() => setIsPaused(false)} onFocus={() => setIsPaused(true)} onBlur={() => setIsPaused(false)} aria-label="Featured Egypt journeys">
