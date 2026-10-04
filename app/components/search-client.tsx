@@ -13,6 +13,7 @@ type Filters = { operation: string; type: string; location: string; min: string;
 type SearchMode = 'trip' | 'stay' | 'buy-home' | 'land';
 const initialFilters: Filters = { operation: 'all', type: 'all', location: '', min: '', max: '', rooms: 'all', status: 'all', sort: 'newest' };
 const pageSize = 6;
+const tripPageSize = 6;
 const roomOptions = [['all', 'Any'], ['1', '1+'], ['2', '2+'], ['3', '3+'], ['4', '4+']];
 const statusOptions = [['all', 'Any'], ['New', 'New'], ['Pre-owned', 'Pre-owned']];
 const modeContent: Record<SearchMode, { eyebrow: string; title: string; emphasis: string; description: string; operation: string }> = {
@@ -53,9 +54,9 @@ export default function SearchClient() {
   }).sort((a, b) => filters.sort === 'price-low' ? a.priceValue - b.priceValue : b.priceValue - a.priceValue), [filters, safeMode]);
   const tripResults = useMemo(() => tripPackages.filter((trip) => (filters.type === 'all' || trip.category === filters.type) && (!filters.location || trip.route.toLowerCase().includes(filters.location.toLowerCase()) || trip.title.toLowerCase().includes(filters.location.toLowerCase())) && (!filters.min || trip.priceValue >= Number(filters.min)) && (!filters.max || trip.priceValue <= Number(filters.max))).sort((a, b) => filters.sort === 'price-low' ? a.priceValue - b.priceValue : b.priceValue - a.priceValue), [filters]);
   const resultCount = safeMode === 'trip' ? tripResults.length : results.length;
-  const pageCount = Math.max(1, Math.ceil(resultCount / pageSize));
+  const pageCount = Math.max(1, Math.ceil(resultCount / (safeMode === 'trip' ? tripPageSize : pageSize)));
   const visibleResults = results.slice((page - 1) * pageSize, page * pageSize);
-  const visibleTrips = tripResults.slice((page - 1) * pageSize, page * pageSize);
+  const visibleTrips = tripResults.slice((page - 1) * tripPageSize, page * tripPageSize);
   useEffect(() => { if (page > pageCount) setPage(pageCount); }, [page, pageCount]);
   const activeFilters = Object.entries(filters).filter(([key, value]) => value && value !== 'all' && !(key === 'sort' && value === 'newest'));
   const filterLabel = (key: string, value: string) => key === 'operation' ? (value === 'sale' ? 'For sale' : 'For rent') : key === 'type' ? typeOptions.find(([id]) => id === value)?.[1] || value : key === 'rooms' ? `${value}+ rooms` : key === 'min' ? `From EGP ${Number(value).toLocaleString()}` : key === 'max' ? `Up to EGP ${Number(value).toLocaleString()}` : value;

@@ -1395,3 +1395,8 @@ html[data-theme="light"] :is(.experience-card,.intent-card,.story-card,.deals-se
 /* AI-generated page hero imagery: each page has its own visual language. */
 .b2b-hero-premium { background-image:linear-gradient(90deg,rgba(3,17,31,.97),rgba(3,17,31,.62)),url('/images/ai/b2b-hero-ai.png'); }
 .trip-builder-hero { background-image:linear-gradient(90deg,rgba(3,17,31,.96),rgba(3,17,31,.52)),url('/images/ai/tailor-hero-ai.png'); }
+
+/* Dedicated imagery for the trip search experience. */
+.search-mode-trip .search-hero { background-image:linear-gradient(90deg,rgba(4,23,43,.97),rgba(4,23,43,.48)),url('/images/ai/search-trip-hero-ai.png'); }
+html[data-theme="light"] .search-mode-trip .search-hero { background-image:linear-gradient(90deg,rgba(249,253,252,.94),rgba(249,253,252,.35)),url('/images/ai/search-trip-hero-ai.png'); }
+.search-mode-trip .trip-map-card { background-image:linear-gradient(145deg,rgba(19,34,47,.5),rgba(15,31,40,.78)),url('/images/ai/egypt-journey-map-ai.png'); }
