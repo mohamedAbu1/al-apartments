@@ -1126,6 +1126,11 @@ html[data-theme="light"] .journey-detail-page .journey-book-card { color:#122833
 @media (max-width:520px) { .trip-results-hero h1 { font-size:3.2rem; }.trip-results-toolbar-actions > span { margin-right:auto; }.trip-results-heading h2 { font-size:1.5rem; }.trip-discovery-body h3 { font-size:1.3rem; } }
 .trip-filter-heading > button { display:none; }
 @media (max-width:800px) { .trip-filter-heading > button { display:grid; } }
+
+.trip-pagination { display:flex; align-items:center; justify-content:center; gap:.8rem; margin:1.5rem 0 .3rem; color:#9db6b9; font-size:.64rem; }
+.trip-pagination button { display:grid; place-items:center; width:2.15rem; height:2.15rem; border:1px solid rgba(67,200,255,.28); border-radius:10px; color:#43c8ff; background:rgba(67,200,255,.08); cursor:pointer; }
+.trip-pagination button:hover:not(:disabled) { border-color:#43c8ff; background:rgba(67,200,255,.18); }
+.trip-pagination button:disabled { cursor:not-allowed; opacity:.35; }
 .journey-intro-topline { display:flex; align-items:center; justify-content:space-between; gap:.8rem; }
 .journey-category-badge { padding:.4rem .6rem; border:1px solid rgba(67,200,255,.3); border-radius:999px; color:#a9e8ff; background:rgba(67,200,255,.08); font-size:.55rem; font-weight:900; letter-spacing:.08em; text-transform:uppercase; }
 .journey-highlight-strip { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1.4rem; }
