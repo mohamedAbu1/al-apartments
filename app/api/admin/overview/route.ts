@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Prisma } from '@prisma/client';
 import { prisma } from '../../../lib/prisma';
 import { getTravelTrips } from '../../../lib/travel-data';
 
@@ -15,8 +16,8 @@ export async function GET(request: NextRequest) {
   const [users, journeys, reviews, messages, inquiries] = await Promise.all([
     prisma.user.count(),
     getTravelTrips().catch(() => []),
-    prisma.$queryRawUnsafe<Array<{ id: string; name: string; comment: string; rating: number; created_at: Date }>>('SELECT id, name, comment, rating, created_at FROM site_reviews WHERE status = \'published\' ORDER BY created_at DESC LIMIT 5').catch(() => []),
-    prisma.$queryRawUnsafe<Array<{ id: string; user_name: string | null; content: string | null; status: string | null; created_at: Date | null }>>('SELECT id, user_name, content, status, created_at FROM messages ORDER BY created_at DESC LIMIT 5').catch(() => []),
+    prisma.$queryRaw<Array<{ id: string; name: string; comment: string; rating: number; created_at: Date }>>(Prisma.sql`SELECT id, name, comment, rating, created_at FROM site_reviews WHERE status = 'published' ORDER BY created_at DESC LIMIT 5`).catch(() => []),
+    prisma.$queryRaw<Array<{ id: string; user_name: string | null; content: string | null; status: string | null; created_at: Date | null }>>(Prisma.sql`SELECT id, user_name, content, status, created_at FROM messages ORDER BY created_at DESC LIMIT 5`).catch(() => []),
     prisma.inquiry.count({ where: { status: 'NEW' } }).catch(() => 0),
   ]);
 

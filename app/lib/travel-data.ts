@@ -1,4 +1,5 @@
 import { prisma } from './prisma';
+import { Prisma } from '@prisma/client';
 import type { TripPackage } from '../data';
 
 export type TravelLanguage = 'en' | 'ar' | 'de' | 'es' | 'it' | 'zh' | 'fr';
@@ -62,14 +63,14 @@ function mapTrip(row: DbTrip, days: DbDay[] = [], language: TravelLanguage = 'en
 }
 
 async function queryTrips(id?: string, language: TravelLanguage = 'en') {
-  const where = id ? `WHERE t.id = ${JSON.stringify(id)}` : '';
   const path = `$.${language}`;
-  return prisma.$queryRawUnsafe<DbTrip[]>(`SELECT t.id, t.title, t.description, t.cover_image, t.solo_price, t.group_price, t.duration, t.duration_unit, t.currency, t.gallery_images, GROUP_CONCAT(DISTINCT COALESCE(JSON_UNQUOTE(JSON_EXTRACT(c.name, '${path}')), JSON_UNQUOTE(JSON_EXTRACT(c.name, '$.en'))) SEPARATOR '||') AS category_names, GROUP_CONCAT(DISTINCT COALESCE(JSON_UNQUOTE(JSON_EXTRACT(ci.name, '${path}')), JSON_UNQUOTE(JSON_EXTRACT(ci.name, '$.en'))) SEPARATOR '||') AS city_names, COUNT(DISTINCT r.id) AS review_count, AVG(r.rating) AS average_rating FROM trips t LEFT JOIN trip_categories tc ON tc.trip_id = t.id LEFT JOIN categories c ON c.id = tc.category_id LEFT JOIN trip_cities tci ON tci.trip_id = t.id LEFT JOIN cities ci ON ci.id = tci.city_id LEFT JOIN reviews r ON r.trip_id = t.id ${where} GROUP BY t.id ORDER BY t.created_at DESC`);
+  const where = id ? Prisma.sql`WHERE t.id = ${id}` : Prisma.empty;
+  return prisma.$queryRaw<DbTrip[]>(Prisma.sql`SELECT t.id, t.title, t.description, t.cover_image, t.solo_price, t.group_price, t.duration, t.duration_unit, t.currency, t.gallery_images, GROUP_CONCAT(DISTINCT COALESCE(JSON_UNQUOTE(JSON_EXTRACT(c.name, ${path})), JSON_UNQUOTE(JSON_EXTRACT(c.name, '$.en'))) SEPARATOR '||') AS category_names, GROUP_CONCAT(DISTINCT COALESCE(JSON_UNQUOTE(JSON_EXTRACT(ci.name, ${path})), JSON_UNQUOTE(JSON_EXTRACT(ci.name, '$.en'))) SEPARATOR '||') AS city_names, COUNT(DISTINCT r.id) AS review_count, AVG(r.rating) AS average_rating FROM trips t LEFT JOIN trip_categories tc ON tc.trip_id = t.id LEFT JOIN categories c ON c.id = tc.category_id LEFT JOIN trip_cities tci ON tci.trip_id = t.id LEFT JOIN cities ci ON ci.id = tci.city_id LEFT JOIN reviews r ON r.trip_id = t.id ${where} GROUP BY t.id ORDER BY t.created_at DESC`);
 }
-async function queryDays(tripId: string, language: TravelLanguage = 'en') { const path = `$.${language}`; return prisma.$queryRawUnsafe<DbDay[]>(`SELECT td.trip_id, td.day_number, GROUP_CONCAT(COALESCE(JSON_UNQUOTE(JSON_EXTRACT(da.activity_translations, '${path}')), JSON_UNQUOTE(JSON_EXTRACT(da.activity_translations, '$.en'))) ORDER BY da.time SEPARATOR ' · ') AS activities FROM trip_days td LEFT JOIN day_activities da ON da.day_id = td.id WHERE td.trip_id = ${JSON.stringify(tripId)} GROUP BY td.trip_id, td.day_number ORDER BY td.day_number`); }
+async function queryDays(tripId: string, language: TravelLanguage = 'en') { const path = `$.${language}`; return prisma.$queryRaw<DbDay[]>(Prisma.sql`SELECT td.trip_id, td.day_number, GROUP_CONCAT(COALESCE(JSON_UNQUOTE(JSON_EXTRACT(da.activity_translations, ${path})), JSON_UNQUOTE(JSON_EXTRACT(da.activity_translations, '$.en'))) ORDER BY da.time SEPARATOR ' · ') AS activities FROM trip_days td LEFT JOIN day_activities da ON da.day_id = td.id WHERE td.trip_id = ${tripId} GROUP BY td.trip_id, td.day_number ORDER BY td.day_number`); }
 
 async function queryTaxonomy(table: 'categories' | 'cities', joinTable: 'trip_categories' | 'trip_cities', foreignKey: 'category_id' | 'city_id') {
-  return prisma.$queryRawUnsafe<Array<DbTaxonomy & { trip_count: number | string }>>(`SELECT x.id, x.name, x.images, COUNT(DISTINCT j.trip_id) AS trip_count FROM ${table} x LEFT JOIN ${joinTable} j ON j.${foreignKey} = x.id GROUP BY x.id ORDER BY trip_count DESC, x.created_at DESC`);
+  return prisma.$queryRaw<Array<DbTaxonomy & { trip_count: number | string }>>(Prisma.sql`SELECT x.id, x.name, x.images, COUNT(DISTINCT j.trip_id) AS trip_count FROM ${Prisma.raw(table)} x LEFT JOIN ${Prisma.raw(joinTable)} j ON j.${Prisma.raw(foreignKey)} = x.id GROUP BY x.id ORDER BY trip_count DESC, x.created_at DESC`);
 }
 
 export async function getTravelTrips(language?: string) {

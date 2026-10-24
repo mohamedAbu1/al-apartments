@@ -1,11 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Prisma } from '@prisma/client';
 import { prisma } from '../../lib/prisma';
 import { ensureSiteReviewsTable } from '../../lib/site-reviews';
 
 export async function GET() {
   try {
     await ensureSiteReviewsTable();
-    const reviews = await prisma.$queryRawUnsafe<Array<{ id: string; name: string; comment: string; rating: number; avatar_url: string | null; created_at: Date }>>(`SELECT id, name, comment, rating, avatar_url, created_at FROM site_reviews WHERE status = 'published' ORDER BY created_at DESC LIMIT 12`);
+    const reviews = await prisma.$queryRaw<Array<{ id: string; name: string; comment: string; rating: number; avatar_url: string | null; created_at: Date }>>(Prisma.sql`SELECT id, name, comment, rating, avatar_url, created_at FROM site_reviews WHERE status = 'published' ORDER BY created_at DESC LIMIT 12`);
     return NextResponse.json({ reviews });
   } catch (error) {
     console.error('[api/site-reviews] Failed to load reviews', error);
@@ -27,7 +28,7 @@ export async function POST(request: NextRequest) {
     if (comment.length < 10) return NextResponse.json({ message: 'Please write at least 10 characters.' }, { status: 400 });
     if (comment.length > 500) return NextResponse.json({ message: 'Please keep your review under 500 characters.' }, { status: 400 });
     const id = crypto.randomUUID();
-    await prisma.$executeRawUnsafe(`INSERT INTO site_reviews (id, user_id, name, comment, rating, avatar_url, status, created_at) VALUES (${JSON.stringify(id)}, ${JSON.stringify(String(session.user.id))}, ${JSON.stringify(session.user.fullName)}, ${JSON.stringify(comment)}, ${rating}, NULL, 'published', NOW())`);
+    await prisma.$executeRaw(Prisma.sql`INSERT INTO site_reviews (id, user_id, name, comment, rating, avatar_url, status, created_at) VALUES (${id}, ${String(session.user.id)}, ${session.user.fullName}, ${comment}, ${rating}, NULL, 'published', NOW())`);
     return NextResponse.json({ review: { id, name: session.user.fullName, comment, rating } }, { status: 201 });
   } catch (error) {
     console.error('[api/site-reviews] Failed to save review', error);

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Prisma } from '@prisma/client';
 import { prisma } from '../../lib/prisma';
 
 const text = (value: unknown) => typeof value === 'string' ? value.trim() : '';
@@ -7,7 +8,7 @@ export async function GET(request: NextRequest) {
   const tripId = text(new URL(request.url).searchParams.get('tripId'));
   if (!tripId) return NextResponse.json({ reviews: [] });
   try {
-    const reviews = await prisma.$queryRawUnsafe<Array<{ id: string; name: string | null; comment: string | null; rating: number; avatar_url: string | null; time: string | null }>>(`SELECT id, name, comment, rating, avatar_url, time FROM reviews WHERE trip_id = ${JSON.stringify(tripId)} ORDER BY created_at DESC LIMIT 20`);
+    const reviews = await prisma.$queryRaw<Array<{ id: string; name: string | null; comment: string | null; rating: number; avatar_url: string | null; time: string | null }>>(Prisma.sql`SELECT id, name, comment, rating, avatar_url, time FROM reviews WHERE trip_id = ${tripId} ORDER BY created_at DESC LIMIT 20`);
     return NextResponse.json({ reviews });
   } catch (error) {
     console.error('[api/trip-reviews] Failed to load reviews', error);
@@ -29,7 +30,7 @@ export async function POST(request: NextRequest) {
     if (comment.length < 10) return NextResponse.json({ message: 'Please write at least 10 characters.' }, { status: 400 });
     if (comment.length > 1000) return NextResponse.json({ message: 'Please keep your review under 1000 characters.' }, { status: 400 });
     const id = crypto.randomUUID();
-    await prisma.$executeRawUnsafe(`INSERT INTO reviews (id, trip_id, user_id, comment, avatar_url, time, name, rating, created_at) VALUES (${JSON.stringify(id)}, ${JSON.stringify(tripId)}, ${JSON.stringify(String(session.user.id))}, ${JSON.stringify(comment)}, NULL, 'Just now', ${JSON.stringify(session.user.fullName)}, ${rating}, NOW())`);
+    await prisma.$executeRaw(Prisma.sql`INSERT INTO reviews (id, trip_id, user_id, comment, avatar_url, time, name, rating, created_at) VALUES (${id}, ${tripId}, ${String(session.user.id)}, ${comment}, NULL, 'Just now', ${session.user.fullName}, ${rating}, NOW())`);
     return NextResponse.json({ review: { id, name: session.user.fullName, comment, rating, time: 'Just now' } }, { status: 201 });
   } catch (error) {
     console.error('[api/trip-reviews] Failed to save review', error);
