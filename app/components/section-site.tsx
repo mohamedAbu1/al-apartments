@@ -7,10 +7,10 @@ import { routes, type AppSection } from '../lib/routes';
 
 type SectionSiteProps = { section: AppSection };
 const heroImages: Record<AppSection, string> = {
-  trip: '/images/Giza-Pyramid-Complex-Trip-1-e1668979516849.webp',
-  stay: '/images/Lounge-area-on-Nile-Dream-720x540.jpeg',
-  'buy-home': '/images/Lounge-area-on-Nile-Dream-720x540.jpeg',
-  land: '/images/pexels-zaki25-16114957.webp',
+  trip: '/images/ai/travel-hero-ai.png',
+  stay: '/images/ai/stay-interior-ai.png',
+  'buy-home': '/images/ai/red-sea-retreat-ai.png',
+  land: '/images/ai/land-investment-ai.png',
 };
 const copy = {
   trip: { label: 'TRAVEL STUDIO', title: 'Go further.\nFeel more.', text: 'Build a considered trip from destinations, experiences, and stays that belong together.', primary: 'Plan a trip', secondary: 'Browse destinations', nav: 'trip' as const },
