@@ -14,6 +14,15 @@ function normalizeLanguage(language?: string): TravelLanguage { return ['en', 'a
 function localized(value: string | null, fallback = '', language: TravelLanguage = 'en') { const parsed = parseJson(value, value || fallback) as Record<string, string> | string; if (typeof parsed === 'string') return parsed || fallback; return parsed[language] || parsed.en || parsed.ar || parsed.de || Object.values(parsed).find(Boolean) || fallback; }
 const localImageHosts = new Set(['montutraveleg.com', 'www.montutraveleg.com', 'onetimelifetravel.com', 'www.onetimelifetravel.com', 'wasettravel.com', 'www.wasettravel.com']);
 const canonicalImageBase = 'https://montutraveleg.com/images/';
+const trackedCatalogImages = new Set([
+  '1200px-Rote_Pyramide_(Dahschur)_04.jpg', 'Giza-Pyramid-Complex-Trip-1-e1668979516849.webp',
+  'HurghadaHulaHulaIslandFull-DayBoatTrip.webp', 'Khan-el-Khalili.webp', 'Lounge-area-on-Nile-Dream-720x540.jpeg',
+  'Tunis-Village-2.jpg', 'egyptian-musiem-in-cairo-oriental-tours-egypt.jpg', 'montu-car-transfer-hero.png',
+  'mortuary-temple-hatshepsut.webp', 'nile-cruise-egypt-slider-1200x600.jpg', 'old-cairo-district.jpg',
+  'pexels-zaki25-16114957.webp', 'ai/egypt-hero.png', 'ai/cairo-market-ai.png', 'ai/desert-adventure-ai.png',
+  'ai/luxury-stay-ai.png', 'ai/museum-culture-ai.png', 'ai/nile-cruise-ai.png', 'ai/red-sea-ai.png', 'ai/siwa-oasis-ai.png',
+]);
+const catalogFallbacks = ['/images/ai/egypt-hero.png', '/images/ai/nile-cruise-ai.png', '/images/ai/red-sea-ai.png', '/images/ai/siwa-oasis-ai.png', '/images/ai/cairo-market-ai.png', '/images/ai/desert-adventure-ai.png'];
 
 /**
  * The imported catalog contains image URLs from the previous site. Keep URLs
@@ -37,6 +46,28 @@ function imageUrl(value: string) {
 
   return source;
 }
+function fallbackImageForText(value: string, index = 0) {
+  const text = value.toLowerCase();
+  if (/red sea|hurghada|sharm|marsa alam|snorkel|diving|beach/.test(text)) return '/images/ai/red-sea-ai.png';
+  if (/nile|luxor|aswan|felucca|cruise|philae|karnak|kom ombo|edfu/.test(text)) return '/images/ai/nile-cruise-ai.png';
+  if (/cairo|giza|pyramid|museum|histor|temple/.test(text)) return '/images/ai/cairo-market-ai.png';
+  if (/siwa|oasis|desert|dahab|sinai|safari/.test(text)) return '/images/ai/siwa-oasis-ai.png';
+  return catalogFallbacks[index % catalogFallbacks.length];
+}
+function safeCatalogImage(value: string | null, fallback: string, index = 0) {
+  const normalized = value ? imageUrl(value) : '';
+  if (!normalized) return fallback;
+  try {
+    const parsed = new URL(normalized);
+    if (parsed.hostname.toLowerCase() === 'montutraveleg.com' || parsed.hostname.toLowerCase() === 'www.montutraveleg.com') {
+      const imagePath = parsed.pathname.replace(/^\/images\//, '');
+      return trackedCatalogImages.has(imagePath) ? normalized : fallbackImageForText(`${value} ${fallback}`, index);
+    }
+  } catch {
+    return fallback;
+  }
+  return normalized;
+}
 function firstImage(value: string | null) {
   const parsed = parseJson(value, value || '');
   const candidates = Array.isArray(parsed) ? parsed : [parsed];
@@ -53,11 +84,12 @@ function mapTrip(row: DbTrip, days: DbDay[] = [], language: TravelLanguage = 'en
   const currency = row.currency || 'USD';
   const unit = row.duration_unit || 'days';
   const durationNumber = row.duration || 1;
-  const gallery = (parseJson(row.gallery_images, []) as Array<{ url?: string }>).map((image) => image.url ? imageUrl(image.url) : '').filter(Boolean);
+  const fallback = fallbackImageForText(`${row.title || ''} ${row.description || ''} ${row.city_names || ''}`);
+  const gallery = (parseJson(row.gallery_images, []) as Array<{ url?: string }>).map((image, index) => image.url ? safeCatalogImage(image.url, fallback, index) : '').filter(Boolean);
   const cities = (row.city_names || '').split('||').filter(Boolean);
   const category = (row.category_names || '').split('||').filter(Boolean)[0] || 'Egypt journeys';
   const itinerary = days.sort((a, b) => a.day_number - b.day_number).map((day) => localized(day.activities, `Day ${day.day_number}`, language));
-  const image = imageUrl(row.cover_image || gallery[0] || '');
+  const image = safeCatalogImage(row.cover_image || gallery[0] || '', fallback);
   const rating = Number(row.average_rating || 0);
   return { id: row.id, title: localized(row.title, 'Egypt journey', language), description: localized(row.description, 'A carefully planned Egyptian journey with local support throughout.', language), category, route: cities.join(' · ') || 'Egypt', duration: `${durationNumber} ${unit}`, price: `From ${currency} ${priceValue.toLocaleString('en-US')}`, priceValue, rating: rating ? rating.toFixed(1) : 'New', reviewCount: Number(row.review_count || 0), image, gallery: gallery.length ? gallery : [image], highlights: language === 'ar' ? 'دعم محلي · تجارب مختارة · تفاصيل انتقال واضحة' : 'Local support · Curated experiences · Clear transfer details', itinerary: itinerary.length ? itinerary : language === 'ar' ? ['الوصول والترحيب المحلي', 'زيارات وتجارب مختارة', 'المغادرة مع دعم محلي'] : ['Arrival and local welcome', 'Curated visits and experiences', 'Departure with local support'] };
 }
@@ -101,7 +133,7 @@ export async function getTravelTaxonomy(language?: string) {
       queryTaxonomy('categories', 'trip_categories', 'category_id'),
       queryTaxonomy('cities', 'trip_cities', 'city_id'),
     ]);
-    const map = (row: DbTaxonomy & { trip_count: number | string }): TravelTaxonomyItem => ({ id: row.id, name: localized(row.name, 'Egypt', locale), image: firstImage(row.images), tripCount: Number(row.trip_count || 0) });
+    const map = (row: DbTaxonomy & { trip_count: number | string }, index: number): TravelTaxonomyItem => { const name = localized(row.name, 'Egypt', locale); return { id: row.id, name, image: safeCatalogImage(firstImage(row.images), fallbackImageForText(name, index), index), tripCount: Number(row.trip_count || 0) }; };
     return { categories: categoryRows.map(map), cities: cityRows.map(map) };
   } catch (error) {
     console.error('Travel taxonomy query failed; database data is unavailable.', error);
