@@ -7,7 +7,7 @@ import SiteFooter from '../components/site-footer';
 import SiteHeader from '../components/site-header';
 
 type TripPlan = { destination: string; startDate: string; endDate: string; travelers: number; style: string; pace: string; budget: string; interests: string[]; stay: string; transport: string; notes: string };
-const destinations = [['Cairo', 'Museums, markets, and city energy', '/images/Giza-Pyramid-Complex-Trip-1-e1668979516849.webp'], ['Luxor & Aswan', 'Temples, tombs, and Nile mornings', '/images/mortuary-temple-hatshepsut.webp'], ['Red Sea', 'Reefs, beaches, and easy-going days', '/images/HurghadaHulaHulaIslandFull-DayBoatTrip.webp'], ['Siwa & the desert', 'Oases, stars, and slower rhythms', '/images/Tunis-Village-2.jpg']];
+const destinations = [['Cairo', 'Museums, markets, and city energy', '/images/ai/trip-cairo-3d.png'], ['Luxor & Aswan', 'Temples, tombs, and Nile mornings', '/images/ai/trip-luxor-3d.png'], ['Red Sea', 'Reefs, beaches, and easy-going days', '/images/ai/trip-red-sea-3d.png'], ['Siwa & the desert', 'Oases, stars, and slower rhythms', '/images/ai/trip-siwa-3d.png']];
 const styles = ['History & culture', 'Nile cruise', 'Beach escape', 'Adventure', 'Food & local life', 'Luxury retreat'];
 const paces = ['Slow & spacious', 'Balanced', 'Full days'];
 const budgets = ['Comfort', 'Premium', 'Luxury'];

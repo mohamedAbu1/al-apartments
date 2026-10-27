@@ -21,6 +21,9 @@ const trackedCatalogImages = new Set([
   'mortuary-temple-hatshepsut.webp', 'nile-cruise-egypt-slider-1200x600.jpg', 'old-cairo-district.jpg',
   'pexels-zaki25-16114957.webp', 'ai/egypt-hero.png', 'ai/cairo-market-ai.png', 'ai/desert-adventure-ai.png',
   'ai/luxury-stay-ai.png', 'ai/museum-culture-ai.png', 'ai/nile-cruise-ai.png', 'ai/red-sea-ai.png', 'ai/siwa-oasis-ai.png',
+  'ai/trip-cairo-3d.png', 'ai/trip-luxor-3d.png', 'ai/trip-red-sea-3d.png', 'ai/trip-siwa-3d.png',
+  'ai/cat-family-3d.png', 'ai/cat-adventure-3d.png', 'ai/cat-historical-3d.png', 'ai/cat-one-day-3d.png', 'ai/cat-spiritual-3d.png', 'ai/cat-luxury-3d.png', 'ai/cat-wellness-3d.png', 'ai/cat-night-3d.png',
+  'ai/city-luxor-3d.png', 'ai/city-aswan-3d.png', 'ai/city-cairo-3d.png', 'ai/city-hurghada-3d.png', 'ai/city-sharm-3d.png', 'ai/city-marsa-alam-3d.png', 'ai/city-fayoum-3d.png', 'ai/city-alexandria-3d.png', 'ai/city-siwa-3d.png',
 ]);
 const catalogFallbacks = ['/images/ai/egypt-hero.png', '/images/ai/nile-cruise-ai.png', '/images/ai/red-sea-ai.png', '/images/ai/siwa-oasis-ai.png', '/images/ai/cairo-market-ai.png', '/images/ai/desert-adventure-ai.png'];
 
@@ -48,10 +51,10 @@ function imageUrl(value: string) {
 }
 function fallbackImageForText(value: string, index = 0) {
   const text = value.toLowerCase();
-  if (/red sea|hurghada|sharm|marsa alam|snorkel|diving|beach/.test(text)) return '/images/ai/red-sea-ai.png';
-  if (/nile|luxor|aswan|felucca|cruise|philae|karnak|kom ombo|edfu/.test(text)) return '/images/ai/nile-cruise-ai.png';
-  if (/cairo|giza|pyramid|museum|histor|temple/.test(text)) return '/images/ai/cairo-market-ai.png';
-  if (/siwa|oasis|desert|dahab|sinai|safari/.test(text)) return '/images/ai/siwa-oasis-ai.png';
+  if (/red sea|hurghada|sharm|marsa alam|snorkel|diving|beach/.test(text)) return '/images/ai/trip-red-sea-3d.png';
+  if (/nile|luxor|aswan|felucca|cruise|philae|karnak|kom ombo|edfu/.test(text)) return '/images/ai/trip-luxor-3d.png';
+  if (/cairo|giza|pyramid|museum|histor|temple|family/.test(text)) return '/images/ai/trip-cairo-3d.png';
+  if (/siwa|oasis|desert|dahab|sinai|safari|adventure/.test(text)) return '/images/ai/trip-siwa-3d.png';
   return catalogFallbacks[index % catalogFallbacks.length];
 }
 function safeCatalogImage(value: string | null, fallback: string, index = 0) {
@@ -59,7 +62,7 @@ function safeCatalogImage(value: string | null, fallback: string, index = 0) {
   if (!normalized) return fallback;
   try {
     const parsed = new URL(normalized);
-    if (parsed.hostname.toLowerCase() === 'montutraveleg.com' || parsed.hostname.toLowerCase() === 'www.montutraveleg.com') {
+    if (localImageHosts.has(parsed.hostname.toLowerCase())) {
       const imagePath = parsed.pathname.replace(/^\/images\//, '');
       return trackedCatalogImages.has(imagePath) ? normalized : fallbackImageForText(`${value} ${fallback}`, index);
     }
@@ -90,8 +93,9 @@ function mapTrip(row: DbTrip, days: DbDay[] = [], language: TravelLanguage = 'en
   const category = (row.category_names || '').split('||').filter(Boolean)[0] || 'Egypt journeys';
   const itinerary = days.sort((a, b) => a.day_number - b.day_number).map((day) => localized(day.activities, `Day ${day.day_number}`, language));
   const image = safeCatalogImage(row.cover_image || gallery[0] || '', fallback);
+  const galleryWithCover = [image, ...gallery.filter((item) => item !== image)].slice(0, 4);
   const rating = Number(row.average_rating || 0);
-  return { id: row.id, title: localized(row.title, 'Egypt journey', language), description: localized(row.description, 'A carefully planned Egyptian journey with local support throughout.', language), category, route: cities.join(' · ') || 'Egypt', duration: `${durationNumber} ${unit}`, price: `From ${currency} ${priceValue.toLocaleString('en-US')}`, priceValue, rating: rating ? rating.toFixed(1) : 'New', reviewCount: Number(row.review_count || 0), image, gallery: gallery.length ? gallery : [image], highlights: language === 'ar' ? 'دعم محلي · تجارب مختارة · تفاصيل انتقال واضحة' : 'Local support · Curated experiences · Clear transfer details', itinerary: itinerary.length ? itinerary : language === 'ar' ? ['الوصول والترحيب المحلي', 'زيارات وتجارب مختارة', 'المغادرة مع دعم محلي'] : ['Arrival and local welcome', 'Curated visits and experiences', 'Departure with local support'] };
+  return { id: row.id, title: localized(row.title, 'Egypt journey', language), description: localized(row.description, 'A carefully planned Egyptian journey with local support throughout.', language), category, route: cities.join(' · ') || 'Egypt', duration: `${durationNumber} ${unit}`, price: `From ${currency} ${priceValue.toLocaleString('en-US')}`, priceValue, rating: rating ? rating.toFixed(1) : 'New', reviewCount: Number(row.review_count || 0), image, gallery: galleryWithCover, highlights: language === 'ar' ? 'دعم محلي · تجارب مختارة · تفاصيل انتقال واضحة' : 'Local support · Curated experiences · Clear transfer details', itinerary: itinerary.length ? itinerary : language === 'ar' ? ['الوصول والترحيب المحلي', 'زيارات وتجارب مختارة', 'المغادرة مع دعم محلي'] : ['Arrival and local welcome', 'Curated visits and experiences', 'Departure with local support'] };
 }
 
 async function queryTrips(id?: string, language: TravelLanguage = 'en') {
@@ -126,6 +130,27 @@ export async function getTravelTrip(id: string, language?: string) {
   }
   return undefined;
 }
+function generatedTaxonomyImage(name: string, index: number) {
+  const text = name.toLowerCase();
+  if (/family/.test(text)) return '/images/ai/cat-family-3d.png';
+  if (/one day/.test(text)) return '/images/ai/cat-one-day-3d.png';
+  if (/adventure/.test(text)) return '/images/ai/cat-adventure-3d.png';
+  if (/histor|culture/.test(text)) return '/images/ai/cat-historical-3d.png';
+  if (/spiritual/.test(text)) return '/images/ai/cat-spiritual-3d.png';
+  if (/luxury/.test(text)) return '/images/ai/cat-luxury-3d.png';
+  if (/wellness|medical/.test(text)) return '/images/ai/cat-wellness-3d.png';
+  if (/night/.test(text)) return '/images/ai/cat-night-3d.png';
+  if (/luxor/.test(text)) return '/images/ai/city-luxor-3d.png';
+  if (/aswan/.test(text)) return '/images/ai/city-aswan-3d.png';
+  if (/cairo/.test(text)) return '/images/ai/city-cairo-3d.png';
+  if (/hurghada|hurgada/.test(text)) return '/images/ai/city-hurghada-3d.png';
+  if (/sharm/.test(text)) return '/images/ai/city-sharm-3d.png';
+  if (/marsa alam/.test(text)) return '/images/ai/city-marsa-alam-3d.png';
+  if (/fayoum/.test(text)) return '/images/ai/city-fayoum-3d.png';
+  if (/alexandria/.test(text)) return '/images/ai/city-alexandria-3d.png';
+  if (/siwa/.test(text)) return '/images/ai/city-siwa-3d.png';
+  return catalogFallbacks[index % catalogFallbacks.length];
+}
 export async function getTravelTaxonomy(language?: string) {
   const locale = normalizeLanguage(language);
   try {
@@ -133,7 +158,7 @@ export async function getTravelTaxonomy(language?: string) {
       queryTaxonomy('categories', 'trip_categories', 'category_id'),
       queryTaxonomy('cities', 'trip_cities', 'city_id'),
     ]);
-    const map = (row: DbTaxonomy & { trip_count: number | string }, index: number): TravelTaxonomyItem => { const name = localized(row.name, 'Egypt', locale); return { id: row.id, name, image: safeCatalogImage(firstImage(row.images), fallbackImageForText(name, index), index), tripCount: Number(row.trip_count || 0) }; };
+    const map = (row: DbTaxonomy & { trip_count: number | string }, index: number): TravelTaxonomyItem => { const name = localized(row.name, 'Egypt', locale); const generatedImage = generatedTaxonomyImage(name, index); return { id: row.id, name, image: safeCatalogImage(firstImage(row.images), generatedImage, index), tripCount: Number(row.trip_count || 0) }; };
     return { categories: categoryRows.map(map), cities: cityRows.map(map) };
   } catch (error) {
     console.error('Travel taxonomy query failed; database data is unavailable.', error);
