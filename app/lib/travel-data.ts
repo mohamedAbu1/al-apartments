@@ -15,7 +15,7 @@ function localized(value: string | null, fallback = '', language: TravelLanguage
 const localImageHosts = new Set(['montutraveleg.com', 'www.montutraveleg.com', 'onetimelifetravel.com', 'www.onetimelifetravel.com', 'wasettravel.com', 'www.wasettravel.com']);
 const canonicalImageBase = 'https://montutraveleg.com/images/';
 const trackedCatalogImages = new Set([
-  '1200px-Rote_Pyramide_(Dahschur)_04.jpg', 'Giza-Pyramid-Complex-Trip-1-e1668979516849.webp',
+  'Giza-Pyramid-Complex-Trip-1-e1668979516849.webp',
   'HurghadaHulaHulaIslandFull-DayBoatTrip.webp', 'Khan-el-Khalili.webp', 'Lounge-area-on-Nile-Dream-720x540.jpeg',
   'Tunis-Village-2.jpg', 'egyptian-musiem-in-cairo-oriental-tours-egypt.jpg', 'montu-car-transfer-hero.png',
   'mortuary-temple-hatshepsut.webp', 'nile-cruise-egypt-slider-1200x600.jpg', 'old-cairo-district.jpg',
@@ -88,7 +88,12 @@ function mapTrip(row: DbTrip, days: DbDay[] = [], language: TravelLanguage = 'en
   const unit = row.duration_unit || 'days';
   const durationNumber = row.duration || 1;
   const fallback = fallbackImageForText(`${row.title || ''} ${row.description || ''} ${row.city_names || ''}`);
-  const gallery = (parseJson(row.gallery_images, []) as Array<{ url?: string }>).map((image, index) => image.url ? safeCatalogImage(image.url, fallback, index) : '').filter(Boolean);
+  const galleryValue = parseJson(row.gallery_images, []);
+  const galleryItems = Array.isArray(galleryValue) ? galleryValue : [];
+  const gallery = galleryItems.map((image, index) => {
+    const url = typeof image === 'string' ? image : image && typeof image === 'object' ? (image as { url?: string }).url : '';
+    return url ? safeCatalogImage(url, fallback, index) : '';
+  }).filter(Boolean);
   const cities = (row.city_names || '').split('||').filter(Boolean);
   const category = (row.category_names || '').split('||').filter(Boolean)[0] || 'Egypt journeys';
   const itinerary = days.sort((a, b) => a.day_number - b.day_number).map((day) => localized(day.activities, `Day ${day.day_number}`, language));
@@ -96,6 +101,25 @@ function mapTrip(row: DbTrip, days: DbDay[] = [], language: TravelLanguage = 'en
   const galleryWithCover = [image, ...gallery.filter((item) => item !== image)].slice(0, 4);
   const rating = Number(row.average_rating || 0);
   return { id: row.id, title: localized(row.title, 'Egypt journey', language), description: localized(row.description, 'A carefully planned Egyptian journey with local support throughout.', language), category, route: cities.join(' · ') || 'Egypt', duration: `${durationNumber} ${unit}`, price: `From ${currency} ${priceValue.toLocaleString('en-US')}`, priceValue, rating: rating ? rating.toFixed(1) : 'New', reviewCount: Number(row.review_count || 0), image, gallery: galleryWithCover, highlights: language === 'ar' ? 'دعم محلي · تجارب مختارة · تفاصيل انتقال واضحة' : 'Local support · Curated experiences · Clear transfer details', itinerary: itinerary.length ? itinerary : language === 'ar' ? ['الوصول والترحيب المحلي', 'زيارات وتجارب مختارة', 'المغادرة مع دعم محلي'] : ['Arrival and local welcome', 'Curated visits and experiences', 'Departure with local support'] };
+}
+
+function dedupeTripImages(trips: TripPackage[]) {
+  const generated = [
+    '/images/ai/trip-cairo-3d.png',
+    '/images/ai/trip-luxor-3d.png',
+    '/images/ai/trip-red-sea-3d.png',
+    '/images/ai/trip-siwa-3d.png',
+  ];
+  const used = new Set<string>();
+  return trips.map((trip, index) => {
+    if (!used.has(trip.image)) {
+      used.add(trip.image);
+      return trip;
+    }
+    const alternative = generated.find((image) => !used.has(image)) || generated[index % generated.length];
+    used.add(alternative);
+    return { ...trip, image: alternative, gallery: [alternative, ...(trip.gallery || []).filter((image) => image !== alternative)].slice(0, 4) };
+  });
 }
 
 async function queryTrips(id?: string, language: TravelLanguage = 'en') {
@@ -112,8 +136,10 @@ async function queryTaxonomy(table: 'categories' | 'cities', joinTable: 'trip_ca
 export async function getTravelTrips(language?: string) {
   const locale = normalizeLanguage(language);
   const rows = await queryTrips(undefined, locale);
-  const days = await Promise.all(rows.map((row) => queryDays(row.id, locale)));
-  return rows.map((row, index) => mapTrip(row, days[index], locale));
+  const days = await Promise.all(rows.map(async (row) => {
+    try { return await queryDays(row.id, locale); } catch (error) { console.error(`Trip days query failed for ${row.id}; using fallback itinerary.`, error); return []; }
+  }));
+  return dedupeTripImages(rows.map((row, index) => mapTrip(row, days[index], locale)));
 }
 
 export async function getTravelTrip(id: string, language?: string) {

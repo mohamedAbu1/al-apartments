@@ -36,7 +36,10 @@ export default async function JourneyPage({ params }: { params: Promise<{ id: st
   const highlightItems = trip.highlights.split(' · ');
   const hasReviews = Boolean(trip.reviewCount);
   const currentCities = trip.route.toLowerCase().split(/·|→/).map((city) => city.trim()).filter(Boolean);
-  const catalog = await getTravelTrips(language);
+  const catalog = await getTravelTrips(language).catch((error) => {
+    console.error('[journey-detail] Related journey catalog unavailable; continuing without related trips.', error);
+    return [];
+  });
   const relatedTrips = catalog.filter((item) => {
     if (item.id === trip.id || item.category !== trip.category) return false;
     const sharedCities = item.route.toLowerCase().split(/·|→/).map((city) => city.trim()).filter((city) => currentCities.includes(city));
