@@ -11,7 +11,9 @@ import { getTravelTrip, getTravelTrips } from '../../../lib/travel-data';
 import { absoluteUrl, createPageMetadata } from '../../../lib/seo';
 import { cookies } from 'next/headers';
 
-export function generateStaticParams() { return []; }
+export const dynamic = 'force-dynamic';
+export const dynamicParams = true;
+export const runtime = 'nodejs';
 
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;

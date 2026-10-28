@@ -152,7 +152,18 @@ export async function getTravelTrip(id: string, language?: string) {
       return mapTrip(rows[0], days, locale);
     }
   } catch (error) {
-    console.error('Trip detail query failed; database data is unavailable.', error);
+    console.error(`Trip detail query failed for ${id}; retrying against the published catalog.`, error);
+    try {
+      const rows = await queryTrips(undefined, locale);
+      const row = rows.find((item) => item.id === id);
+      if (row) {
+        let days: DbDay[] = [];
+        try { days = await queryDays(id, locale); } catch (daysError) { console.error(`Trip days query failed for ${id}; using fallback itinerary.`, daysError); }
+        return mapTrip(row, days, locale);
+      }
+    } catch (fallbackError) {
+      console.error('Published catalog retry failed; database data is unavailable.', fallbackError);
+    }
   }
   return undefined;
 }
